@@ -35,12 +35,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.15.0
- * Query Engine version: 85179d7826409ee107a6ba334b5e305ae3fba9fb
+ * Prisma Client JS version: 6.13.0
+ * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
  */
 Prisma.prismaVersion = {
-  client: "6.15.0",
-  engine: "85179d7826409ee107a6ba334b5e305ae3fba9fb"
+  client: "6.13.0",
+  engine: "361e86d0ea4987e9f53a565309b3eed797a6bcbd"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -238,6 +238,10 @@ const config = {
       },
       {
         "fromEnvVar": null,
+        "value": "linux-musl-openssl-3.0.x"
+      },
+      {
+        "fromEnvVar": null,
         "value": "windows"
       },
       {
@@ -254,12 +258,13 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
-  "clientVersion": "6.15.0",
-  "engineVersion": "85179d7826409ee107a6ba334b5e305ae3fba9fb",
+  "clientVersion": "6.13.0",
+  "engineVersion": "361e86d0ea4987e9f53a565309b3eed797a6bcbd",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "mysql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -268,8 +273,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"darwin\", \"darwin-arm64\", \"linux-arm64-openssl-3.0.x\", \"windows\", \"debian-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            BigInt   @id @default(autoincrement())\n  name          String   @db.VarChar(10)\n  nickname      String   @db.VarChar(10)\n  gender        String   @db.VarChar(10)\n  birthdate     DateTime @db.Date\n  profileImage  String?  @map(\"profile_image\") @db.VarChar(511)\n  phoneNumber   String?  @map(\"phone_number\") @db.VarChar(15)\n  oauthProvider String?  @map(\"oauth_provider\") @db.VarChar(30)\n  oauthId       String?  @map(\"oauth_id\") @db.VarChar(100)\n  createdAt     DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt     DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@map(\"user\")\n}\n\nmodel Team {\n  id        BigInt   @id @default(autoincrement())\n  name      String   @db.VarChar(20)\n  createdAt DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@map(\"team\")\n}\n\nmodel TeamMember {\n  teamId    BigInt   @map(\"team_id\")\n  userId    BigInt   @map(\"user_id\")\n  role      String   @db.VarChar(20)\n  createdAt DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@id([teamId, userId])\n  @@index([teamId], name: \"idx_team_id\")\n  @@index([userId], name: \"idx_user_id\")\n  @@map(\"team_member\")\n}\n\nmodel RidingRecord {\n  id          BigInt               @id @default(autoincrement())\n  userId      BigInt?              @map(\"user_id\")\n  teamId      BigInt?              @map(\"team_id\")\n  distance    Float\n  duration    Int\n  startPos    Unsupported(\"POINT\") @map(\"start_pos\")\n  stopOverPos Unsupported(\"POINT\") @map(\"stop_over_pos\")\n  endPos      Unsupported(\"POINT\") @map(\"end_pos\")\n  createdAt   DateTime             @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt   DateTime             @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@index([userId], name: \"idx_user_id\")\n  @@map(\"riding_record\")\n}\n\nmodel RefreshToken {\n  id        BigInt   @id @default(autoincrement())\n  userId    BigInt   @unique @map(\"user_id\")\n  token     String   @db.VarChar(255)\n  createdAt DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@index([userId], name: \"idx_user_id\")\n  @@map(\"refresh_token\")\n}\n\nmodel S3UploadedFiles {\n  id        BigInt   @id @default(autoincrement())\n  domain    String   @db.VarChar(50) // 업로드된 파일이 속한 도메인 (예: 'events', 'community')\n  kind      String   @db.VarChar(20) // 파일 종류: 'image' | 'video'\n  key       String   @unique @db.VarChar(500) // S3 object key\n  url       String   @db.VarChar(1024) // CDN 공개 URL\n  mimeType  String   @map(\"mime_type\") @db.VarChar(100) // ex. image/jpeg\n  size      Int? // 파일 크기 (byte 단위)\n  createdAt DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@map(\"s3_uploaded_files\")\n}\n",
-  "inlineSchemaHash": "22dc21b340ca4bc50a3494a08ef64c31b708c1de2d779914c06579cc35e36789",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"darwin\", \"darwin-arm64\", \"linux-arm64-openssl-3.0.x\", \"linux-musl-openssl-3.0.x\", \"windows\", \"debian-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            BigInt   @id @default(autoincrement())\n  name          String   @db.VarChar(10)\n  nickname      String   @db.VarChar(10)\n  gender        String   @db.VarChar(10)\n  birthdate     DateTime @db.Date\n  profileImage  String?  @map(\"profile_image\") @db.VarChar(511)\n  phoneNumber   String?  @map(\"phone_number\") @db.VarChar(15)\n  oauthProvider String?  @map(\"oauth_provider\") @db.VarChar(30)\n  oauthId       String?  @map(\"oauth_id\") @db.VarChar(100)\n  createdAt     DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt     DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@map(\"user\")\n}\n\nmodel Team {\n  id        BigInt   @id @default(autoincrement())\n  name      String   @db.VarChar(20)\n  createdAt DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@map(\"team\")\n}\n\nmodel TeamMember {\n  teamId    BigInt   @map(\"team_id\")\n  userId    BigInt   @map(\"user_id\")\n  role      String   @db.VarChar(20)\n  createdAt DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@id([teamId, userId])\n  @@index([teamId], name: \"idx_team_id\")\n  @@index([userId], name: \"idx_user_id\")\n  @@map(\"team_member\")\n}\n\nmodel RidingRecord {\n  id          BigInt               @id @default(autoincrement())\n  userId      BigInt?              @map(\"user_id\")\n  teamId      BigInt?              @map(\"team_id\")\n  distance    Float\n  duration    Int\n  startPos    Unsupported(\"POINT\") @map(\"start_pos\")\n  stopOverPos Unsupported(\"POINT\") @map(\"stop_over_pos\")\n  endPos      Unsupported(\"POINT\") @map(\"end_pos\")\n  createdAt   DateTime             @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt   DateTime             @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@index([userId], name: \"idx_user_id\")\n  @@map(\"riding_record\")\n}\n\nmodel RefreshToken {\n  id        BigInt   @id @default(autoincrement())\n  userId    BigInt   @unique @map(\"user_id\")\n  token     String   @db.VarChar(255)\n  createdAt DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@index([userId], name: \"idx_user_id\")\n  @@map(\"refresh_token\")\n}\n\nmodel S3UploadedFiles {\n  id        BigInt   @id @default(autoincrement())\n  domain    String   @db.VarChar(50) // 업로드된 파일이 속한 도메인 (예: 'events', 'community')\n  kind      String   @db.VarChar(20) // 파일 종류: 'image' | 'video'\n  key       String   @unique @db.VarChar(500) // S3 object key\n  url       String   @db.VarChar(1024) // CDN 공개 URL\n  mimeType  String   @map(\"mime_type\") @db.VarChar(100) // ex. image/jpeg\n  size      Int? // 파일 크기 (byte 단위)\n  createdAt DateTime @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime @default(now()) @map(\"updated_at\") @db.Timestamp(6)\n\n  @@map(\"s3_uploaded_files\")\n}\n",
+  "inlineSchemaHash": "6d2a4fc6e9e2d93a6df76122e174f434c676fee1443383cc6500996d9e344ad8",
   "copyEngine": true
 }
 
@@ -318,6 +323,10 @@ path.join(process.cwd(), "src/generated/prisma/libquery_engine-darwin.dylib.node
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-linux-arm64-openssl-3.0.x.so.node");
 path.join(process.cwd(), "src/generated/prisma/libquery_engine-linux-arm64-openssl-3.0.x.so.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-linux-musl-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-linux-musl-openssl-3.0.x.so.node")
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
