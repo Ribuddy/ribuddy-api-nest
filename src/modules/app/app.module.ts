@@ -6,7 +6,9 @@ import cookieParser from 'cookie-parser';
 import { WinstonModule } from 'nest-winston';
 
 import { winstonLoggerOptions } from '@common/configs/winston.config';
-import { GlobalExceptionFilter } from '@common/filters/http-exception.filter';
+import { AllExceptionsFilter } from '@common/filters/all-exception.filter';
+import { CustomExceptionFilter } from '@common/filters/custom-exception.filter';
+import { HttpExceptionFilter } from '@common/filters/http-exception.filter';
 import { ResponseInterceptor } from '@common/interceptors/response.interceptor';
 import { LoggerMiddleware } from '@common/middleware/logger.middleware';
 import { RequestContextMiddleware } from '@common/middleware/request-context.middleware';
@@ -27,7 +29,7 @@ import { TmapConfig } from '@modules/tmap/configs/tmap.config';
 import { TmapModule } from '@modules/tmap/tmap.module';
 import { UsersModule } from '@modules/users/users.module';
 
-import { AppController } from './app.controller';
+import { AppTestController } from './app.controller';
 
 const validate = (config: Record<string, unknown>) => {
   const parsedConfig = configValidationSchema.parse(config);
@@ -60,7 +62,7 @@ const validate = (config: Record<string, unknown>) => {
     TmapModule,
     MapModule,
   ],
-  controllers: [AppController],
+  controllers: [AppTestController],
   providers: [
     {
       provide: APP_INTERCEPTOR,
@@ -68,7 +70,15 @@ const validate = (config: Record<string, unknown>) => {
     },
     {
       provide: APP_FILTER,
-      useClass: GlobalExceptionFilter,
+      useClass: CustomExceptionFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
     },
     {
       provide: APP_PIPE,
