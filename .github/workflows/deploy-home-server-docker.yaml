@@ -1,8 +1,9 @@
-name: Deploy to Mac Mini With Docker
+name: Build & Push Docker Image, Deploy to Home Server
 
 on:
   push:
     branches:
+      - main
       - develop
   workflow_dispatch:
 
@@ -36,13 +37,13 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: scripts/ec2-dev/dockerfile
+          file: scripts/docker/dockerfile # Dockerfile path
           push: true # 빌드 후 푸시 실행
           tags: ${{secrets.DOCKER_IMAGE_NAME_WITH_TAG}} # version은 latest로 우선 고정
           platforms: linux/amd64,linux/arm64
 
   docker-pull-and-run:
-    name: Pull Latest Docker Image and Run on Mac Mini
+    name: Pull Latest Docker Image and Run on Home Server
     needs: build-docker-image-and-push
     runs-on: ubuntu-latest
     steps:

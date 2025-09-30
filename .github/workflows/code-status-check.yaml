@@ -1,8 +1,9 @@
-name: Status Check on Develop Branch
+name: Status Check on Pull Request (Type Check & Build)
 
 on:
   pull_request:
     branches:
+      - main
       - develop
 
 jobs:
