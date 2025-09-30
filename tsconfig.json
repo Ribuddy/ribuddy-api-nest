@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "module": "commonjs",
+    "target": "ES2023",
+    "lib": ["es2020"],
+    "sourceMap": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@common/*": ["common/*"],
+      "@utils/*": ["utils/*"],
+      "@peekle/prisma/client": ["generated/prisma"],
+      "@peekle/prisma/client/*": ["generated/prisma/*"],
+      "@modules/*": ["modules/*"],
+      "@/*": ["*"]
+    }
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist", "test/**/*.e2e-spec.ts"]
+}
