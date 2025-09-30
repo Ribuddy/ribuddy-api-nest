@@ -10,7 +10,8 @@ on:
 jobs:
   type-check:
     name: TypeScript Type Check
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: [self-hosted, largeserver]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
