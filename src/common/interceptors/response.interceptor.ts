@@ -35,7 +35,9 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, ApiCommonRespo
 
     // interceptor logic
     return next.handle().pipe(
+      // 요청이 성공했을 경우
       map((res: any) => this.responseHandler(res, context)),
+      // 요청이 실패했을 경우 filter 단으로 책임 전환
       catchError((err: unknown) => {
         if (err instanceof HttpException) {
           this.logger.log('error', err);
