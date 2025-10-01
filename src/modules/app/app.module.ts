@@ -69,7 +69,7 @@ const validate = (config: Record<string, unknown>) => {
     },
     // FILTER 간에는, 순서가 중요합니다.
     // 더 구체적인 ExceptionFilter가 뒤에 와야 합니다.
-    // -> FILTER는 provider에 등록된거 기준으로 뒤에서부터 적용되기 떄문!
+    // -> FILTER는 provider에 등록된거 기준으로 뒤에서부터 적용되기 때문!
     // e.g. HttpExceptionFilter가 AllExceptionsFilter보다 뒤에 와야 함
     {
       provide: APP_FILTER,

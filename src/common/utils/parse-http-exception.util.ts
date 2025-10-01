@@ -43,7 +43,7 @@ export const parseHttpExceptionToErrorDetails = (exception: HttpException): Exce
   // 디버깅 시에는 data에 있는 errorResponse를 확인해서, 왜 우리가 의도하지 않은 HttpException이 발생했는지 확인
   const { code: errorCode, message: errorMessage } = CommonCode.UNKNOWN_HTTP_EXCEPTION;
 
-  console.log(errorResponse, 'errorResponse');
+  // console.log(errorResponse, 'errorResponse');
 
   return {
     name: exception.constructor.name,

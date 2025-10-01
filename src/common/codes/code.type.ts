@@ -35,12 +35,4 @@ export interface ExceptionLogPayload {
   request: ExceptionRequestInfo;
 }
 
-// export interface ExceptionRequestInfo {
-//   method: string | undefined;
-//   url: string | undefined;
-//   ip: string | string[] | undefined;
-//   userAgent: string | string[] | undefined;
-//   referer: string | string[] | undefined;
-// }
-
 export type ExceptionRequestInfo = Pick<Request, 'method' | 'url' | 'ip' | 'headers'>;

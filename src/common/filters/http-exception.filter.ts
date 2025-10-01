@@ -36,7 +36,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       errorDetails = parseCustomExceptionToErrorDetails(exception);
 
       logPayload = {
-        // timestamp와 trqceId는 Logger에서 추가됨
+        // timestamp와 traceId는 Logger에서 추가됨
         context: this.constructor.name,
         filterType: 'CustomExceptionFilter',
         error: errorDetails,
