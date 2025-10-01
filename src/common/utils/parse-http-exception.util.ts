@@ -3,7 +3,11 @@ import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 
 import { Request } from 'express';
 
-import { CustomExceptionResponse } from '@common/codes/code.type';
+import {
+  CustomExceptionResponse,
+  ExceptionDetails,
+  ExceptionRequestInfo,
+} from '@common/codes/code.type';
 import { CommonCode } from '@common/codes/common.code';
 import { CustomException } from '@common/codes/custom.exception';
 
@@ -11,7 +15,9 @@ import { CustomException } from '@common/codes/custom.exception';
  * CustomException의 정보를 파싱합니다.
  * @param exception
  */
-export const parseCustomExceptionToErrorDetails = (exception: CustomException) => {
+export const parseCustomExceptionToErrorDetails = (
+  exception: CustomException,
+): ExceptionDetails => {
   const errorResponse = exception.getResponse() as CustomExceptionResponse;
   const httpStatusCode = exception.getStatus();
 
@@ -21,6 +27,7 @@ export const parseCustomExceptionToErrorDetails = (exception: CustomException) =
     code: errorResponse.code,
     stack: exception.stack ?? undefined,
     message: errorResponse.message,
+    data: null,
   };
 };
 
@@ -28,7 +35,7 @@ export const parseCustomExceptionToErrorDetails = (exception: CustomException) =
  * HttpException의 정보를 파싱합니다.
  * @param exception
  */
-export const parseHttpExceptionToErrorDetails = (exception: HttpException) => {
+export const parseHttpExceptionToErrorDetails = (exception: HttpException): ExceptionDetails => {
   const errorResponse = exception.getResponse();
   const httpStatusCode = exception.getStatus();
 
@@ -52,14 +59,17 @@ export const parseHttpExceptionToErrorDetails = (exception: HttpException) => {
  * Request의 정보를 파싱합니다.
  * @param ctx
  */
-export const parseContextToRequestInfo = (ctx: HttpArgumentsHost) => {
+export const parseContextToRequestInfo = (ctx: HttpArgumentsHost): ExceptionRequestInfo => {
   const request = ctx.getRequest<Request>();
 
   return {
     method: request.method,
     url: request.originalUrl,
     ip: request.ip,
-    userAgent: request.headers['user-agent'],
-    referer: request.headers['referer'] || request.headers['referrer'],
+    headers: {
+      userAgent: request.headers['user-agent'],
+      referer: request.headers['referer'],
+      referrer: request.headers['referrer'],
+    },
   };
 };

@@ -7,7 +7,6 @@ import { WinstonModule } from 'nest-winston';
 
 import { winstonLoggerOptions } from '@common/configs/winston.config';
 import { AllExceptionsFilter } from '@common/filters/all-exception.filter';
-import { CustomExceptionFilter } from '@common/filters/custom-exception.filter';
 import { HttpExceptionFilter } from '@common/filters/http-exception.filter';
 import { ResponseInterceptor } from '@common/interceptors/response.interceptor';
 import { LoggerMiddleware } from '@common/middleware/logger.middleware';
@@ -68,17 +67,17 @@ const validate = (config: Record<string, unknown>) => {
       provide: APP_INTERCEPTOR,
       useClass: ResponseInterceptor,
     },
+    // FILTER 간에는, 순서가 중요합니다.
+    // 더 구체적인 ExceptionFilter가 뒤에 와야 합니다.
+    // -> FILTER는 provider에 등록된거 기준으로 뒤에서부터 적용되기 떄문!
+    // e.g. HttpExceptionFilter가 AllExceptionsFilter보다 뒤에 와야 함
     {
       provide: APP_FILTER,
-      useClass: CustomExceptionFilter,
+      useClass: AllExceptionsFilter,
     },
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
-    },
-    {
-      provide: APP_FILTER,
-      useClass: AllExceptionsFilter,
     },
     {
       provide: APP_PIPE,

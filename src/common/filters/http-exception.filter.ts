@@ -10,9 +10,12 @@ import {
 import { Request, Response } from 'express';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
+import { ExceptionDetails, ExceptionLogPayload } from '@common/codes/code.type';
+import { CustomException } from '@common/codes/custom.exception';
 import { ApiCommonResponse } from '@common/dto/common-response.dto';
 import {
   parseContextToRequestInfo,
+  parseCustomExceptionToErrorDetails,
   parseHttpExceptionToErrorDetails,
 } from '@common/utils/parse-http-exception.util';
 
@@ -25,16 +28,37 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
 
-    const errorDetails = parseHttpExceptionToErrorDetails(exception);
+    let errorDetails: ExceptionDetails;
+    let logPayload: ExceptionLogPayload;
 
-    const logPayload = {
-      // timestamp와 trqceId는 Logger에서 추가됨
+    // 더 구체적인 CustomException인지 확인
+    if (exception instanceof CustomException) {
+      errorDetails = parseCustomExceptionToErrorDetails(exception);
 
-      context: this.constructor.name,
-      error: errorDetails,
-      request: parseContextToRequestInfo(ctx),
-    };
+      logPayload = {
+        // timestamp와 trqceId는 Logger에서 추가됨
+        context: this.constructor.name,
+        filterType: 'CustomExceptionFilter',
+        error: errorDetails,
+        request: parseContextToRequestInfo(ctx),
+      };
+    }
+    // 그 외에, 우리가 의도하지 않은 일반적인 HttpException이 발생한 것인지 확인
+    else {
+      errorDetails = parseHttpExceptionToErrorDetails(exception);
 
+      logPayload = {
+        // timestamp와 trqceId는 Logger에서 추가됨
+
+        context: this.constructor.name,
+        filterType: 'HttpExceptionFilter',
+        error: errorDetails,
+        request: parseContextToRequestInfo(ctx),
+      };
+    }
+
+    // Logging은 한 번에!
+    // console.log('logPayload', logPayload);
     this.logger.log(logPayload);
 
     // 응답이 전송되지 않은 경우에만 Response 전송
