@@ -8,11 +8,14 @@ import { Request } from 'express';
  * @property message - 기본 응답 메시지
  * @property status - 이 코드에 매칭되는 HTTP 상태 코드
  */
-export interface ICustomCode {
+export interface CustomErrorCode {
   readonly code: string;
   readonly status: HttpStatus;
   readonly message: string;
 }
+
+export type CustomSuccessCode = Omit<CustomErrorCode, 'status'> &
+  Partial<Pick<CustomErrorCode, 'status'>>;
 
 export interface CustomExceptionResponse {
   code: string;
