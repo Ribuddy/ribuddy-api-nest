@@ -10,7 +10,7 @@ import {
 import { Request, Response } from 'express';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
-import { CommonCode } from '@common/codes/common.code';
+import { CommonErrorCode } from '@common/codes/error/common.error.code';
 import { ApiCommonResponse } from '@common/dto/common-response.dto';
 
 @Catch() // 👈 모든 예외를 캐치
@@ -27,7 +27,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       exception, // exception 객체 자체를 넘겨 스택 트레이스 등을 확인
     );
 
-    const { code: errorCode, status, message } = CommonCode.UNKNOWN_ERROR;
+    const { code: errorCode, status, message } = CommonErrorCode.UNKNOWN_ERROR;
 
     if (!response.headersSent) {
       response.status(status).json(ApiCommonResponse.fail(errorCode, message, null));

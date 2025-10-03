@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  InternalServerErrorException,
   Post,
   Query,
   Redirect,
@@ -13,15 +12,8 @@ import {
 } from '@nestjs/common';
 import { ApiHeader, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-import { Response } from 'express';
-
-import { CookieName } from '@common/constants/cookie.constants';
 import { BypassResponseInterceptor } from '@common/decorators/bypass-response-interceptor.decorator';
 
-import {
-  accessTokenCookieOptions,
-  refreshTokenCookieOptions,
-} from '@modules/auth/config/cookie.config';
 import { Public } from '@modules/auth/decorators/public.decorator';
 import { OAUTH_CALLBACK, OAUTH_LOGIN, OAUTH_REGISTER } from '@modules/auth/docs/oauth.docs';
 import { GoogleOAuthGuard } from '@modules/auth/guards/google-oauth.guard';
@@ -41,10 +33,9 @@ export class OAuthV1Controller {
   ) {}
 
   @ApiOperation(OAUTH_REGISTER)
-  // @ApiBearerAuth()
   @ApiHeader({
     name: 'RegisterToken', // 실제 헤더의 key
-    description: 'Bearer Token이 아닙니다. RegisterToken 평문 그대로 요청을 보내주세요.',
+    description: 'Bearer Token이 아닌, RegisterToken 평문 그대로 요청을 보내주세요.',
     required: true,
     example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
   })

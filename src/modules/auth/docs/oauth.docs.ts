@@ -5,7 +5,10 @@ export const OAUTH_REGISTER = {
   summary: 'OAuth 사용자 회원가입',
   description: `## v1.0 2025-09-15
 \nOAuth로 Login 했을 시에 \`type=register\` 로 응답이 온 사용자 (가입되지 않은 사용자) 가 회원가입을 하기 위한 API 입니다.
-\n로그인 시도 시에 제공된 \`registerToken\`을 헤더에 담아 요청해 주세요.
+\nOAuth 로그인 시 발급받은 RegisterToken을 이용해서 회원가입을 진행합니다.
+\n
+\nHeader의 RegisterToken에 OAuth 로그인 시 발급받은 RegisterToken을 **평문** 형태로 넣어서 요청해주세요.
+\nOAuth 로그인 Response의 응답에서 \`type: register\`로 왔어야 합니다.
 \n`,
 };
 

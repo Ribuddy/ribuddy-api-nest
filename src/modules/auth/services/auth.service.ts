@@ -2,6 +2,10 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
+import { CustomException } from '@common/codes/custom.exception';
+import { JwtErrorCode } from '@common/codes/error/jwt.error.code';
+import { UserErrorCode } from '@common/codes/error/user.error.code';
+
 import { RefreshJwtConfig } from '@modules/auth/config/refresh-jwt.config';
 import { RegisterJwtConfig } from '@modules/auth/config/register-jwt.config';
 import { JwtPayload, RegisterJwtPayload } from '@modules/auth/types/jwt.types';
@@ -48,7 +52,7 @@ export class AuthService {
   async validateJwtUser(userId: bigint) {
     const user = await this.userService.getUserInfo(userId);
 
-    if (!user) throw new UnauthorizedException('INVALID_TOKEN : 존재하지 않는 사용자입니다.');
+    // if (!user) throw new CustomException(UserErrorCode.NO_USER);
 
     return {
       userId: user.id,
