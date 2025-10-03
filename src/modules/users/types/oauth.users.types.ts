@@ -10,6 +10,7 @@ export enum OAuthProvider {
 
 export interface GoogleOAuthUserData extends OAuthUserInfo {
   name: string;
+  displayName: string;
   profileImage: string;
 }
 

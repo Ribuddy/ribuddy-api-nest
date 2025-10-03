@@ -1,18 +1,10 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-
-import { Prisma } from '@peekle/prisma/client';
 
 import { FrontendUrlConfig } from '@modules/auth/config/frontend-url.config';
 import { AuthService } from '@modules/auth/services/auth.service';
-import { RegisterJwtPayload } from '@modules/auth/types/jwt.types';
 import { PrismaService } from '@modules/prisma/prisma.service';
-import { CreateOAuthUserRequestDto } from '@modules/users/dto/user.dto';
-import {
-  GoogleOAuthUserData,
-  KakaoUserData,
-  OAuthLoginOrRegisterResult,
-} from '@modules/users/types/oauth.users.types';
+import { GoogleOAuthUserData, OAuthUserInfo } from '@modules/users/types/oauth.users.types';
 
 @Injectable()
 export class OAuthUserService {
@@ -23,62 +15,58 @@ export class OAuthUserService {
     private readonly frontendUrlConfig: ConfigType<typeof FrontendUrlConfig>,
   ) {}
 
-  async oauthLoginOrRegister(
-    oauthData: GoogleOAuthUserData | KakaoUserData,
-  ): Promise<OAuthLoginOrRegisterResult> {
-    const { oauthProvider, oauthId } = oauthData;
-    const user = await this.prismaService.user.findFirst({
+  async getUserByOAuth(oauthData: OAuthUserInfo) {
+    return this.prismaService.oAuthUser.findUnique({
       where: {
-        oauthProvider: oauthProvider,
-        oauthId: oauthId,
+        oauthProvider_oauthId: {
+          oauthProvider: oauthData.oauthProvider,
+          oauthId: oauthData.oauthId,
+        },
       },
     });
+  }
 
-    console.log('OAuthUserService ~ user:', user);
+  async googleOAuthLoginOrRegister(googleData: GoogleOAuthUserData) {
+    const user = await this.getUserByOAuth(googleData);
 
-    if (user) {
-      const tokens = await this.authService.generateTokens(user.id);
-      return { type: 'login', oauthProvider: oauthData.oauthProvider, tokens };
+    if (!user) {
+      const newUserId = await this.createOAuthUserWithGoogle(googleData);
+      return this.authService.generateTokens(newUserId);
     } else {
-      const registerToken = await this.authService.generateRegisterToken(oauthData);
-      return {
-        type: 'register',
-        oauthProvider: oauthData.oauthProvider,
-        tokens: { registerToken },
-      };
+      return this.authService.generateTokens(user.userId);
     }
   }
 
-  async createOAuthUser(user: CreateOAuthUserRequestDto & RegisterJwtPayload) {
+  /**
+   * Google OAuth 시에 제공되는 데이터를 기반으로 회원가입을 하는 로직입니다.
+   *
+   * transaction이 적용되어 있습니다.
+   *
+   * @returns 생성된 사용자의 ID를 반환합니다.
+   */
+  async createOAuthUserWithGoogle(googleUser: GoogleOAuthUserData): Promise<bigint> {
     const newUser = await this.prismaService.$transaction(async (txPrisma) => {
       const createdUser = await txPrisma.user.create({
-        data: user,
+        data: {
+          name: googleUser.name,
+          nickname: googleUser.displayName,
+          profileImage: googleUser.profileImage,
+        },
         select: { id: true },
       });
 
-      // // TODO: 필수 약관 동의 여부 인증 필요
-      // try {
-      //   await txPrisma.userTerm.createMany({
-      //     data: user.terms.map((term) => ({
-      //       userId: createdUser.id,
-      //       termId: BigInt(term.termId),
-      //       isAccepted: term.isAccepted,
-      //     })),
-      //   });
-      // } catch (err) {
-      //   if (err instanceof Prisma.PrismaClientKnownRequestError) {
-      //     if (err.code === 'P2003') {
-      //       console.error('Foreign key constraint failed:', err.message);
-      //       throw new BadRequestException('존재하지 않는 약관입니다.');
-      //     }
-      //   }
-      //   throw err;
-      // }
+      await txPrisma.oAuthUser.create({
+        data: {
+          oauthProvider: googleUser.oauthProvider,
+          oauthId: googleUser.oauthId,
+          userId: BigInt(createdUser.id),
+        },
+      });
 
       return createdUser;
     });
 
-    return { id: newUser.id.toString() };
+    return newUser.id;
   }
 
   getFrontendOAuthCallbackUrl() {

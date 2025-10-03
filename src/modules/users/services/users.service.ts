@@ -37,23 +37,15 @@ export class UsersService {
    * 내 정보 조회
    */
   async getUserInfo(userId: bigint) {
-    const profileOwner = await this.prisma.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { id: userId },
     });
 
-    if (!profileOwner) {
+    if (!user) {
       throw new CustomException(UserErrorCode.NO_USER);
     }
 
-    return {
-      id: profileOwner.id,
-      name: profileOwner.name,
-      nickname: profileOwner.nickname,
-      phoneNumber: profileOwner.phoneNumber ?? undefined,
-      profileImage: profileOwner.profileImage ?? undefined,
-      createdAt: profileOwner.createdAt.toISOString(),
-      updatedAt: profileOwner.updatedAt.toISOString(),
-    };
+    return { ...user, id: user.id.toString() };
   }
 
   /**
