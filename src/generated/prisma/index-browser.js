@@ -124,12 +124,15 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   nickname: 'nickname',
-  gender: 'gender',
-  birthdate: 'birthdate',
   profileImage: 'profileImage',
-  phoneNumber: 'phoneNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OAuthUserScalarFieldEnum = {
   oauthProvider: 'oauthProvider',
   oauthId: 'oauthId',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -192,9 +195,10 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
   name: 'name',
   nickname: 'nickname',
-  gender: 'gender',
-  profileImage: 'profileImage',
-  phoneNumber: 'phoneNumber',
+  profileImage: 'profileImage'
+};
+
+exports.Prisma.OAuthUserOrderByRelevanceFieldEnum = {
   oauthProvider: 'oauthProvider',
   oauthId: 'oauthId'
 };
@@ -222,6 +226,7 @@ exports.Prisma.S3UploadedFilesOrderByRelevanceFieldEnum = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  OAuthUser: 'OAuthUser',
   Team: 'Team',
   TeamMember: 'TeamMember',
   RidingRecord: 'RidingRecord',
