@@ -8,8 +8,8 @@ import {
   ExceptionDetails,
   ExceptionRequestInfo,
 } from '@common/codes/code.type';
-import { CommonCode } from '@common/codes/common.code';
 import { CustomException } from '@common/codes/custom.exception';
+import { CommonErrorCode } from '@common/codes/error/common.error.code';
 
 /**
  * CustomException의 정보를 파싱합니다.
@@ -41,7 +41,7 @@ export const parseHttpExceptionToErrorDetails = (exception: HttpException): Exce
 
   // ErrorCode와 Message는 고정
   // 디버깅 시에는 data에 있는 errorResponse를 확인해서, 왜 우리가 의도하지 않은 HttpException이 발생했는지 확인
-  const { code: errorCode, message: errorMessage } = CommonCode.UNKNOWN_HTTP_EXCEPTION;
+  const { code: errorCode, message: errorMessage } = CommonErrorCode.UNKNOWN_HTTP_EXCEPTION;
 
   // console.log(errorResponse, 'errorResponse');
 

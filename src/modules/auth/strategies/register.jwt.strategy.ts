@@ -26,6 +26,8 @@ export class RegisterJwtStrategy extends PassportStrategy(Strategy, 'register-jw
   }
 
   validate(payload: RegisterJwtPayload) {
+    // TODO: RegisterJwtPayload 검증 로직 추가
+
     return payload;
   }
 }

@@ -5,6 +5,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
+import { CustomException } from '@common/codes/custom.exception';
+import { UserErrorCode } from '@common/codes/error/user.error.code';
+
 import { PrismaService } from '@modules/prisma/prisma.service';
 import {
   CreateUserRequestDto,
@@ -39,7 +42,7 @@ export class UsersService {
     });
 
     if (!profileOwner) {
-      throw new NotFoundException('해당 사용자를 찾을 수 없습니다.');
+      throw new CustomException(UserErrorCode.NO_USER);
     }
 
     return {

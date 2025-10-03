@@ -1,9 +1,9 @@
 import { HttpException } from '@nestjs/common';
 
-import { ICustomCode } from '@common/codes/code.type';
+import { CustomErrorCode } from '@common/codes/code.type';
 
 export class CustomException extends HttpException {
-  constructor(customCode: ICustomCode) {
+  constructor(customCode: CustomErrorCode) {
     // HttpException의 constructor : response, status
     // 우리는 { code, message } 형태의 response를 전달
     super(

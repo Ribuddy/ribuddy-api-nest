@@ -15,6 +15,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { BYPASS_RESPONSE_INTERCEPTOR } from '@common/decorators/bypass-response-interceptor.decorator';
+import { RESPONSE_CODE_METADATA } from '@common/decorators/response/response-code.decorator';
 import { RESPONSE_MESSAGE_METADATA } from '@common/decorators/response/response-message.decorator';
 import { ApiCommonResponse } from '@common/dto/common-response.dto';
 
@@ -35,9 +36,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, ApiCommonRespo
 
     // interceptor logic
     return next.handle().pipe(
-      // 요청이 성공했을 경우
       map((res: any) => this.responseHandler(res, context)),
-      // 요청이 실패했을 경우 filter 단으로 책임 전환
       catchError((err: unknown) => {
         if (err instanceof HttpException) {
           this.logger.log('error', err);
@@ -52,8 +51,8 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, ApiCommonRespo
   responseHandler(res: any, context: ExecutionContext) {
     const ctx = context.switchToHttp();
     const response = ctx.getResponse();
-    const statusCode = response.statusCode;
-
+    const statusCode =
+      this.reflector.get<string>(RESPONSE_CODE_METADATA, context.getHandler()) || 'COMMON0001';
     const message =
       this.reflector.get<string>(RESPONSE_MESSAGE_METADATA, context.getHandler()) ||
       '요청이 성공했습니다.';

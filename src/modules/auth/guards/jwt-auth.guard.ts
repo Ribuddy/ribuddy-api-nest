@@ -6,15 +6,11 @@ import { AuthGuard } from '@nestjs/passport';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Observable } from 'rxjs';
 
+import { CustomException } from '@common/codes/custom.exception';
+import { JwtErrorCode } from '@common/codes/error/jwt.error.code';
 import { inspectObject } from '@common/utils/inspect-object.util';
 
 import { IS_PUBLIC_KEY } from '@modules/auth/decorators/public.decorator';
-import {
-  JwtSecretLeakException,
-  JwtTokenExpiredException,
-  JwtTokenInvalidException,
-  JwtTokenNotActivatedException,
-} from '@modules/auth/exceptions/jwt.exeption';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -36,35 +32,45 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context);
   }
 
-  handleRequest(err, user, info: Error, context: ExecutionContext) {
+  handleRequest(err, user, info: unknown, context: ExecutionContext) {
     // info: 토큰 자체에 대한 정보(예: 만료, 형식 오류)
     // err: Strategy의 validate 메소드에서 발생시킨 에러
     // user: validate 메소드가 성공적으로 유저 객체를 반환했을 때의 값
+    console.log(err, user, info);
 
-    // 1. 토큰 자체의 에러 확인 (만료, 잘못된 형식 등)
-    if (info instanceof JsonWebTokenError) {
+    // 토큰이 없는 경우나 기타 Error 발생 시 NO_TOKEN 에러 반환
+    if (info instanceof Error) {
+      this.logger.log(`[JWT ERROR]: ${inspectObject(info)}`);
+      throw new CustomException(JwtErrorCode.NO_TOKEN);
+    }
+    // 토큰 자체의 에러 확인 (만료, 잘못된 형식 등)
+    else if (info instanceof JsonWebTokenError) {
       // 만료된 토큰인 경우
       if (info instanceof TokenExpiredError) {
-        throw new JwtTokenExpiredException();
+        throw new CustomException(JwtErrorCode.EXPIRED_TOKEN);
       }
       // 아직 활성화되지 않은 토큰인 경우
       else if (info instanceof NotBeforeError) {
-        throw new JwtTokenNotActivatedException();
+        throw new CustomException(JwtErrorCode.NOT_ACTIVATED_TOKEN);
       }
       // 그 외 : 토큰 서명이 잘못되었거나 형식이 잘못된 경우
-      throw new JwtTokenInvalidException();
+      throw new CustomException(JwtErrorCode.INVALID_TOKEN);
     }
 
-    // 2. Strategy의 validate 메소드에서 발생시킨 에러 확인
+    // err가 존재하는 경우 :
+    // Strategy의 validate 메소드에서 발생시킨 에러 확인
     if (err) {
-      this.logger.error(`JWT AUTH GUARD ERROR: ${inspectObject(err)}`);
-      throw err; // validate에서 던진 커스텀 에러를 그대로 다시 던짐
+      this.logger.error(`[JWT STRATEGY VALIDATION ERR]: ${inspectObject(err)}`);
+      throw new CustomException(JwtErrorCode.STRATEGY_VALIDATION_ERROR);
+      // throw err; // validate에서 던진 커스텀 에러를 그대로 다시 던짐
     }
 
-    // 3. 유저 정보가 없는 경우 (가장 일반적인 인증 실패)
+    // 유저 정보가 없는 경우 :
+    // Jwt 검증을 통과했으나 사용자 정보가 없는 경우
+    // secret key leak를 의심해볼 수 있음.
     if (!user) {
       this.logger.error('FATAL ERROR: JWT SECRET LEAK');
-      throw new JwtSecretLeakException();
+      throw new CustomException(JwtErrorCode.SECRET_LEAK);
     }
 
     // 모든 검증을 통과하면 user 객체를 반환

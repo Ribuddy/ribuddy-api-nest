@@ -6,9 +6,13 @@ import {
   VERSION_NEUTRAL,
   Version,
 } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 
-import { CommonCode } from '@common/codes/common.code';
 import { CustomException } from '@common/codes/custom.exception';
+import { CommonErrorCode } from '@common/codes/error/common.error.code';
+import { CommonSuccessCode } from '@common/codes/success/common.success.code';
+import { CustomResponse } from '@common/decorators/response/custom-response.decorator';
+import { ResponseCode } from '@common/decorators/response/response-code.decorator';
 
 import { Public } from '@modules/auth/decorators/public.decorator';
 
@@ -16,31 +20,45 @@ import { Public } from '@modules/auth/decorators/public.decorator';
   version: VERSION_NEUTRAL,
   path: 'test',
 })
+@Public()
 export class AppTestController {
-  @Public()
   @Get('hello')
-  // @Version(['1.1', '1.2'])
+  @CustomResponse(CommonSuccessCode.COMMON_SUCCESS)
+  @ApiOperation({
+    summary: 'Health-Check API',
+    description: `서버 상태 확인 및 ApiBaseResponse를 확인하기 위한 API 입니다.
+    \nHello World!를 return 합니다.`,
+  })
   getHello(): string {
     return 'Hello World!';
   }
 
-  @Public()
-  @Get('normal-error')
-  // @Version(['1.1', '1.2'])
+  @Get('exception/normal')
+  @ApiOperation({
+    summary: 'Normal Error 발생 테스트 API',
+    description: `\`CustomException\`이나 \`HttpException\`에 모두 해당하지 않는, General한 Error를 throw 합니다.
+    \n비즈니스 로직에서 의도되지 않은 Exception이며, 외부 패키지 단에서 예상하지 못한 오류가 발생하는 경우가 해당합니다.
+    \n응답을 참고해주세요.`,
+  })
   raiseError() {
     throw new Error('[NORMAL ERROR] 테스트 에러입니다.');
   }
 
-  @Public()
-  @Get('http-error')
-  // @Version(['1.1', '1.2'])
+  @Get('exception/http')
+  @ApiOperation({
+    summary: 'HttpException 발생 테스트 API',
+    description: `HttpException를 throw 하는 API 입니다. 응답을 참고해주세요.`,
+  })
   raiseHttpError(): string {
     throw new BadRequestException('[HTTP ERROR] 테스트 에러입니다.');
   }
 
-  @Public()
-  @Get('custom-error')
+  @Get('exception/custom')
+  @ApiOperation({
+    summary: 'CustomException 발생 테스트 API',
+    description: `CustomException을 throw 하는 API 입니다. 응답을 참고해주세요.`,
+  })
   raiseCustomError() {
-    throw new CustomException(CommonCode.TEST_CUSTOM_ERROR);
+    throw new CustomException(CommonErrorCode.TEST_CUSTOM_ERROR);
   }
 }
