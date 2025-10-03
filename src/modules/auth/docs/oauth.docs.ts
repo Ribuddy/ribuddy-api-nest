@@ -12,18 +12,17 @@ export const OAUTH_REGISTER = {
 \n`,
 };
 
-export const OAUTH_LOGIN = (oauthProvier: string, path: string) => ({
-  summary: `${oauthProvier} OAuth Login`,
+export const OAUTH_LOGIN = (oauthProvider: string, path: string) => ({
+  summary: `${oauthProvider} OAuth Login`,
   description: `## v1.0 2025-09-15
-\nOAuth Provider (${oauthProvier}) 측 계정 로그인 페이지로 Redirect 되는 API 입니다.
-\n로그인 시에 자동으로 \`${path}/callback\` 으로 Redirect 됩니다.
-\nCallback URI는 FE에서 직접 접근하지 않습니다.
+\nOAuth Provider (${oauthProvider}) 측 계정 로그인 페이지로 Redirect 되는 API 입니다.
+\n로그인 시에 callback URL인 \`${path}/callback\` 으로 Redirect 됩니다.
 \n[LOCAL](${LOCAL_URL}${path}) [REMOTE](${REMOTE_URL}${path})`,
 });
 
-export const OAUTH_CALLBACK = (oauthProvier: string) => ({
-  summary: `${oauthProvier} OAuth Callback`,
+export const OAUTH_CALLBACK = (oauthProvider: string) => ({
+  summary: `${oauthProvider} OAuth Callback`,
   description: `## v1.0 2025-09-15
-\nQuery String으로 OAuth Provider (${oauthProvier}) 가 제공한 Authorization Code를 첨부해 주세요.
+\nQuery String으로 OAuth Provider (${oauthProvider}) 가 제공한 Authorization Code를 첨부해 주세요.
 \n* Application 환경에서의 지원을 위한 API 입니다. Web 환경에서는 직접 접근할 필요가 없는 API 입니다.`,
 });
