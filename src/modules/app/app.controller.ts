@@ -10,7 +10,7 @@ import { ApiOperation } from '@nestjs/swagger';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
-import { CommonSuccessCode } from '@common/codes/sucess/common.success.code';
+import { CommonSuccessCode } from '@common/codes/success/common.success.code';
 import { CustomResponse } from '@common/decorators/response/custom-response.decorator';
 import { ResponseCode } from '@common/decorators/response/response-code.decorator';
 
