@@ -6,7 +6,7 @@ import {
   VERSION_NEUTRAL,
   Version,
 } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
@@ -21,6 +21,7 @@ import { Public } from '@modules/auth/decorators/public.decorator';
   path: 'test',
 })
 @Public()
+@ApiTags('TEST_API')
 export class AppTestController {
   @Get('hello')
   @CustomResponse(CommonSuccessCode.COMMON_SUCCESS)
