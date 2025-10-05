@@ -2,17 +2,18 @@ import {
   BadRequestException,
   Controller,
   Get,
-  InternalServerErrorException,
+  Inject,
+  UseGuards,
   VERSION_NEUTRAL,
-  Version,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
 import { CommonSuccessCode } from '@common/codes/success/common.success.code';
+import { RequestContext } from '@common/context/reqeust.context';
 import { CustomResponse } from '@common/decorators/response/custom-response.decorator';
-import { ResponseCode } from '@common/decorators/response/response-code.decorator';
+import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
 
 import { Public } from '@modules/auth/decorators/public.decorator';
 
@@ -21,8 +22,13 @@ import { Public } from '@modules/auth/decorators/public.decorator';
   path: 'test',
 })
 @Public()
-@ApiTags('TEST_API')
-export class AppTestController {
+@ApiTags('Test API')
+export class ErrorTestController {
+  constructor(
+    @Inject(REQUEST_CONTEXT)
+    private requestContext: RequestContext,
+  ) {}
+
   @Get('hello')
   @CustomResponse(CommonSuccessCode.COMMON_SUCCESS)
   @ApiOperation({
@@ -32,6 +38,17 @@ export class AppTestController {
   })
   getHello(): string {
     return 'Hello World!';
+  }
+
+  @Get('request-context')
+  getRequestContext() {
+    const userId = this.requestContext.getUserId();
+    const traceId = this.requestContext.getTraceId();
+
+    return {
+      userId: userId ? userId.toString() : '로그인되지 않은 사용자입니다.',
+      traceId: traceId ? traceId : 'Request ID가 설정되지 않았습니다.',
+    };
   }
 
   @Get('exception/normal')
@@ -61,5 +78,12 @@ export class AppTestController {
   })
   raiseCustomError() {
     throw new CustomException(CommonErrorCode.TEST_CUSTOM_ERROR);
+  }
+
+  @Get('user')
+  getUserInfo() {
+    const userId = this.requestContext.getUserId();
+
+    return userId ? userId.toString() : '로그인되지 않은 사용자입니다.';
   }
 }

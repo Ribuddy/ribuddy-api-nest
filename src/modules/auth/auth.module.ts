@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 
 import { JwtConfig } from '@modules/auth/config/jwt.config';
@@ -18,15 +17,16 @@ import { UsersModule } from '@modules/users/users.module';
   imports: [UsersModule, JwtModule.registerAsync(JwtConfig.asProvider())],
   controllers: [AuthV1Controller, OAuthV1Controller, AuthTestController],
   providers: [
+    // Services
     AuthService,
     KakaoAuthService,
+    // Strategies
     JwtStrategy,
     GoogleOAuthStrategy,
     RegisterJwtStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
+    // Guards
+    JwtAuthGuard,
   ],
+  // exports: [JwtStrategy, JwtAuthGuard],
 })
 export class AuthModule {}
