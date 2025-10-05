@@ -1,9 +1,9 @@
-import { ExecutionContext, Inject, Injectable, Logger } from '@nestjs/common';
+import { ExecutionContext, Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JsonWebTokenError, NotBeforeError, TokenExpiredError } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { WINSTON_MODULE_NEST_PROVIDER, WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Observable } from 'rxjs';
 
 import { CustomException } from '@common/codes/custom.exception';
@@ -11,12 +11,13 @@ import { JwtErrorCode } from '@common/codes/error/jwt.error.code';
 import { inspectObject } from '@common/utils/inspect-object.util';
 
 import { IS_PUBLIC_KEY } from '@modules/auth/decorators/public.decorator';
+import { JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
+export class JwtAuthGuard extends AuthGuard(JWT_STRATEGY) {
   constructor(
     private reflector: Reflector,
-    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
   ) {
     super();
   }

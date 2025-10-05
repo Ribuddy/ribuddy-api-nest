@@ -1,11 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
+import { RequestContext } from '@common/context/reqeust.context';
+import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
+
 import { JwtConfig } from '@modules/auth/config/jwt.config';
 import { AuthService } from '@modules/auth/services/auth.service';
+import { JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
 import { JwtPayload } from '@modules/auth/types/jwt.types';
 
 /**
@@ -14,22 +18,29 @@ import { JwtPayload } from '@modules/auth/types/jwt.types';
  * Passport의 jwt strategy에 활용됩니다.
  */
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+export class JwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY) {
   constructor(
-    @Inject(JwtConfig.KEY)
-    private jwtConfiguration: ConfigType<typeof JwtConfig>,
+    configService: ConfigService,
+    // @Inject(REQUEST_CONTEXT)
+    // private readonly requestContext: RequestContext,
     private authService: AuthService,
   ) {
+    const jwtConfig = configService.getOrThrow<ConfigType<typeof JwtConfig>>('jwt');
+
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: jwtConfiguration.secret,
+      secretOrKey: jwtConfig.secret,
       ignoreExpiration: false,
     });
+
+    console.log('JWT Strategy initialized');
   }
 
   validate(payload: JwtPayload) {
-    const userId = payload.userId;
+    const userId = BigInt(payload.userId);
+    // this.requestContext.setUserId(userId);
+    console.log('Validated user ID:', userId);
 
-    return this.authService.validateJwtUser(BigInt(userId));
+    return this.authService.validateJwtUser(userId);
   }
 }

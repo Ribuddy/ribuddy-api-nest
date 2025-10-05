@@ -5,10 +5,11 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 
 import { GoogleOAuthConfig } from '@modules/auth/config/google-oauth-config';
+import { GOOGLE_OAUTH_STRATEGY } from '@modules/auth/strategies/strategy.constants';
 import { GoogleOAuthUserData, OAuthProvider } from '@modules/users/types/oauth.users.types';
 
 @Injectable()
-export class GoogleOAuthStrategy extends PassportStrategy(Strategy, 'google-oauth') {
+export class GoogleOAuthStrategy extends PassportStrategy(Strategy, GOOGLE_OAUTH_STRATEGY) {
   constructor(
     @Inject(GoogleOAuthConfig.KEY)
     private readonly googleOAuthConfig: ConfigType<typeof GoogleOAuthConfig>,
