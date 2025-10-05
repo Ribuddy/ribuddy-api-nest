@@ -4,14 +4,14 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Public } from '@modules/auth/decorators/public.decorator';
 import { OAUTH_CALLBACK, OAUTH_LOGIN } from '@modules/auth/docs/oauth.docs';
 import { GoogleOAuthGuard } from '@modules/auth/guards/google-oauth.guard';
-import { OAuthUserService } from '@modules/users/services/oauth.users.service';
+import { OAuthAuthService } from '@modules/auth/services/oauth.auth.service';
 
 @Controller({
   version: '1',
   path: 'auth',
 })
 export class OAuthV1Controller {
-  constructor(private readonly oauthUserService: OAuthUserService) {}
+  constructor(private readonly oAuthAuthService: OAuthAuthService) {}
 
   @ApiOperation(OAUTH_LOGIN('Google', '/auth/google/login'))
   @ApiResponse({
@@ -30,6 +30,6 @@ export class OAuthV1Controller {
   async googleCallback(@Request() req: any) {
     // console.log('Google OAuth Callback:', req.user);
 
-    return await this.oauthUserService.googleOAuthLoginOrRegister(req.user);
+    return await this.oAuthAuthService.googleOAuthLoginOrRegister(req.user);
   }
 }

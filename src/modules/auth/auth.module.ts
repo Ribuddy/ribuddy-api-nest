@@ -7,6 +7,7 @@ import { OAuthV1Controller } from '@modules/auth/controllers/v1/oauth.v1.control
 import { AuthTestController } from '@modules/auth/controllers/version-neutral/test.auth.controller';
 import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';
 import { KakaoAuthService } from '@modules/auth/services/kakao-oauth.auth.service';
+import { OAuthAuthService } from '@modules/auth/services/oauth.auth.service';
 import { TokenAuthService } from '@modules/auth/services/token.auth.service';
 import { GoogleOAuthStrategy } from '@modules/auth/strategies/google-oauth.strategy';
 import { JwtStrategy } from '@modules/auth/strategies/jwt.strategy';
@@ -20,6 +21,7 @@ import { UsersModule } from '@modules/users/users.module';
     // Services
     TokenAuthService,
     KakaoAuthService,
+    OAuthAuthService,
     // Strategies
     JwtStrategy,
     GoogleOAuthStrategy,
@@ -27,6 +29,6 @@ import { UsersModule } from '@modules/users/users.module';
     // Guards
     JwtAuthGuard,
   ],
-  exports: [TokenAuthService],
+  exports: [TokenAuthService, OAuthAuthService],
 })
 export class AuthModule {}

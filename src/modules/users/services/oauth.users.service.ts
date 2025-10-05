@@ -1,19 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { Injectable } from '@nestjs/common';
 
-import { FrontendUrlConfig } from '@modules/auth/config/frontend-url.config';
-import { TokenAuthService } from '@modules/auth/services/token.auth.service';
 import { PrismaService } from '@modules/prisma/prisma.service';
 import { GoogleOAuthUserData, OAuthUserInfo } from '@modules/users/types/oauth.users.types';
 
 @Injectable()
 export class OAuthUserService {
-  constructor(
-    private readonly tokenAuthService: TokenAuthService,
-    private readonly prismaService: PrismaService,
-    @Inject(FrontendUrlConfig.KEY)
-    private readonly frontendUrlConfig: ConfigType<typeof FrontendUrlConfig>,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async getUserByOAuth(oauthData: OAuthUserInfo) {
     return this.prismaService.oAuthUser.findUnique({
@@ -24,17 +16,6 @@ export class OAuthUserService {
         },
       },
     });
-  }
-
-  async googleOAuthLoginOrRegister(googleData: GoogleOAuthUserData) {
-    const user = await this.getUserByOAuth(googleData);
-
-    if (!user) {
-      const newUserId = await this.createOAuthUserWithGoogle(googleData);
-      return this.tokenAuthService.generateTokens(newUserId);
-    } else {
-      return this.tokenAuthService.generateTokens(user.userId);
-    }
   }
 
   /**
@@ -67,19 +48,5 @@ export class OAuthUserService {
     });
 
     return newUser.id;
-  }
-
-  getFrontendOAuthCallbackUrl() {
-    let baseUrl: string;
-    if (process.env.NODE_ENV === 'production') {
-      baseUrl = this.frontendUrlConfig.prodUrl;
-    } else if (process.env.NODE_ENV === 'development') {
-      baseUrl = this.frontendUrlConfig.devUrl;
-    } else {
-      baseUrl = this.frontendUrlConfig.localUrl;
-    }
-
-    return baseUrl + '/auth/oauth/callback';
-    //  return 'http://localhost:3000/auth/oauth/callback';
   }
 }
