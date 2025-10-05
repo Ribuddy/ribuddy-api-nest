@@ -7,7 +7,7 @@ import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
 import { RequestContext } from '@common/context/reqeust.context';
 
-import { ALS, AlsInstance } from '@modules/request-context/request-context.module';
+import { ALS, AlsInstance } from '@modules/als/als.module';
 import { UserProfileResponseDto } from '@modules/users/dto/user.dto';
 // 임시 유저 식별 (JWT 붙기 전까지 mock 헤더 사용)
 

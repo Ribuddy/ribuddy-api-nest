@@ -20,4 +20,4 @@ export type AlsInstance = AsyncLocalStorage<RequestContext>;
   ],
   exports: [ALS],
 })
-export class RequestContextModule {}
+export class AlsModule {}

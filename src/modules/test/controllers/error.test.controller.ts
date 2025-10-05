@@ -16,8 +16,8 @@ import { CommonSuccessCode } from '@common/codes/success/common.success.code';
 import { RequestContext } from '@common/context/reqeust.context';
 import { CustomResponse } from '@common/decorators/response/custom-response.decorator';
 
+import { ALS, AlsInstance } from '@modules/als/als.module';
 import { Public } from '@modules/auth/decorators/public.decorator';
-import { ALS, AlsInstance } from '@modules/request-context/request-context.module';
 
 @Controller({
   version: VERSION_NEUTRAL,
@@ -39,7 +39,7 @@ export class ErrorTestController {
     return 'Hello World!';
   }
 
-  @Get('request-context')
+  @Get('als')
   getRequestContext() {
     const requestContext = this.als.getStore();
 

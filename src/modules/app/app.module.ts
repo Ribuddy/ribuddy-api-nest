@@ -13,6 +13,7 @@ import { ResponseInterceptor } from '@common/interceptors/response.interceptor';
 import { LoggerMiddleware } from '@common/middleware/logger.middleware';
 import { RequestContextMiddleware } from '@common/middleware/request-context.middleware';
 
+import { AlsModule } from '@modules/als/als.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { FrontendUrlConfig } from '@modules/auth/config/frontend-url.config';
 import { GoogleOAuthConfig } from '@modules/auth/config/google-oauth-config';
@@ -26,7 +27,6 @@ import { AwsModule } from '@modules/aws/aws.module';
 import { AwsConfig } from '@modules/aws/configs/aws.config';
 import { MapModule } from '@modules/map/map.module';
 import { PrismaModule } from '@modules/prisma/prisma.module';
-import { RequestContextModule } from '@modules/request-context/request-context.module';
 import { TestModule } from '@modules/test/test.module';
 import { TmapConfig } from '@modules/tmap/configs/tmap.config';
 import { TmapModule } from '@modules/tmap/tmap.module';
@@ -58,7 +58,7 @@ const validate = (config: Record<string, unknown>) => {
       validate,
     }),
     WinstonModule.forRoot(winstonLoggerOptions),
-    RequestContextModule,
+    AlsModule,
     // Non-Global
     AuthModule,
     UsersModule,

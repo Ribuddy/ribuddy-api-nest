@@ -3,7 +3,7 @@ import { Inject, Injectable, LoggerService, NestMiddleware } from '@nestjs/commo
 import { NextFunction, Request, Response } from 'express';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
-import { ALS, AlsInstance } from '@modules/request-context/request-context.module';
+import { ALS, AlsInstance } from '@modules/als/als.module';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
