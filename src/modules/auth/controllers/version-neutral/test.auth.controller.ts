@@ -1,5 +1,6 @@
-import { Controller, Get, Query, Req, VERSION_NEUTRAL } from '@nestjs/common';
-import { ApiBearerAuth, ApiCookieAuth, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { Controller, Get, Query, Req, UseGuards, VERSION_NEUTRAL } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { ApiBearerAuth, ApiCookieAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import { Request } from 'express';
 
@@ -12,8 +13,12 @@ import { AuthService } from '@modules/auth/services/auth.service';
   version: VERSION_NEUTRAL,
   path: 'auth/test',
 })
+@ApiTags('Test API')
 export class AuthTestController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @ApiOperation({
     summary: '토큰 검증 API',
@@ -30,6 +35,11 @@ export class AuthTestController {
       name,
       nickname,
     };
+  }
+
+  @Get('refresh-jwt')
+  getRefresh() {
+    return this.configService.getOrThrow('refresh-jwt');
   }
 
   @ApiOperation({

@@ -1,10 +1,6 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-
-import { CustomException } from '@common/codes/custom.exception';
-import { JwtErrorCode } from '@common/codes/error/jwt.error.code';
-import { UserErrorCode } from '@common/codes/error/user.error.code';
 
 import { RefreshJwtConfig } from '@modules/auth/config/refresh-jwt.config';
 import { RegisterJwtConfig } from '@modules/auth/config/register-jwt.config';
@@ -19,6 +15,7 @@ export class AuthService {
     private refreshJwtConfig: ConfigType<typeof RefreshJwtConfig>,
     @Inject(RegisterJwtConfig.KEY)
     private registerJwtConfig: ConfigType<typeof RegisterJwtConfig>,
+    private readonly configService: ConfigService,
     private readonly userService: UsersService,
   ) {}
 
@@ -29,7 +26,7 @@ export class AuthService {
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload),
-      this.jwtService.signAsync(payload, this.refreshJwtConfig),
+      this.jwtService.signAsync(payload, this.configService.getOrThrow('refresh-jwt')),
     ]);
 
     return {
