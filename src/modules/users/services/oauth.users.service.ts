@@ -2,14 +2,14 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 
 import { FrontendUrlConfig } from '@modules/auth/config/frontend-url.config';
-import { AuthService } from '@modules/auth/services/auth.service';
+import { TokenAuthService } from '@modules/auth/services/token.auth.service';
 import { PrismaService } from '@modules/prisma/prisma.service';
 import { GoogleOAuthUserData, OAuthUserInfo } from '@modules/users/types/oauth.users.types';
 
 @Injectable()
 export class OAuthUserService {
   constructor(
-    private readonly authService: AuthService,
+    private readonly tokenAuthService: TokenAuthService,
     private readonly prismaService: PrismaService,
     @Inject(FrontendUrlConfig.KEY)
     private readonly frontendUrlConfig: ConfigType<typeof FrontendUrlConfig>,
@@ -31,9 +31,9 @@ export class OAuthUserService {
 
     if (!user) {
       const newUserId = await this.createOAuthUserWithGoogle(googleData);
-      return this.authService.generateTokens(newUserId);
+      return this.tokenAuthService.generateTokens(newUserId);
     } else {
-      return this.authService.generateTokens(user.userId);
+      return this.tokenAuthService.generateTokens(user.userId);
     }
   }
 
