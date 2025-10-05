@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 
 import { RefreshJwtConfig } from '@modules/auth/config/refresh-jwt.config';
 import { RegisterJwtConfig } from '@modules/auth/config/register-jwt.config';
-import { JwtPayload, RegisterJwtPayload } from '@modules/auth/types/jwt.types';
+import { AccessTokenJwtPayload, RegisterJwtPayload } from '@modules/auth/types/jwt.types';
 import { UsersService } from '@modules/users/services/users.service';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class AuthService {
     private readonly userService: UsersService,
   ) {}
 
-  async generateTokens(userId: bigint): Promise<JwtPayload> {
+  async generateTokens(userId: bigint): Promise<AccessTokenJwtPayload> {
     const payload = {
       userId: userId.toString(),
     };

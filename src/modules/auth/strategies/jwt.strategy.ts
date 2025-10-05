@@ -10,7 +10,7 @@ import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
 import { JwtConfig } from '@modules/auth/config/jwt.config';
 import { AuthService } from '@modules/auth/services/auth.service';
 import { JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
-import { JwtPayload } from '@modules/auth/types/jwt.types';
+import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
 
 /**
  * JWT를 이용한 Guard 입니다.
@@ -36,7 +36,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY) {
     console.log('JWT Strategy initialized');
   }
 
-  validate(payload: JwtPayload) {
+  validate(payload: AccessTokenJwtPayload) {
     const userId = BigInt(payload.userId);
     // this.requestContext.setUserId(userId);
     console.log('Validated user ID:', userId);

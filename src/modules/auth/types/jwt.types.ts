@@ -4,7 +4,7 @@ import {
   OAuthUserInfo,
 } from '@modules/users/types/oauth.users.types';
 
-export interface JwtPayload {
+export interface AccessTokenJwtPayload {
   userId: string;
   accessToken: string;
   refreshToken: string;
