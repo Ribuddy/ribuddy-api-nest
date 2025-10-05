@@ -6,8 +6,9 @@ import { Request } from 'express';
 
 import { ResponseMessage } from '@common/decorators/response/response-message.decorator';
 
+import { REFRESH_JWT_CONFIG } from '@modules/auth/config/refresh-jwt.config';
 import { Public } from '@modules/auth/decorators/public.decorator';
-import { AuthService } from '@modules/auth/services/auth.service';
+import { TokenAuthService } from '@modules/auth/services/token.auth.service';
 
 @Controller({
   version: VERSION_NEUTRAL,
@@ -16,7 +17,7 @@ import { AuthService } from '@modules/auth/services/auth.service';
 @ApiTags('Test API')
 export class AuthTestController {
   constructor(
-    private readonly authService: AuthService,
+    private readonly authService: TokenAuthService,
     private readonly configService: ConfigService,
   ) {}
 
@@ -39,7 +40,7 @@ export class AuthTestController {
 
   @Get('refresh-jwt')
   getRefresh() {
-    return this.configService.getOrThrow('refresh-jwt');
+    return this.configService.getOrThrow(REFRESH_JWT_CONFIG);
   }
 
   @ApiOperation({

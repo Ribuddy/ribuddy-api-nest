@@ -7,8 +7,8 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { RequestContext } from '@common/context/reqeust.context';
 import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
 
-import { JwtConfig } from '@modules/auth/config/jwt.config';
-import { AuthService } from '@modules/auth/services/auth.service';
+import { JWT_CONFIG, JwtConfig } from '@modules/auth/config/jwt.config';
+import { TokenAuthService } from '@modules/auth/services/token.auth.service';
 import { JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
 import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
 
@@ -23,9 +23,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY) {
     configService: ConfigService,
     // @Inject(REQUEST_CONTEXT)
     // private readonly requestContext: RequestContext,
-    private authService: AuthService,
+    private authService: TokenAuthService,
   ) {
-    const jwtConfig = configService.getOrThrow<ConfigType<typeof JwtConfig>>('jwt');
+    const jwtConfig = configService.getOrThrow<ConfigType<typeof JwtConfig>>(JWT_CONFIG);
 
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
