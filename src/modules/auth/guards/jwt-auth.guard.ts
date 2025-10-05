@@ -8,8 +8,6 @@ import { Observable } from 'rxjs';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { JwtErrorCode } from '@common/codes/error/jwt.error.code';
-import { RequestContext } from '@common/context/reqeust.context';
-import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
 import { inspectObject } from '@common/utils/inspect-object.util';
 
 import { IS_PUBLIC_KEY } from '@modules/auth/decorators/public.decorator';
@@ -19,10 +17,8 @@ import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
 @Injectable()
 export class JwtAuthGuard extends AuthGuard(JWT_STRATEGY) {
   constructor(
-    private reflector: Reflector,
+    private readonly reflector: Reflector,
     @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
-    @Inject(REQUEST_CONTEXT)
-    private readonly requestContext: RequestContext,
   ) {
     super();
   }
@@ -82,7 +78,7 @@ export class JwtAuthGuard extends AuthGuard(JWT_STRATEGY) {
     const payload: AccessTokenJwtPayload = user;
 
     // 검증을 통과했다면, RequestContext에 userId를 설정
-    this.requestContext.setUserId(BigInt(payload.userId));
+    // this.requestContext.setUserId(BigInt(payload.userId));
 
     // 모든 검증을 통과하면 user 객체를 반환
     return user;

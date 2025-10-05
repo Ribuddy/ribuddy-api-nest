@@ -59,7 +59,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     // Logging은 한 번에!
     // console.log('logPayload', logPayload);
-    this.logger.log(logPayload);
+    logPayload.stack = exception.stack;
+    this.logger.error(logPayload);
 
     // 응답이 전송되지 않은 경우에만 Response 전송
     if (!response.headersSent) {

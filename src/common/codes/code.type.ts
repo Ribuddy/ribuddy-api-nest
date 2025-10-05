@@ -36,6 +36,7 @@ export interface ExceptionLogPayload {
   filterType: string;
   error: ExceptionDetails;
   request: ExceptionRequestInfo;
+  stack?: string;
 }
 
 export type ExceptionRequestInfo = Pick<Request, 'method' | 'url' | 'ip' | 'headers'>;

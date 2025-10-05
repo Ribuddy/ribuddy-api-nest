@@ -8,14 +8,16 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { AsyncLocalStorage } from 'async_hooks';
+
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
 import { CommonSuccessCode } from '@common/codes/success/common.success.code';
 import { RequestContext } from '@common/context/reqeust.context';
 import { CustomResponse } from '@common/decorators/response/custom-response.decorator';
-import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
 
 import { Public } from '@modules/auth/decorators/public.decorator';
+import { ALS, AlsInstance } from '@modules/request-context/request-context.module';
 
 @Controller({
   version: VERSION_NEUTRAL,
@@ -24,10 +26,7 @@ import { Public } from '@modules/auth/decorators/public.decorator';
 @Public()
 @ApiTags('Test API')
 export class ErrorTestController {
-  constructor(
-    @Inject(REQUEST_CONTEXT)
-    private requestContext: RequestContext,
-  ) {}
+  constructor(@Inject(ALS) private readonly als: AlsInstance) {}
 
   @Get('hello')
   @CustomResponse(CommonSuccessCode.COMMON_SUCCESS)
@@ -42,13 +41,21 @@ export class ErrorTestController {
 
   @Get('request-context')
   getRequestContext() {
-    const userId = this.requestContext.getUserId();
-    const traceId = this.requestContext.getTraceId();
+    const requestContext = this.als.getStore();
 
-    return {
-      userId: userId ? userId.toString() : '로그인되지 않은 사용자입니다.',
-      traceId: traceId ? traceId : 'Request ID가 설정되지 않았습니다.',
-    };
+    if (!requestContext) {
+      throw new CustomException(CommonErrorCode.REQUEST_CONTEXT_ERROR);
+    }
+
+    return requestContext;
+
+    // const userId = requestContext.getUserId();
+    // const traceId = requestContext.getTraceId();
+    //
+    // return {
+    //   userId: userId ? userId.toString() : '로그인되지 않은 사용자입니다.',
+    //   traceId: traceId ? traceId : 'Request ID가 설정되지 않았습니다.',
+    // };
   }
 
   @Get('exception/normal')
@@ -82,7 +89,13 @@ export class ErrorTestController {
 
   @Get('user')
   getUserInfo() {
-    const userId = this.requestContext.getUserId();
+    const requestContext = this.als.getStore();
+
+    if (!requestContext) {
+      throw new CustomException(CommonErrorCode.REQUEST_CONTEXT_ERROR);
+    }
+
+    const userId = requestContext.getUserId();
 
     return userId ? userId.toString() : '로그인되지 않은 사용자입니다.';
   }
