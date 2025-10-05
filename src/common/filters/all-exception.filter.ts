@@ -23,9 +23,11 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
 
     this.logger.error(
-      `[ALL_EXCEPTION] ${typeof exception} ${request.method} ${request.url}`,
+      `[ALL_EXCEPTION -  ${exception && (exception as any).constructor?.name}] ${request.method} ${request.url}`,
       exception, // exception 객체 자체를 넘겨 스택 트레이스 등을 확인
     );
+
+    // console.error(exception);
 
     const { code: errorCode, status, message } = CommonErrorCode.UNKNOWN_ERROR;
 

@@ -2,8 +2,10 @@ import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/com
 import { JsonWebTokenError, TokenExpiredError } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 
+import { REGISTER_JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
+
 @Injectable()
-export class RegisterJwtGuard extends AuthGuard('register-jwt') {
+export class RegisterJwtGuard extends AuthGuard(REGISTER_JWT_STRATEGY) {
   handleRequest(err, user, info: Error, context: ExecutionContext) {
     // 👇 여기서 실패 동작을 커스터마이징합니다.
     if (err || !user) {

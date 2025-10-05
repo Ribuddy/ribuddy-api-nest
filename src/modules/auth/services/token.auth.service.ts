@@ -1,35 +1,32 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { Inject, Injectable } from '@nestjs/common';
+import { ConfigService, ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import { CustomException } from '@common/codes/custom.exception';
-import { JwtErrorCode } from '@common/codes/error/jwt.error.code';
-import { UserErrorCode } from '@common/codes/error/user.error.code';
-
-import { RefreshJwtConfig } from '@modules/auth/config/refresh-jwt.config';
+import { REFRESH_JWT_CONFIG, RefreshJwtConfig } from '@modules/auth/config/refresh-jwt.config';
 import { RegisterJwtConfig } from '@modules/auth/config/register-jwt.config';
-import { JwtPayload, RegisterJwtPayload } from '@modules/auth/types/jwt.types';
+import { AccessTokenJwtPayload, RegisterJwtPayload } from '@modules/auth/types/jwt.types';
 import { UsersService } from '@modules/users/services/users.service';
 
 @Injectable()
-export class AuthService {
+export class TokenAuthService {
   constructor(
     private readonly jwtService: JwtService,
     @Inject(RefreshJwtConfig.KEY)
     private refreshJwtConfig: ConfigType<typeof RefreshJwtConfig>,
     @Inject(RegisterJwtConfig.KEY)
     private registerJwtConfig: ConfigType<typeof RegisterJwtConfig>,
+    private readonly configService: ConfigService,
     private readonly userService: UsersService,
   ) {}
 
-  async generateTokens(userId: bigint): Promise<JwtPayload> {
+  async generateTokens(userId: bigint): Promise<AccessTokenJwtPayload> {
     const payload = {
       userId: userId.toString(),
     };
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload),
-      this.jwtService.signAsync(payload, this.refreshJwtConfig),
+      this.jwtService.signAsync(payload, this.configService.getOrThrow(REFRESH_JWT_CONFIG)),
     ]);
 
     return {
@@ -40,9 +37,7 @@ export class AuthService {
   }
 
   async generateRegisterToken(payload: RegisterJwtPayload) {
-    const registerToken = await this.jwtService.signAsync(payload, this.registerJwtConfig);
-
-    return registerToken;
+    return await this.jwtService.signAsync(payload, this.registerJwtConfig);
   }
 
   /**

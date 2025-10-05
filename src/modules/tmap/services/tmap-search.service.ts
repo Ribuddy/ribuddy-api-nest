@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, InternalServerErrorException, LoggerService } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
 
 import { AxiosError } from 'axios';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
@@ -8,7 +8,7 @@ import { catchError, firstValueFrom } from 'rxjs';
 
 import { inspectObject } from '@common/utils/inspect-object.util';
 
-import { TmapConfig } from '@modules/tmap/configs/tmap.config';
+import { TMAP_CONFIG, TmapConfig } from '@modules/tmap/configs/tmap.config';
 import { PoiSearchRequestDto } from '@modules/tmap/dto/poi-search-request.dto';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class TmapSearchService {
   constructor(
     private readonly httpService: HttpService,
     @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
-    @Inject(TmapConfig.KEY) private readonly tmapConfig: ConfigType<typeof TmapConfig>,
+    private readonly configService: ConfigService,
   ) {}
 
   /**
@@ -29,7 +29,8 @@ export class TmapSearchService {
    * @throws {InternalServerErrorException} API 요청 실패 시 예외를 발생시킵니다.
    */
   async searchPoi(poiSearchRequestDto: PoiSearchRequestDto): Promise<any> {
-    const appKey = this.tmapConfig.appKey;
+    const tmapConfig = this.configService.getOrThrow<ConfigType<typeof TmapConfig>>(TMAP_CONFIG);
+    const appKey = tmapConfig.appKey;
     const url = this.TMAP_API_BASE_URL;
 
     // 요청 헤더 구성

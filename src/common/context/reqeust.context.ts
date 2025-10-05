@@ -8,7 +8,8 @@ import { AsyncLocalStorage } from 'async_hooks';
 export class RequestContext {
   private static readonly als = new AsyncLocalStorage<RequestContext>();
 
-  public readonly traceId: string;
+  private readonly traceId: string;
+  private userId: bigint | null = null;
 
   constructor(traceId: string) {
     this.traceId = traceId;
@@ -26,6 +27,18 @@ export class RequestContext {
 
   public static run(context: RequestContext, fn: () => any): any {
     return this.als.run(context, fn);
+  }
+
+  public getTraceId(): string {
+    return this.traceId;
+  }
+
+  public setUserId(userId: bigint) {
+    this.userId = userId;
+  }
+
+  public getUserId(): bigint | null {
+    return this.userId;
   }
 }
 

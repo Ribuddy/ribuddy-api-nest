@@ -5,6 +5,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { RegisterJwtConfig } from '@modules/auth/config/register-jwt.config';
+import { REGISTER_JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
 import { RegisterJwtPayload } from '@modules/auth/types/jwt.types';
 
 /**
@@ -13,7 +14,7 @@ import { RegisterJwtPayload } from '@modules/auth/types/jwt.types';
  * Passport의 jwt strategy에 활용됩니다.
  */
 @Injectable()
-export class RegisterJwtStrategy extends PassportStrategy(Strategy, 'register-jwt') {
+export class RegisterJwtStrategy extends PassportStrategy(Strategy, REGISTER_JWT_STRATEGY) {
   constructor(
     @Inject(RegisterJwtConfig.KEY)
     private registerJwtConfiguration: ConfigType<typeof RegisterJwtConfig>,

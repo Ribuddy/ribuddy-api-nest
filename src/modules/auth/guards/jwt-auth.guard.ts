@@ -1,22 +1,28 @@
-import { ExecutionContext, Inject, Injectable, Logger } from '@nestjs/common';
+import { ExecutionContext, Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JsonWebTokenError, NotBeforeError, TokenExpiredError } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { WINSTON_MODULE_NEST_PROVIDER, WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Observable } from 'rxjs';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { JwtErrorCode } from '@common/codes/error/jwt.error.code';
+import { RequestContext } from '@common/context/reqeust.context';
+import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
 import { inspectObject } from '@common/utils/inspect-object.util';
 
 import { IS_PUBLIC_KEY } from '@modules/auth/decorators/public.decorator';
+import { JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
+import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
+export class JwtAuthGuard extends AuthGuard(JWT_STRATEGY) {
   constructor(
     private reflector: Reflector,
-    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
+    @Inject(REQUEST_CONTEXT)
+    private readonly requestContext: RequestContext,
   ) {
     super();
   }
@@ -32,11 +38,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context);
   }
 
-  handleRequest(err, user, info: unknown, context: ExecutionContext) {
+  handleRequest(err, user: any, info: unknown, context: ExecutionContext) {
     // info: 토큰 자체에 대한 정보(예: 만료, 형식 오류)
     // err: Strategy의 validate 메소드에서 발생시킨 에러
     // user: validate 메소드가 성공적으로 유저 객체를 반환했을 때의 값
-    console.log(err, user, info);
+    // console.log(err, user, info);
 
     // 토큰이 없는 경우나 기타 Error 발생 시 NO_TOKEN 에러 반환
     if (info instanceof Error) {
@@ -72,6 +78,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       this.logger.error('FATAL ERROR: JWT SECRET LEAK');
       throw new CustomException(JwtErrorCode.SECRET_LEAK);
     }
+
+    const payload: AccessTokenJwtPayload = user;
+
+    // 검증을 통과했다면, RequestContext에 userId를 설정
+    this.requestContext.setUserId(BigInt(payload.userId));
 
     // 모든 검증을 통과하면 user 객체를 반환
     return user;

@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { PassportModule } from '@nestjs/passport';
 
 import cookieParser from 'cookie-parser';
 import { WinstonModule } from 'nest-winston';
@@ -19,16 +20,17 @@ import { JwtConfig } from '@modules/auth/config/jwt.config';
 import { KakaoOAuthConfig } from '@modules/auth/config/kakao-oauth-config';
 import { RefreshJwtConfig } from '@modules/auth/config/refresh-jwt.config';
 import { RegisterJwtConfig } from '@modules/auth/config/register-jwt.config';
+import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';
 import { configValidationSchema } from '@modules/auth/schemas/validation.schema';
 import { AwsModule } from '@modules/aws/aws.module';
 import { AwsConfig } from '@modules/aws/configs/aws.config';
 import { MapModule } from '@modules/map/map.module';
 import { PrismaModule } from '@modules/prisma/prisma.module';
+import { RequestContextModule } from '@modules/request-context/request-context.module';
+import { TestModule } from '@modules/test/test.module';
 import { TmapConfig } from '@modules/tmap/configs/tmap.config';
 import { TmapModule } from '@modules/tmap/tmap.module';
 import { UsersModule } from '@modules/users/users.module';
-
-import { AppTestController } from './app.controller';
 
 const validate = (config: Record<string, unknown>) => {
   const parsedConfig = configValidationSchema.parse(config);
@@ -38,6 +40,8 @@ const validate = (config: Record<string, unknown>) => {
 
 @Module({
   imports: [
+    PassportModule,
+    // Global
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env.local', `.env.${process.env.NODE_ENV}`, '.env'],
@@ -54,19 +58,27 @@ const validate = (config: Record<string, unknown>) => {
       validate,
     }),
     WinstonModule.forRoot(winstonLoggerOptions),
+    RequestContextModule,
+    // Non-Global
+    AuthModule,
     UsersModule,
     PrismaModule,
-    AuthModule,
     AwsModule,
     TmapModule,
     MapModule,
+    TestModule,
   ],
-  controllers: [AppTestController],
+  controllers: [],
   providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
     {
       provide: APP_INTERCEPTOR,
       useClass: ResponseInterceptor,
     },
+    // ===== FILTER =====
     // FILTER 간에는, 순서가 중요합니다.
     // 더 구체적인 ExceptionFilter가 뒤에 와야 합니다.
     // -> FILTER는 provider에 등록된거 기준으로 뒤에서부터 적용되기 때문!
@@ -79,6 +91,7 @@ const validate = (config: Record<string, unknown>) => {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
+    // ===== PIPE =====
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({
