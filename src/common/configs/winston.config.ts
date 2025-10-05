@@ -9,7 +9,7 @@ const formatMessage = winston.format((info) => {
   const requestContext = RequestContext.current;
 
   if (requestContext) {
-    info.traceId = requestContext.traceId;
+    info.traceId = requestContext.getTraceId();
   }
 
   // console.log(info);

@@ -5,13 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { RequestContext } from '@common/context/reqeust.context';
 
+export const REQUEST_CONTEXT = Symbol('REQUEST_CONTEXT');
+
 @Injectable()
 export class RequestContextMiddleware implements NestMiddleware {
   constructor() {}
 
   use(req: Request, res: Response, next: NextFunction) {
     // Header에 설정된 Request Id가 있으면 그걸 따르고, 없다면 생성
-    const traceId = (req.headers['x-trace-id'] as string) || uuidv4();
+    const traceId = (req.headers['x-trace-id'] as string) ?? uuidv4();
 
     res.setHeader('X-Trace-Id', traceId);
 
