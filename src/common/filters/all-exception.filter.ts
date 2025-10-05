@@ -27,7 +27,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       exception, // exception 객체 자체를 넘겨 스택 트레이스 등을 확인
     );
 
-    console.error(exception);
+    // console.error(exception);
 
     const { code: errorCode, status, message } = CommonErrorCode.UNKNOWN_ERROR;
 

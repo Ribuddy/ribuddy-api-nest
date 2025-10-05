@@ -60,7 +60,6 @@ const validate = (config: Record<string, unknown>) => {
     WinstonModule.forRoot(winstonLoggerOptions),
     RequestContextModule,
     // Non-Global
-    // forwardRef(() => AuthModule),
     AuthModule,
     UsersModule,
     PrismaModule,

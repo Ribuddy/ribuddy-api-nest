@@ -1,11 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService, ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 
 import { ExtractJwt, Strategy } from 'passport-jwt';
-
-import { RequestContext } from '@common/context/reqeust.context';
-import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
 
 import { JWT_CONFIG, JwtConfig } from '@modules/auth/config/jwt.config';
 import { TokenAuthService } from '@modules/auth/services/token.auth.service';
@@ -20,9 +17,9 @@ import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY) {
   constructor(
+    // Note: 여기에 RequestContext를 주입했었으나, 순환의존성 및 알 수 없는 버그 발생으로 제거하였습니다.
+    // 향후 작업 시 주의하세요.
     configService: ConfigService,
-    // @Inject(REQUEST_CONTEXT)
-    // private readonly requestContext: RequestContext,
     private authService: TokenAuthService,
   ) {
     const jwtConfig = configService.getOrThrow<ConfigType<typeof JwtConfig>>(JWT_CONFIG);
@@ -32,13 +29,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY) {
       secretOrKey: jwtConfig.secret,
       ignoreExpiration: false,
     });
-
-    console.log('JWT Strategy initialized');
   }
 
   validate(payload: AccessTokenJwtPayload) {
     const userId = BigInt(payload.userId);
-    // this.requestContext.setUserId(userId);
     console.log('Validated user ID:', userId);
 
     return this.authService.validateJwtUser(userId);

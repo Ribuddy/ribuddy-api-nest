@@ -14,6 +14,7 @@ import { inspectObject } from '@common/utils/inspect-object.util';
 
 import { IS_PUBLIC_KEY } from '@modules/auth/decorators/public.decorator';
 import { JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
+import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard(JWT_STRATEGY) {
@@ -37,11 +38,11 @@ export class JwtAuthGuard extends AuthGuard(JWT_STRATEGY) {
     return super.canActivate(context);
   }
 
-  handleRequest(err, user, info: unknown, context: ExecutionContext) {
+  handleRequest(err, user: any, info: unknown, context: ExecutionContext) {
     // info: 토큰 자체에 대한 정보(예: 만료, 형식 오류)
     // err: Strategy의 validate 메소드에서 발생시킨 에러
     // user: validate 메소드가 성공적으로 유저 객체를 반환했을 때의 값
-    console.log(err, user, info);
+    // console.log(err, user, info);
 
     // 토큰이 없는 경우나 기타 Error 발생 시 NO_TOKEN 에러 반환
     if (info instanceof Error) {
@@ -78,7 +79,10 @@ export class JwtAuthGuard extends AuthGuard(JWT_STRATEGY) {
       throw new CustomException(JwtErrorCode.SECRET_LEAK);
     }
 
-    this.requestContext.setUserId(user);
+    const payload: AccessTokenJwtPayload = user;
+
+    // 검증을 통과했다면, RequestContext에 userId를 설정
+    this.requestContext.setUserId(BigInt(payload.userId));
 
     // 모든 검증을 통과하면 user 객체를 반환
     return user;
