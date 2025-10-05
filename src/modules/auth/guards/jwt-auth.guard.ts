@@ -1,9 +1,9 @@
-import { ExecutionContext, Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
+import { ExecutionContext, Inject, Injectable, LoggerService } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JsonWebTokenError, NotBeforeError, TokenExpiredError } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 
-import { WINSTON_MODULE_NEST_PROVIDER, WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Observable } from 'rxjs';
 
 import { CustomException } from '@common/codes/custom.exception';
