@@ -23,4 +23,10 @@ export class UsersService {
 
     return { ...user, id: user.id.toString() };
   }
+
+  async deleteUser(userId: bigint) {
+    return this.prisma.user.delete({
+      where: { id: userId },
+    });
+  }
 }
