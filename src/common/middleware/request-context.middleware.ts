@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { RequestContext } from '@common/context/reqeust.context';
 
-import { ALS, AlsInstance } from '@modules/als/als.module';
+import { ALS, AlsInstance } from '@modules/als/constants/als.constants';
 
 @Injectable()
 export class RequestContextMiddleware implements NestMiddleware {
