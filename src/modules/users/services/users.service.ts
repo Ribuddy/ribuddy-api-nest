@@ -4,6 +4,7 @@ import { CustomException } from '@common/codes/custom.exception';
 import { UserErrorCode } from '@common/codes/error/user.error.code';
 
 import { PrismaService } from '@modules/prisma/prisma.service';
+import { EditUserProfileRequestDto } from '@modules/users/dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -25,8 +26,23 @@ export class UsersService {
   }
 
   async deleteUser(userId: bigint) {
-    return this.prisma.user.delete({
+    const deletedUser = await this.prisma.user.delete({
       where: { id: userId },
     });
+
+    return { ...deletedUser, id: deletedUser.id.toString() };
+  }
+
+  async editUser(userId: bigint, partialUser: EditUserProfileRequestDto) {
+    const updatedUser = await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        name: partialUser.name,
+        nickname: partialUser.nickname,
+        profileImage: partialUser.profileImage,
+      },
+    });
+
+    return { ...updatedUser, id: updatedUser.id.toString() };
   }
 }
