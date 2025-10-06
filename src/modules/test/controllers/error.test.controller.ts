@@ -8,15 +8,13 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { AsyncLocalStorage } from 'async_hooks';
-
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
 import { CommonSuccessCode } from '@common/codes/success/common.success.code';
-import { RequestContext } from '@common/context/reqeust.context';
 import { CustomResponse } from '@common/decorators/response/custom-response.decorator';
 
-import { ALS, AlsInstance } from '@modules/als/als.module';
+import { ALS, AlsInstance } from '@modules/als/constants/als.constants';
+import { RequestContextService } from '@modules/als/services/request-context.service';
 import { Public } from '@modules/auth/decorators/public.decorator';
 
 @Controller({
@@ -26,7 +24,10 @@ import { Public } from '@modules/auth/decorators/public.decorator';
 @Public()
 @ApiTags('Test API')
 export class ErrorTestController {
-  constructor(@Inject(ALS) private readonly als: AlsInstance) {}
+  constructor(
+    @Inject(ALS) private readonly als: AlsInstance,
+    private readonly requestContextService: RequestContextService,
+  ) {}
 
   @Get('hello')
   @CustomResponse(CommonSuccessCode.COMMON_SUCCESS)
@@ -41,13 +42,7 @@ export class ErrorTestController {
 
   @Get('als')
   getRequestContext() {
-    const requestContext = this.als.getStore();
-
-    if (!requestContext) {
-      throw new CustomException(CommonErrorCode.REQUEST_CONTEXT_ERROR);
-    }
-
-    return requestContext;
+    return this.requestContextService.getContext();
 
     // const userId = requestContext.getUserId();
     // const traceId = requestContext.getTraceId();
@@ -85,18 +80,5 @@ export class ErrorTestController {
   })
   raiseCustomError() {
     throw new CustomException(CommonErrorCode.TEST_CUSTOM_ERROR);
-  }
-
-  @Get('user')
-  getUserInfo() {
-    const requestContext = this.als.getStore();
-
-    if (!requestContext) {
-      throw new CustomException(CommonErrorCode.REQUEST_CONTEXT_ERROR);
-    }
-
-    const userId = requestContext.getUserId();
-
-    return userId ? userId.toString() : '로그인되지 않은 사용자입니다.';
   }
 }

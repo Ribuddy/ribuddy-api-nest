@@ -4,12 +4,14 @@ import { NextFunction, Request, Response } from 'express';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 import { ALS, AlsInstance } from '@modules/als/constants/als.constants';
+import { RequestContextService } from '@modules/als/services/request-context.service';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   constructor(
     @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
     @Inject(ALS) private readonly als: AlsInstance,
+    private readonly requestContextService: RequestContextService,
   ) {}
 
   use(req: Request, res: Response, next: NextFunction) {
@@ -24,8 +26,8 @@ export class LoggerMiddleware implements NestMiddleware {
       const duration = Date.now() - startTime;
 
       const requestContext = this.als.getStore();
-      const userId = requestContext?.getUserId()?.toString() ?? 'Anonymous';
-      const traceId = requestContext?.getTraceId() ?? 'no-trace-id';
+      const userId = this.requestContextService.getUserId()?.toString() ?? 'Anonymous';
+      const traceId = this.requestContextService.getTraceId() ?? 'no-trace-id';
       const formattedTraceId = traceId.slice(0, 4);
 
       // ✅ 구조화된 로그 객체 생성
