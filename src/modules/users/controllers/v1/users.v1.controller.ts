@@ -1,11 +1,15 @@
-import { Body, Controller, Delete, Get, Inject, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
 
 import { RequestContextService } from '@modules/als/services/request-context.service';
-import { EditUserProfileRequestDto, UserProfileResponseDto } from '@modules/users/dto/user.dto';
+import {
+  EditUserProfileRequestDto,
+  UserIdRequestDto,
+  UserProfileResponseDto,
+} from '@modules/users/dto/user.dto';
 // 임시 유저 식별 (JWT 붙기 전까지 mock 헤더 사용)
 
 import { UsersService } from '@modules/users/services/users.service';
@@ -18,17 +22,28 @@ export class UsersV1Controller {
     private readonly requestContextService: RequestContextService,
   ) {}
 
-  @ApiOperation({ summary: '[WIP] 내 정보 조회' })
+  @ApiOperation({ summary: '내 정보 조회' })
+  @ApiOkResponse({
+    description: 'AccessToken을 기반으로, 로그인된 사용자의 정보룰 조회합니다.',
+    type: UserProfileResponseDto,
+  })
+  @ApiBearerAuth()
+  @Get('me')
+  getMyProfile() {
+    const userId = this.requestContextService.getOrThrowUserId();
+
+    return this.usersService.getUserInfo(userId);
+  }
+
+  @ApiOperation({ summary: '다른 사용자 정보 조회' })
   @ApiOkResponse({
     description: '내 정보 조회 성공',
     type: UserProfileResponseDto,
   })
   @ApiBearerAuth()
-  @Get('me')
-  getUserInfo() {
-    const userId = this.requestContextService.getOrThrowUserId();
-
-    return this.usersService.getUserInfo(userId);
+  @Get(':id')
+  getUserInfo(@Param() param: UserIdRequestDto) {
+    return this.usersService.getUserInfo(param.id);
   }
 
   @ApiOperation({
