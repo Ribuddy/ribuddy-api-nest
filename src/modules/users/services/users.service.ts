@@ -34,13 +34,14 @@ export class UsersService {
   }
 
   async editUser(userId: bigint, partialUser: EditUserProfileRequestDto) {
+    // remove undefined fields (cus of partial in DTO)
+    const filteredData = Object.fromEntries(
+      Object.entries(partialUser).filter(([_, v]) => v !== undefined),
+    );
+
     const updatedUser = await this.prisma.user.update({
       where: { id: userId },
-      data: {
-        name: partialUser.name,
-        nickname: partialUser.nickname,
-        profileImage: partialUser.profileImage,
-      },
+      data: filteredData,
     });
 
     return { ...updatedUser, id: updatedUser.id.toString() };
