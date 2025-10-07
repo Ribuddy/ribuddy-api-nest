@@ -25,6 +25,7 @@ import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';
 import { configValidationSchema } from '@modules/auth/schemas/validation.schema';
 import { AwsModule } from '@modules/aws/aws.module';
 import { AwsConfig } from '@modules/aws/configs/aws.config';
+import { DrivingModule } from '@modules/driving/driving.module';
 import { MapModule } from '@modules/map/map.module';
 import { PrismaModule } from '@modules/prisma/prisma.module';
 import { TestModule } from '@modules/test/test.module';
@@ -67,6 +68,7 @@ const validate = (config: Record<string, unknown>) => {
     TmapModule,
     MapModule,
     TestModule,
+    DrivingModule,
   ],
   controllers: [],
   providers: [
