@@ -1,5 +1,4 @@
-import { PickType } from '@nestjs/mapped-types';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType, PickType } from '@nestjs/swagger';
 
 import { Transform, Type } from 'class-transformer';
 import { IsDate, IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
@@ -68,3 +67,12 @@ export class UserProfileResponseDto extends PickType(User, [
   'nickname',
   'profileImage',
 ] as const) {}
+
+/**
+ * 사용자 정보 수정 DTO
+ *
+ * - name, nickname, profileImage 필드만 수정 가능
+ */
+export class EditUserProfileRequestDto extends PartialType(
+  PickType(User, ['name', 'nickname', 'profileImage'] as const),
+) {}

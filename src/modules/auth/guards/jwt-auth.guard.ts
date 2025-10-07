@@ -1,17 +1,16 @@
-import { ExecutionContext, Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
+import { ExecutionContext, Inject, Injectable, LoggerService } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JsonWebTokenError, NotBeforeError, TokenExpiredError } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 
-import { WINSTON_MODULE_NEST_PROVIDER, WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Observable } from 'rxjs';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { JwtErrorCode } from '@common/codes/error/jwt.error.code';
-import { RequestContext } from '@common/context/reqeust.context';
-import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
 import { inspectObject } from '@common/utils/inspect-object.util';
 
+import { RequestContextService } from '@modules/als/services/request-context.service';
 import { IS_PUBLIC_KEY } from '@modules/auth/decorators/public.decorator';
 import { JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
 import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
@@ -19,10 +18,9 @@ import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
 @Injectable()
 export class JwtAuthGuard extends AuthGuard(JWT_STRATEGY) {
   constructor(
-    private reflector: Reflector,
+    private readonly reflector: Reflector,
     @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
-    @Inject(REQUEST_CONTEXT)
-    private readonly requestContext: RequestContext,
+    private readonly requestContextService: RequestContextService,
   ) {
     super();
   }
@@ -82,7 +80,7 @@ export class JwtAuthGuard extends AuthGuard(JWT_STRATEGY) {
     const payload: AccessTokenJwtPayload = user;
 
     // 검증을 통과했다면, RequestContext에 userId를 설정
-    this.requestContext.setUserId(BigInt(payload.userId));
+    this.requestContextService.setUserId(BigInt(payload.userId));
 
     // 모든 검증을 통과하면 user 객체를 반환
     return user;

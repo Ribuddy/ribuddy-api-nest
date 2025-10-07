@@ -11,10 +11,10 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
 import { CommonSuccessCode } from '@common/codes/success/common.success.code';
-import { RequestContext } from '@common/context/reqeust.context';
 import { CustomResponse } from '@common/decorators/response/custom-response.decorator';
-import { REQUEST_CONTEXT } from '@common/middleware/request-context.middleware';
 
+import { ALS, AlsInstance } from '@modules/als/constants/als.constants';
+import { RequestContextService } from '@modules/als/services/request-context.service';
 import { Public } from '@modules/auth/decorators/public.decorator';
 
 @Controller({
@@ -25,8 +25,8 @@ import { Public } from '@modules/auth/decorators/public.decorator';
 @ApiTags('Test API')
 export class ErrorTestController {
   constructor(
-    @Inject(REQUEST_CONTEXT)
-    private requestContext: RequestContext,
+    @Inject(ALS) private readonly als: AlsInstance,
+    private readonly requestContextService: RequestContextService,
   ) {}
 
   @Get('hello')
@@ -40,15 +40,17 @@ export class ErrorTestController {
     return 'Hello World!';
   }
 
-  @Get('request-context')
+  @Get('als')
   getRequestContext() {
-    const userId = this.requestContext.getUserId();
-    const traceId = this.requestContext.getTraceId();
+    return this.requestContextService.getContext();
 
-    return {
-      userId: userId ? userId.toString() : '로그인되지 않은 사용자입니다.',
-      traceId: traceId ? traceId : 'Request ID가 설정되지 않았습니다.',
-    };
+    // const userId = requestContext.getUserId();
+    // const traceId = requestContext.getTraceId();
+    //
+    // return {
+    //   userId: userId ? userId.toString() : '로그인되지 않은 사용자입니다.',
+    //   traceId: traceId ? traceId : 'Request ID가 설정되지 않았습니다.',
+    // };
   }
 
   @Get('exception/normal')
@@ -78,12 +80,5 @@ export class ErrorTestController {
   })
   raiseCustomError() {
     throw new CustomException(CommonErrorCode.TEST_CUSTOM_ERROR);
-  }
-
-  @Get('user')
-  getUserInfo() {
-    const userId = this.requestContext.getUserId();
-
-    return userId ? userId.toString() : '로그인되지 않은 사용자입니다.';
   }
 }

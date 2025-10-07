@@ -1,11 +1,4 @@
-import {
-  ArgumentsHost,
-  Catch,
-  ExceptionFilter,
-  HttpStatus,
-  Inject,
-  LoggerService,
-} from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, Inject, LoggerService } from '@nestjs/common';
 
 import { Request, Response } from 'express';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
@@ -24,10 +17,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     this.logger.error(
       `[ALL_EXCEPTION -  ${exception && (exception as any).constructor?.name}] ${request.method} ${request.url}`,
-      exception, // exception 객체 자체를 넘겨 스택 트레이스 등을 확인
+      exception instanceof Error ? exception.stack : 'NOT_INSTANCE_OF_ERROR',
     );
 
-    // console.error(exception);
+    // if (process.env.NODE_ENV === 'development') console.error(exception);
 
     const { code: errorCode, status, message } = CommonErrorCode.UNKNOWN_ERROR;
 
