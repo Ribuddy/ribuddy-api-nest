@@ -1,11 +1,18 @@
 #!/bin/bash
 
+DOCKER_USER_NAME="ribuddy"
+DOCKER_IMAGE_NAME="ribuddy-api"
+
+DOCKERFILE_PATH="scripts/docker/dockerfile"
+
+SCRIPT_ENV_PATH="scripts/ec2-dev/manual/.env"
+
 echo "=============================="
 echo "🔐 환경변수 설정 시작"
 echo "=============================="
 if [ -f .env ]; then
   # shellcheck disable=SC2046
-  export $(grep -v '^#' scripts/ec2-dev/manual/.env | xargs)
+  export $(grep -v '^#' $SCRIPT_ENV_PATH | xargs)
   echo "✅ .env 파일에서 환경변수 불러오기 완료"
 else
   echo "⚠️ .env 파일을 찾을 수 없습니다. 환경변수 설정을 건너뜁니다."
@@ -37,8 +44,8 @@ echo "🔨 멀티 아키텍처 Docker 이미지 빌드 및 푸시 시작"
 
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
-  -t ribuddy/ribuddy-api:latest \
-  -f scripts/docker/dockerfile . \
+  -t "$DOCKER_USER_NAME/$DOCKER_IMAGE_NAME:latest" \
+  -f "$DOCKERFILE_PATH" . \
   --push
 
 echo "✅ Docker 이미지 빌드 및 푸시 완료"
