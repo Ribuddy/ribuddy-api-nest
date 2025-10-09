@@ -30,8 +30,8 @@
       "@config/*": ["config/*"],
       "@common/*": ["common/*"],
       "@utils/*": ["utils/*"],
-      "@peekle/prisma/client": ["generated/prisma"],
-      "@peekle/prisma/client/*": ["generated/prisma/*"],
+      "@generated/prisma/client": ["generated/prisma"],
+      "@generated/prisma/client/*": ["generated/prisma/*"],
       "@modules/*": ["modules/*"],
       "@/*": ["*"]
     }
