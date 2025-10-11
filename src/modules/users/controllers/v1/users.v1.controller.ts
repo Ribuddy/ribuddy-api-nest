@@ -48,7 +48,7 @@ export class UsersV1Controller {
     description: '내 정보 조회 성공',
     type: UserProfileResponseDto,
   })
-  @Get(':id')
+  @Get('profile/:id')
   getUserInfo(@Param() param: UserIdRequestDto) {
     return this.usersService.getUserInfo(param.id);
   }
@@ -120,13 +120,28 @@ export class UsersV1Controller {
     return;
   }
 
+  @ApiOperation({
+    summary: '친구 목록 조회',
+    description: '내가 추가한 친구들의 목록을 조회합니다.',
+  })
+  @Get('friend/list')
+  async getFriendList() {
+    const userId = this.requestContextService.getOrThrowUserId();
+
+    console.log('userId', userId);
+
+    return this.usersService.getFriendList(userId);
+  }
+
+  // ================= 테스트용 API =================
+
   @ApiTags(API_TAGS.TEST)
   @ApiOperation({
     summary: '[테스트용] userId로 직접 친구 추가',
     description:
       '라이버디 ID로 친구 추가 하는 대신, 직접 userId로 친구 추가를 할 수 있습니다. (즐겨찾기 여부는 무시되지만, 요청에 포함하셔야 합니다.)',
   })
-  @Post('friend/:ribuddyId')
+  @Post('friend/manual')
   async addFriendByUserId(@Body() data: FriendDto) {
     await this.usersService.addFriend(data.fromUserId, data.toUserId);
 

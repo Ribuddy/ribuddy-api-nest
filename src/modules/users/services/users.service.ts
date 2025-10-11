@@ -128,4 +128,21 @@ export class UsersService {
 
     return user.id;
   }
+
+  async getFriendList(userId: bigint) {
+    const friends = await this.prisma.friend.findMany({
+      where: { fromUserId: userId },
+      include: {
+        toUser: true,
+      },
+    });
+
+    return friends.map((friend) => ({
+      id: friend.toUser.id.toString(),
+      name: friend.toUser.name,
+      nickname: friend.toUser.nickname,
+      ribuddyId: friend.toUser.ribuddyId,
+      isFavorite: friend.isFavorite,
+    }));
+  }
 }
