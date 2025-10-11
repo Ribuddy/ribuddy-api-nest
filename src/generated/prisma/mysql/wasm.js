@@ -130,10 +130,9 @@ exports.Prisma.UserScalarFieldEnum = {
 };
 
 exports.Prisma.FriendScalarFieldEnum = {
-  user1: 'user1',
-  user2: 'user2',
-  user1Favorite: 'user1Favorite',
-  user2Favorite: 'user2Favorite',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  isFavorite: 'isFavorite',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

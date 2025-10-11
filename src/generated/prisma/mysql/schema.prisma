@@ -25,19 +25,24 @@ model User {
 
   OAuthUser OAuthUser[]
 
+  sentFriendRequests     Friend[] @relation("FriendRequestSender")
+  receivedFriendRequests Friend[] @relation("FriendRequestReceiver")
+
   @@map("user")
 }
 
 model Friend {
-  user1         BigInt
-  user2         BigInt
-  user1Favorite Boolean @map("user1_favorite")
-  user2Favorite Boolean @map("user2_favorite")
+  fromUserId BigInt
+  toUserId   BigInt
+  isFavorite Boolean @map("is_favorite")
+
+  fromUser User @relation("FriendRequestSender", fields: [fromUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  toUser   User @relation("FriendRequestReceiver", fields: [toUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
 
-  @@id([user1, user2])
+  @@id([fromUserId, toUserId])
 }
 
 model OAuthUser {
