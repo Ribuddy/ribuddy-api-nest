@@ -1,5 +1,7 @@
 import { Controller, Get, Post, VERSION_NEUTRAL } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+import { API_TAGS } from '@common/constants/api-tags.constants';
 
 import { Public } from '@modules/auth/decorators/public.decorator';
 import { MongoDBPrismaService } from '@modules/prisma/services/mongodb.prisma.service';
@@ -10,7 +12,8 @@ import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.servic
   path: 'test/db',
 })
 @Public()
-@ApiTags('Test API')
+@ApiTags(API_TAGS.TEST)
+@ApiBearerAuth()
 export class DBTestController {
   constructor(
     private readonly mysql: MySQLPrismaService,

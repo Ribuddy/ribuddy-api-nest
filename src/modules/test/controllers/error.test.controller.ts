@@ -6,11 +6,12 @@ import {
   UseGuards,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
 import { CommonSuccessCode } from '@common/codes/success/common.success.code';
+import { API_TAGS } from '@common/constants/api-tags.constants';
 import { CustomResponse } from '@common/decorators/response/custom-response.decorator';
 
 import { ALS, AlsInstance } from '@modules/als/constants/als.constants';
@@ -22,7 +23,8 @@ import { Public } from '@modules/auth/decorators/public.decorator';
   path: 'test/error',
 })
 @Public()
-@ApiTags('Test API')
+@ApiTags(API_TAGS.TEST)
+@ApiBearerAuth()
 export class ErrorTestController {
   constructor(
     @Inject(ALS) private readonly als: AlsInstance,

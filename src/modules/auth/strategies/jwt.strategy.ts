@@ -33,7 +33,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY) {
 
   validate(payload: AccessTokenJwtPayload) {
     const userId = BigInt(payload.userId);
-    console.log('Validated user ID:', userId);
+    // console.log('Validated user ID:', userId);
 
     return this.authService.validateJwtUser(userId);
   }

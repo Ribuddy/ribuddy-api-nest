@@ -4,6 +4,7 @@ import { ApiBearerAuth, ApiCookieAuth, ApiOperation, ApiQuery, ApiTags } from '@
 
 import { Request } from 'express';
 
+import { API_TAGS } from '@common/constants/api-tags.constants';
 import { ResponseMessage } from '@common/decorators/response/response-message.decorator';
 
 import { REFRESH_JWT_CONFIG } from '@modules/auth/config/refresh-jwt.config';
@@ -14,7 +15,8 @@ import { TokenAuthService } from '@modules/auth/services/token.auth.service';
   version: VERSION_NEUTRAL,
   path: 'auth/test',
 })
-@ApiTags('Test API')
+@ApiTags(API_TAGS.TEST)
+@ApiBearerAuth()
 export class AuthTestController {
   constructor(
     private readonly authService: TokenAuthService,
@@ -25,7 +27,6 @@ export class AuthTestController {
     summary: '토큰 검증 API',
     description: 'GET 요청을 보냈을 때 JwtGuard를 통과했는지 확인합니다.',
   })
-  @ApiBearerAuth()
   @Get('protected')
   @ResponseMessage('JWT Guard를 Pass 했습니다.')
   async tokenCheck(@Req() req) {
@@ -60,7 +61,6 @@ export class AuthTestController {
   }
 
   @Get('cookie')
-  @ApiBearerAuth()
   @Public()
   checkCookie(@Req() req: Request) {
     return req.cookies;

@@ -1,7 +1,10 @@
 import { Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('라이딩 팀')
+import { API_TAGS } from '@common/constants/api-tags.constants';
+
+@ApiTags(API_TAGS.DRIVING_TEAM)
+@ApiBearerAuth()
 @Controller({
   path: 'driving/team',
   version: '1',

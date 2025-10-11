@@ -13,7 +13,8 @@ export class User {
   @IsBigInt()
   @ApiProperty({
     description: '사용자 ID',
-    type: String,
+    type: 'string',
+    format: 'bigint',
     example: '1',
   })
   id!: bigint;
@@ -35,7 +36,23 @@ export class User {
   @IsString()
   @IsOptional()
   @ApiProperty({
-    description: '사용자 프로필 이미지',
+    description: '사용자 한 줄 소개',
+    example: '나는 말하는 감자입니다.',
+  })
+  oneLineIntroduction?: string; // 한 줄 소개
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: '라이버디 ID, 친구 추가 시 사용됩니다.',
+    example: 'ribuddy_official',
+  })
+  ribuddyId!: string; // 한 줄 소개
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({
+    description: '사용자 프로필 이미지 링크',
   })
   profileImage?: string;
 
@@ -65,14 +82,70 @@ export class UserProfileResponseDto extends PickType(User, [
   'id',
   'name',
   'nickname',
+  'oneLineIntroduction',
+  'ribuddyId',
   'profileImage',
 ] as const) {}
 
 /**
  * 사용자 정보 수정 DTO
- *
- * - name, nickname, profileImage 필드만 수정 가능
  */
 export class EditUserProfileRequestDto extends PartialType(
-  PickType(User, ['name', 'nickname', 'profileImage'] as const),
+  PickType(User, ['name', 'nickname', 'oneLineIntroduction', 'ribuddyId', 'profileImage'] as const),
 ) {}
+
+export class AddFriendByRibuddyIdRequestDto {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: '친구로 추가할 사용자의 라이버디 ID',
+    example: 'ribuddy_official',
+  })
+  ribuddyId!: string;
+}
+
+export class DeleteFriendByUserIdRequestDto {
+  @TransformToBigint()
+  @IsBigInt()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: '친구를 삭제할 사용자의 user ID',
+    example: '12',
+    type: 'string',
+    format: 'bigint',
+  })
+  friendUserId!: bigint;
+}
+
+export class FriendDto {
+  @TransformToBigint()
+  @IsBigInt()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: '기준 사용자 ID',
+    type: 'string',
+    format: 'bigint',
+    example: '2',
+  })
+  fromUserId!: bigint;
+
+  @TransformToBigint()
+  @IsBigInt()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: '기준 사용자가 친구로 추가할 사용자의 ID',
+    type: 'string',
+    format: 'bigint',
+    example: '2',
+  })
+  toUserId!: bigint;
+
+  @IsOptional()
+  @ApiProperty({
+    description: '친구 즐겨찾기 여부 (기본값: false)',
+    example: false,
+  })
+  isFavorite!: boolean;
+}
+
+export class EditFriendStatusDto extends PickType(FriendDto, ['toUserId', 'isFavorite'] as const) {}

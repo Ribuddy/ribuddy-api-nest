@@ -1,4 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+import { API_TAGS } from '@common/constants/api-tags.constants';
 
 import { Public } from '@modules/auth/decorators/public.decorator';
 import { PoiSearchRequestDto } from '@modules/tmap/dto/poi-search-request.dto';
@@ -10,6 +13,8 @@ import { TmapSearchService } from '@modules/tmap/services/tmap-search.service';
   path: 'map',
   version: '1',
 })
+@ApiTags(API_TAGS.MAP)
+@ApiBearerAuth()
 export class MapV1Controller {
   constructor(
     private readonly tmapRouteService: TmapRouteService,

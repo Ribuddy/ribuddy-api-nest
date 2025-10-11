@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { randomUUID } from 'crypto';
+
 import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.service';
 import { GoogleOAuthUserData, OAuthUserInfo } from '@modules/users/types/oauth.users.types';
 
@@ -32,6 +34,7 @@ export class OAuthUserService {
           name: googleUser.name,
           nickname: googleUser.displayName,
           profileImage: googleUser.profileImage,
+          ribuddyId: randomUUID().split('-').join(''), // or, google OAuthID?
         },
         select: { id: true },
       });

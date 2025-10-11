@@ -1444,10 +1444,14 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     OAuthUser: number
+    sentFriendRequests: number
+    receivedFriendRequests: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     OAuthUser?: boolean | UserCountOutputTypeCountOAuthUserArgs
+    sentFriendRequests?: boolean | UserCountOutputTypeCountSentFriendRequestsArgs
+    receivedFriendRequests?: boolean | UserCountOutputTypeCountReceivedFriendRequestsArgs
   }
 
   // Custom InputTypes
@@ -1466,6 +1470,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountOAuthUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OAuthUserWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSentFriendRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FriendWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReceivedFriendRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FriendWhereInput
   }
 
 
@@ -1497,6 +1515,8 @@ export namespace Prisma {
     id: bigint | null
     name: string | null
     nickname: string | null
+    oneLineIntroduction: string | null
+    ribuddyId: string | null
     profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1506,6 +1526,8 @@ export namespace Prisma {
     id: bigint | null
     name: string | null
     nickname: string | null
+    oneLineIntroduction: string | null
+    ribuddyId: string | null
     profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1515,6 +1537,8 @@ export namespace Prisma {
     id: number
     name: number
     nickname: number
+    oneLineIntroduction: number
+    ribuddyId: number
     profileImage: number
     createdAt: number
     updatedAt: number
@@ -1534,6 +1558,8 @@ export namespace Prisma {
     id?: true
     name?: true
     nickname?: true
+    oneLineIntroduction?: true
+    ribuddyId?: true
     profileImage?: true
     createdAt?: true
     updatedAt?: true
@@ -1543,6 +1569,8 @@ export namespace Prisma {
     id?: true
     name?: true
     nickname?: true
+    oneLineIntroduction?: true
+    ribuddyId?: true
     profileImage?: true
     createdAt?: true
     updatedAt?: true
@@ -1552,6 +1580,8 @@ export namespace Prisma {
     id?: true
     name?: true
     nickname?: true
+    oneLineIntroduction?: true
+    ribuddyId?: true
     profileImage?: true
     createdAt?: true
     updatedAt?: true
@@ -1648,6 +1678,8 @@ export namespace Prisma {
     id: bigint
     name: string
     nickname: string
+    oneLineIntroduction: string | null
+    ribuddyId: string
     profileImage: string | null
     createdAt: Date
     updatedAt: Date
@@ -1676,10 +1708,14 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     nickname?: boolean
+    oneLineIntroduction?: boolean
+    ribuddyId?: boolean
     profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     OAuthUser?: boolean | User$OAuthUserArgs<ExtArgs>
+    sentFriendRequests?: boolean | User$sentFriendRequestsArgs<ExtArgs>
+    receivedFriendRequests?: boolean | User$receivedFriendRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1689,14 +1725,18 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     nickname?: boolean
+    oneLineIntroduction?: boolean
+    ribuddyId?: boolean
     profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "nickname" | "profileImage" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "nickname" | "oneLineIntroduction" | "ribuddyId" | "profileImage" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     OAuthUser?: boolean | User$OAuthUserArgs<ExtArgs>
+    sentFriendRequests?: boolean | User$sentFriendRequestsArgs<ExtArgs>
+    receivedFriendRequests?: boolean | User$receivedFriendRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1704,11 +1744,15 @@ export namespace Prisma {
     name: "User"
     objects: {
       OAuthUser: Prisma.$OAuthUserPayload<ExtArgs>[]
+      sentFriendRequests: Prisma.$FriendPayload<ExtArgs>[]
+      receivedFriendRequests: Prisma.$FriendPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       name: string
       nickname: string
+      oneLineIntroduction: string | null
+      ribuddyId: string
       profileImage: string | null
       createdAt: Date
       updatedAt: Date
@@ -2053,6 +2097,8 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     OAuthUser<T extends User$OAuthUserArgs<ExtArgs> = {}>(args?: Subset<T, User$OAuthUserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sentFriendRequests<T extends User$sentFriendRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$sentFriendRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    receivedFriendRequests<T extends User$receivedFriendRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedFriendRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2085,6 +2131,8 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'BigInt'>
     readonly name: FieldRef<"User", 'String'>
     readonly nickname: FieldRef<"User", 'String'>
+    readonly oneLineIntroduction: FieldRef<"User", 'String'>
+    readonly ribuddyId: FieldRef<"User", 'String'>
     readonly profileImage: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -2455,6 +2503,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.sentFriendRequests
+   */
+  export type User$sentFriendRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Friend
+     */
+    omit?: FriendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    where?: FriendWhereInput
+    orderBy?: FriendOrderByWithRelationInput | FriendOrderByWithRelationInput[]
+    cursor?: FriendWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FriendScalarFieldEnum | FriendScalarFieldEnum[]
+  }
+
+  /**
+   * User.receivedFriendRequests
+   */
+  export type User$receivedFriendRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Friend
+     */
+    omit?: FriendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    where?: FriendWhereInput
+    orderBy?: FriendOrderByWithRelationInput | FriendOrderByWithRelationInput[]
+    cursor?: FriendWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FriendScalarFieldEnum | FriendScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2486,38 +2582,35 @@ export namespace Prisma {
   }
 
   export type FriendAvgAggregateOutputType = {
-    user1: number | null
-    user2: number | null
+    fromUserId: number | null
+    toUserId: number | null
   }
 
   export type FriendSumAggregateOutputType = {
-    user1: bigint | null
-    user2: bigint | null
+    fromUserId: bigint | null
+    toUserId: bigint | null
   }
 
   export type FriendMinAggregateOutputType = {
-    user1: bigint | null
-    user2: bigint | null
-    user1Favorite: boolean | null
-    user2Favorite: boolean | null
+    fromUserId: bigint | null
+    toUserId: bigint | null
+    isFavorite: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type FriendMaxAggregateOutputType = {
-    user1: bigint | null
-    user2: bigint | null
-    user1Favorite: boolean | null
-    user2Favorite: boolean | null
+    fromUserId: bigint | null
+    toUserId: bigint | null
+    isFavorite: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type FriendCountAggregateOutputType = {
-    user1: number
-    user2: number
-    user1Favorite: number
-    user2Favorite: number
+    fromUserId: number
+    toUserId: number
+    isFavorite: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2525,38 +2618,35 @@ export namespace Prisma {
 
 
   export type FriendAvgAggregateInputType = {
-    user1?: true
-    user2?: true
+    fromUserId?: true
+    toUserId?: true
   }
 
   export type FriendSumAggregateInputType = {
-    user1?: true
-    user2?: true
+    fromUserId?: true
+    toUserId?: true
   }
 
   export type FriendMinAggregateInputType = {
-    user1?: true
-    user2?: true
-    user1Favorite?: true
-    user2Favorite?: true
+    fromUserId?: true
+    toUserId?: true
+    isFavorite?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type FriendMaxAggregateInputType = {
-    user1?: true
-    user2?: true
-    user1Favorite?: true
-    user2Favorite?: true
+    fromUserId?: true
+    toUserId?: true
+    isFavorite?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type FriendCountAggregateInputType = {
-    user1?: true
-    user2?: true
-    user1Favorite?: true
-    user2Favorite?: true
+    fromUserId?: true
+    toUserId?: true
+    isFavorite?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2649,10 +2739,9 @@ export namespace Prisma {
   }
 
   export type FriendGroupByOutputType = {
-    user1: bigint
-    user2: bigint
-    user1Favorite: boolean
-    user2Favorite: boolean
+    fromUserId: bigint
+    toUserId: bigint
+    isFavorite: boolean
     createdAt: Date
     updatedAt: Date
     _count: FriendCountAggregateOutputType | null
@@ -2677,35 +2766,41 @@ export namespace Prisma {
 
 
   export type FriendSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    user1?: boolean
-    user2?: boolean
-    user1Favorite?: boolean
-    user2Favorite?: boolean
+    fromUserId?: boolean
+    toUserId?: boolean
+    isFavorite?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    fromUser?: boolean | UserDefaultArgs<ExtArgs>
+    toUser?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["friend"]>
 
 
 
   export type FriendSelectScalar = {
-    user1?: boolean
-    user2?: boolean
-    user1Favorite?: boolean
-    user2Favorite?: boolean
+    fromUserId?: boolean
+    toUserId?: boolean
+    isFavorite?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type FriendOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"user1" | "user2" | "user1Favorite" | "user2Favorite" | "createdAt" | "updatedAt", ExtArgs["result"]["friend"]>
+  export type FriendOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"fromUserId" | "toUserId" | "isFavorite" | "createdAt" | "updatedAt", ExtArgs["result"]["friend"]>
+  export type FriendInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fromUser?: boolean | UserDefaultArgs<ExtArgs>
+    toUser?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $FriendPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Friend"
-    objects: {}
+    objects: {
+      fromUser: Prisma.$UserPayload<ExtArgs>
+      toUser: Prisma.$UserPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
-      user1: bigint
-      user2: bigint
-      user1Favorite: boolean
-      user2Favorite: boolean
+      fromUserId: bigint
+      toUserId: bigint
+      isFavorite: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["friend"]>
@@ -2791,8 +2886,8 @@ export namespace Prisma {
      * // Get first 10 Friends
      * const friends = await prisma.friend.findMany({ take: 10 })
      * 
-     * // Only select the `user1`
-     * const friendWithUser1Only = await prisma.friend.findMany({ select: { user1: true } })
+     * // Only select the `fromUserId`
+     * const friendWithFromUserIdOnly = await prisma.friend.findMany({ select: { fromUserId: true } })
      * 
      */
     findMany<T extends FriendFindManyArgs>(args?: SelectSubset<T, FriendFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -3048,6 +3143,8 @@ export namespace Prisma {
    */
   export interface Prisma__FriendClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    fromUser<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    toUser<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3077,10 +3174,9 @@ export namespace Prisma {
    * Fields of the Friend model
    */
   interface FriendFieldRefs {
-    readonly user1: FieldRef<"Friend", 'BigInt'>
-    readonly user2: FieldRef<"Friend", 'BigInt'>
-    readonly user1Favorite: FieldRef<"Friend", 'Boolean'>
-    readonly user2Favorite: FieldRef<"Friend", 'Boolean'>
+    readonly fromUserId: FieldRef<"Friend", 'BigInt'>
+    readonly toUserId: FieldRef<"Friend", 'BigInt'>
+    readonly isFavorite: FieldRef<"Friend", 'Boolean'>
     readonly createdAt: FieldRef<"Friend", 'DateTime'>
     readonly updatedAt: FieldRef<"Friend", 'DateTime'>
   }
@@ -3100,6 +3196,10 @@ export namespace Prisma {
      */
     omit?: FriendOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
      * Filter, which Friend to fetch.
      */
     where: FriendWhereUniqueInput
@@ -3118,6 +3218,10 @@ export namespace Prisma {
      */
     omit?: FriendOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
      * Filter, which Friend to fetch.
      */
     where: FriendWhereUniqueInput
@@ -3135,6 +3239,10 @@ export namespace Prisma {
      * Omit specific fields from the Friend
      */
     omit?: FriendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
     /**
      * Filter, which Friend to fetch.
      */
@@ -3184,6 +3292,10 @@ export namespace Prisma {
      */
     omit?: FriendOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
      * Filter, which Friend to fetch.
      */
     where?: FriendWhereInput
@@ -3232,6 +3344,10 @@ export namespace Prisma {
      */
     omit?: FriendOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
      * Filter, which Friends to fetch.
      */
     where?: FriendWhereInput
@@ -3275,6 +3391,10 @@ export namespace Prisma {
      */
     omit?: FriendOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
      * The data needed to create a Friend.
      */
     data: XOR<FriendCreateInput, FriendUncheckedCreateInput>
@@ -3303,6 +3423,10 @@ export namespace Prisma {
      * Omit specific fields from the Friend
      */
     omit?: FriendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
     /**
      * The data needed to update a Friend.
      */
@@ -3344,6 +3468,10 @@ export namespace Prisma {
      */
     omit?: FriendOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
      * The filter to search for the Friend to update in case it exists.
      */
     where: FriendWhereUniqueInput
@@ -3369,6 +3497,10 @@ export namespace Prisma {
      * Omit specific fields from the Friend
      */
     omit?: FriendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
     /**
      * Filter which Friend to delete.
      */
@@ -3401,6 +3533,10 @@ export namespace Prisma {
      * Omit specific fields from the Friend
      */
     omit?: FriendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
   }
 
 
@@ -8946,6 +9082,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     nickname: 'nickname',
+    oneLineIntroduction: 'oneLineIntroduction',
+    ribuddyId: 'ribuddyId',
     profileImage: 'profileImage',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -8955,10 +9093,9 @@ export namespace Prisma {
 
 
   export const FriendScalarFieldEnum: {
-    user1: 'user1',
-    user2: 'user2',
-    user1Favorite: 'user1Favorite',
-    user2Favorite: 'user2Favorite',
+    fromUserId: 'fromUserId',
+    toUserId: 'toUserId',
+    isFavorite: 'isFavorite',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -9056,6 +9193,8 @@ export namespace Prisma {
   export const UserOrderByRelevanceFieldEnum: {
     name: 'name',
     nickname: 'nickname',
+    oneLineIntroduction: 'oneLineIntroduction',
+    ribuddyId: 'ribuddyId',
     profileImage: 'profileImage'
   };
 
@@ -9159,40 +9298,54 @@ export namespace Prisma {
     id?: BigIntFilter<"User"> | bigint | number
     name?: StringFilter<"User"> | string
     nickname?: StringFilter<"User"> | string
+    oneLineIntroduction?: StringNullableFilter<"User"> | string | null
+    ribuddyId?: StringFilter<"User"> | string
     profileImage?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     OAuthUser?: OAuthUserListRelationFilter
+    sentFriendRequests?: FriendListRelationFilter
+    receivedFriendRequests?: FriendListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrderInput | SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     OAuthUser?: OAuthUserOrderByRelationAggregateInput
+    sentFriendRequests?: FriendOrderByRelationAggregateInput
+    receivedFriendRequests?: FriendOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
+    ribuddyId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     nickname?: StringFilter<"User"> | string
+    oneLineIntroduction?: StringNullableFilter<"User"> | string | null
     profileImage?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     OAuthUser?: OAuthUserListRelationFilter
-  }, "id">
+    sentFriendRequests?: FriendListRelationFilter
+    receivedFriendRequests?: FriendListRelationFilter
+  }, "id" | "ribuddyId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrderInput | SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9210,6 +9363,8 @@ export namespace Prisma {
     id?: BigIntWithAggregatesFilter<"User"> | bigint | number
     name?: StringWithAggregatesFilter<"User"> | string
     nickname?: StringWithAggregatesFilter<"User"> | string
+    oneLineIntroduction?: StringNullableWithAggregatesFilter<"User"> | string | null
+    ribuddyId?: StringWithAggregatesFilter<"User"> | string
     profileImage?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -9219,41 +9374,43 @@ export namespace Prisma {
     AND?: FriendWhereInput | FriendWhereInput[]
     OR?: FriendWhereInput[]
     NOT?: FriendWhereInput | FriendWhereInput[]
-    user1?: BigIntFilter<"Friend"> | bigint | number
-    user2?: BigIntFilter<"Friend"> | bigint | number
-    user1Favorite?: BoolFilter<"Friend"> | boolean
-    user2Favorite?: BoolFilter<"Friend"> | boolean
+    fromUserId?: BigIntFilter<"Friend"> | bigint | number
+    toUserId?: BigIntFilter<"Friend"> | bigint | number
+    isFavorite?: BoolFilter<"Friend"> | boolean
     createdAt?: DateTimeFilter<"Friend"> | Date | string
     updatedAt?: DateTimeFilter<"Friend"> | Date | string
+    fromUser?: XOR<UserScalarRelationFilter, UserWhereInput>
+    toUser?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type FriendOrderByWithRelationInput = {
-    user1?: SortOrder
-    user2?: SortOrder
-    user1Favorite?: SortOrder
-    user2Favorite?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    isFavorite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    fromUser?: UserOrderByWithRelationInput
+    toUser?: UserOrderByWithRelationInput
   }
 
   export type FriendWhereUniqueInput = Prisma.AtLeast<{
-    user1_user2?: FriendUser1User2CompoundUniqueInput
+    fromUserId_toUserId?: FriendFromUserIdToUserIdCompoundUniqueInput
     AND?: FriendWhereInput | FriendWhereInput[]
     OR?: FriendWhereInput[]
     NOT?: FriendWhereInput | FriendWhereInput[]
-    user1?: BigIntFilter<"Friend"> | bigint | number
-    user2?: BigIntFilter<"Friend"> | bigint | number
-    user1Favorite?: BoolFilter<"Friend"> | boolean
-    user2Favorite?: BoolFilter<"Friend"> | boolean
+    fromUserId?: BigIntFilter<"Friend"> | bigint | number
+    toUserId?: BigIntFilter<"Friend"> | bigint | number
+    isFavorite?: BoolFilter<"Friend"> | boolean
     createdAt?: DateTimeFilter<"Friend"> | Date | string
     updatedAt?: DateTimeFilter<"Friend"> | Date | string
-  }, "user1_user2">
+    fromUser?: XOR<UserScalarRelationFilter, UserWhereInput>
+    toUser?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "fromUserId_toUserId">
 
   export type FriendOrderByWithAggregationInput = {
-    user1?: SortOrder
-    user2?: SortOrder
-    user1Favorite?: SortOrder
-    user2Favorite?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    isFavorite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: FriendCountOrderByAggregateInput
@@ -9267,10 +9424,9 @@ export namespace Prisma {
     AND?: FriendScalarWhereWithAggregatesInput | FriendScalarWhereWithAggregatesInput[]
     OR?: FriendScalarWhereWithAggregatesInput[]
     NOT?: FriendScalarWhereWithAggregatesInput | FriendScalarWhereWithAggregatesInput[]
-    user1?: BigIntWithAggregatesFilter<"Friend"> | bigint | number
-    user2?: BigIntWithAggregatesFilter<"Friend"> | bigint | number
-    user1Favorite?: BoolWithAggregatesFilter<"Friend"> | boolean
-    user2Favorite?: BoolWithAggregatesFilter<"Friend"> | boolean
+    fromUserId?: BigIntWithAggregatesFilter<"Friend"> | bigint | number
+    toUserId?: BigIntWithAggregatesFilter<"Friend"> | bigint | number
+    isFavorite?: BoolWithAggregatesFilter<"Friend"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Friend"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Friend"> | Date | string
   }
@@ -9638,46 +9794,64 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     OAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
+    sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
+    receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     OAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
+    sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
+    receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
 
   export type UserUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     OAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
+    sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
+    receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     OAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
+    sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
+    receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9687,6 +9861,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9696,70 +9872,63 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FriendCreateInput = {
-    user1: bigint | number
-    user2: bigint | number
-    user1Favorite: boolean
-    user2Favorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    fromUser: UserCreateNestedOneWithoutSentFriendRequestsInput
+    toUser: UserCreateNestedOneWithoutReceivedFriendRequestsInput
   }
 
   export type FriendUncheckedCreateInput = {
-    user1: bigint | number
-    user2: bigint | number
-    user1Favorite: boolean
-    user2Favorite: boolean
+    fromUserId: bigint | number
+    toUserId: bigint | number
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type FriendUpdateInput = {
-    user1?: BigIntFieldUpdateOperationsInput | bigint | number
-    user2?: BigIntFieldUpdateOperationsInput | bigint | number
-    user1Favorite?: BoolFieldUpdateOperationsInput | boolean
-    user2Favorite?: BoolFieldUpdateOperationsInput | boolean
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromUser?: UserUpdateOneRequiredWithoutSentFriendRequestsNestedInput
+    toUser?: UserUpdateOneRequiredWithoutReceivedFriendRequestsNestedInput
   }
 
   export type FriendUncheckedUpdateInput = {
-    user1?: BigIntFieldUpdateOperationsInput | bigint | number
-    user2?: BigIntFieldUpdateOperationsInput | bigint | number
-    user1Favorite?: BoolFieldUpdateOperationsInput | boolean
-    user2Favorite?: BoolFieldUpdateOperationsInput | boolean
+    fromUserId?: BigIntFieldUpdateOperationsInput | bigint | number
+    toUserId?: BigIntFieldUpdateOperationsInput | bigint | number
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FriendCreateManyInput = {
-    user1: bigint | number
-    user2: bigint | number
-    user1Favorite: boolean
-    user2Favorite: boolean
+    fromUserId: bigint | number
+    toUserId: bigint | number
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type FriendUpdateManyMutationInput = {
-    user1?: BigIntFieldUpdateOperationsInput | bigint | number
-    user2?: BigIntFieldUpdateOperationsInput | bigint | number
-    user1Favorite?: BoolFieldUpdateOperationsInput | boolean
-    user2Favorite?: BoolFieldUpdateOperationsInput | boolean
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FriendUncheckedUpdateManyInput = {
-    user1?: BigIntFieldUpdateOperationsInput | bigint | number
-    user2?: BigIntFieldUpdateOperationsInput | bigint | number
-    user1Favorite?: BoolFieldUpdateOperationsInput | boolean
-    user2Favorite?: BoolFieldUpdateOperationsInput | boolean
+    fromUserId?: BigIntFieldUpdateOperationsInput | bigint | number
+    toUserId?: BigIntFieldUpdateOperationsInput | bigint | number
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10162,12 +10331,22 @@ export namespace Prisma {
     none?: OAuthUserWhereInput
   }
 
+  export type FriendListRelationFilter = {
+    every?: FriendWhereInput
+    some?: FriendWhereInput
+    none?: FriendWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type OAuthUserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FriendOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -10181,6 +10360,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10194,6 +10375,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10203,6 +10386,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10283,46 +10468,48 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type FriendUser1User2CompoundUniqueInput = {
-    user1: bigint | number
-    user2: bigint | number
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type FriendFromUserIdToUserIdCompoundUniqueInput = {
+    fromUserId: bigint | number
+    toUserId: bigint | number
   }
 
   export type FriendCountOrderByAggregateInput = {
-    user1?: SortOrder
-    user2?: SortOrder
-    user1Favorite?: SortOrder
-    user2Favorite?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    isFavorite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FriendAvgOrderByAggregateInput = {
-    user1?: SortOrder
-    user2?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
   }
 
   export type FriendMaxOrderByAggregateInput = {
-    user1?: SortOrder
-    user2?: SortOrder
-    user1Favorite?: SortOrder
-    user2Favorite?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    isFavorite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FriendMinOrderByAggregateInput = {
-    user1?: SortOrder
-    user2?: SortOrder
-    user1Favorite?: SortOrder
-    user2Favorite?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    isFavorite?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FriendSumOrderByAggregateInput = {
-    user1?: SortOrder
-    user2?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -10331,11 +10518,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type OAuthUserOrderByRelevanceInput = {
@@ -10714,11 +10896,39 @@ export namespace Prisma {
     connect?: OAuthUserWhereUniqueInput | OAuthUserWhereUniqueInput[]
   }
 
+  export type FriendCreateNestedManyWithoutFromUserInput = {
+    create?: XOR<FriendCreateWithoutFromUserInput, FriendUncheckedCreateWithoutFromUserInput> | FriendCreateWithoutFromUserInput[] | FriendUncheckedCreateWithoutFromUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutFromUserInput | FriendCreateOrConnectWithoutFromUserInput[]
+    createMany?: FriendCreateManyFromUserInputEnvelope
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+  }
+
+  export type FriendCreateNestedManyWithoutToUserInput = {
+    create?: XOR<FriendCreateWithoutToUserInput, FriendUncheckedCreateWithoutToUserInput> | FriendCreateWithoutToUserInput[] | FriendUncheckedCreateWithoutToUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutToUserInput | FriendCreateOrConnectWithoutToUserInput[]
+    createMany?: FriendCreateManyToUserInputEnvelope
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+  }
+
   export type OAuthUserUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<OAuthUserCreateWithoutUserInput, OAuthUserUncheckedCreateWithoutUserInput> | OAuthUserCreateWithoutUserInput[] | OAuthUserUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OAuthUserCreateOrConnectWithoutUserInput | OAuthUserCreateOrConnectWithoutUserInput[]
     createMany?: OAuthUserCreateManyUserInputEnvelope
     connect?: OAuthUserWhereUniqueInput | OAuthUserWhereUniqueInput[]
+  }
+
+  export type FriendUncheckedCreateNestedManyWithoutFromUserInput = {
+    create?: XOR<FriendCreateWithoutFromUserInput, FriendUncheckedCreateWithoutFromUserInput> | FriendCreateWithoutFromUserInput[] | FriendUncheckedCreateWithoutFromUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutFromUserInput | FriendCreateOrConnectWithoutFromUserInput[]
+    createMany?: FriendCreateManyFromUserInputEnvelope
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+  }
+
+  export type FriendUncheckedCreateNestedManyWithoutToUserInput = {
+    create?: XOR<FriendCreateWithoutToUserInput, FriendUncheckedCreateWithoutToUserInput> | FriendCreateWithoutToUserInput[] | FriendUncheckedCreateWithoutToUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutToUserInput | FriendCreateOrConnectWithoutToUserInput[]
+    createMany?: FriendCreateManyToUserInputEnvelope
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
   }
 
   export type BigIntFieldUpdateOperationsInput = {
@@ -10755,6 +10965,34 @@ export namespace Prisma {
     deleteMany?: OAuthUserScalarWhereInput | OAuthUserScalarWhereInput[]
   }
 
+  export type FriendUpdateManyWithoutFromUserNestedInput = {
+    create?: XOR<FriendCreateWithoutFromUserInput, FriendUncheckedCreateWithoutFromUserInput> | FriendCreateWithoutFromUserInput[] | FriendUncheckedCreateWithoutFromUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutFromUserInput | FriendCreateOrConnectWithoutFromUserInput[]
+    upsert?: FriendUpsertWithWhereUniqueWithoutFromUserInput | FriendUpsertWithWhereUniqueWithoutFromUserInput[]
+    createMany?: FriendCreateManyFromUserInputEnvelope
+    set?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    disconnect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    delete?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    update?: FriendUpdateWithWhereUniqueWithoutFromUserInput | FriendUpdateWithWhereUniqueWithoutFromUserInput[]
+    updateMany?: FriendUpdateManyWithWhereWithoutFromUserInput | FriendUpdateManyWithWhereWithoutFromUserInput[]
+    deleteMany?: FriendScalarWhereInput | FriendScalarWhereInput[]
+  }
+
+  export type FriendUpdateManyWithoutToUserNestedInput = {
+    create?: XOR<FriendCreateWithoutToUserInput, FriendUncheckedCreateWithoutToUserInput> | FriendCreateWithoutToUserInput[] | FriendUncheckedCreateWithoutToUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutToUserInput | FriendCreateOrConnectWithoutToUserInput[]
+    upsert?: FriendUpsertWithWhereUniqueWithoutToUserInput | FriendUpsertWithWhereUniqueWithoutToUserInput[]
+    createMany?: FriendCreateManyToUserInputEnvelope
+    set?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    disconnect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    delete?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    update?: FriendUpdateWithWhereUniqueWithoutToUserInput | FriendUpdateWithWhereUniqueWithoutToUserInput[]
+    updateMany?: FriendUpdateManyWithWhereWithoutToUserInput | FriendUpdateManyWithWhereWithoutToUserInput[]
+    deleteMany?: FriendScalarWhereInput | FriendScalarWhereInput[]
+  }
+
   export type OAuthUserUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<OAuthUserCreateWithoutUserInput, OAuthUserUncheckedCreateWithoutUserInput> | OAuthUserCreateWithoutUserInput[] | OAuthUserUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OAuthUserCreateOrConnectWithoutUserInput | OAuthUserCreateOrConnectWithoutUserInput[]
@@ -10769,8 +11007,64 @@ export namespace Prisma {
     deleteMany?: OAuthUserScalarWhereInput | OAuthUserScalarWhereInput[]
   }
 
+  export type FriendUncheckedUpdateManyWithoutFromUserNestedInput = {
+    create?: XOR<FriendCreateWithoutFromUserInput, FriendUncheckedCreateWithoutFromUserInput> | FriendCreateWithoutFromUserInput[] | FriendUncheckedCreateWithoutFromUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutFromUserInput | FriendCreateOrConnectWithoutFromUserInput[]
+    upsert?: FriendUpsertWithWhereUniqueWithoutFromUserInput | FriendUpsertWithWhereUniqueWithoutFromUserInput[]
+    createMany?: FriendCreateManyFromUserInputEnvelope
+    set?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    disconnect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    delete?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    update?: FriendUpdateWithWhereUniqueWithoutFromUserInput | FriendUpdateWithWhereUniqueWithoutFromUserInput[]
+    updateMany?: FriendUpdateManyWithWhereWithoutFromUserInput | FriendUpdateManyWithWhereWithoutFromUserInput[]
+    deleteMany?: FriendScalarWhereInput | FriendScalarWhereInput[]
+  }
+
+  export type FriendUncheckedUpdateManyWithoutToUserNestedInput = {
+    create?: XOR<FriendCreateWithoutToUserInput, FriendUncheckedCreateWithoutToUserInput> | FriendCreateWithoutToUserInput[] | FriendUncheckedCreateWithoutToUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutToUserInput | FriendCreateOrConnectWithoutToUserInput[]
+    upsert?: FriendUpsertWithWhereUniqueWithoutToUserInput | FriendUpsertWithWhereUniqueWithoutToUserInput[]
+    createMany?: FriendCreateManyToUserInputEnvelope
+    set?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    disconnect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    delete?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    update?: FriendUpdateWithWhereUniqueWithoutToUserInput | FriendUpdateWithWhereUniqueWithoutToUserInput[]
+    updateMany?: FriendUpdateManyWithWhereWithoutToUserInput | FriendUpdateManyWithWhereWithoutToUserInput[]
+    deleteMany?: FriendScalarWhereInput | FriendScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutSentFriendRequestsInput = {
+    create?: XOR<UserCreateWithoutSentFriendRequestsInput, UserUncheckedCreateWithoutSentFriendRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSentFriendRequestsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReceivedFriendRequestsInput = {
+    create?: XOR<UserCreateWithoutReceivedFriendRequestsInput, UserUncheckedCreateWithoutReceivedFriendRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceivedFriendRequestsInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutSentFriendRequestsNestedInput = {
+    create?: XOR<UserCreateWithoutSentFriendRequestsInput, UserUncheckedCreateWithoutSentFriendRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSentFriendRequestsInput
+    upsert?: UserUpsertWithoutSentFriendRequestsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSentFriendRequestsInput, UserUpdateWithoutSentFriendRequestsInput>, UserUncheckedUpdateWithoutSentFriendRequestsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutReceivedFriendRequestsNestedInput = {
+    create?: XOR<UserCreateWithoutReceivedFriendRequestsInput, UserUncheckedCreateWithoutReceivedFriendRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceivedFriendRequestsInput
+    upsert?: UserUpsertWithoutReceivedFriendRequestsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceivedFriendRequestsInput, UserUpdateWithoutReceivedFriendRequestsInput>, UserUncheckedUpdateWithoutReceivedFriendRequestsInput>
   }
 
   export type UserCreateNestedOneWithoutOAuthUserInput = {
@@ -11093,6 +11387,54 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FriendCreateWithoutFromUserInput = {
+    isFavorite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    toUser: UserCreateNestedOneWithoutReceivedFriendRequestsInput
+  }
+
+  export type FriendUncheckedCreateWithoutFromUserInput = {
+    toUserId: bigint | number
+    isFavorite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendCreateOrConnectWithoutFromUserInput = {
+    where: FriendWhereUniqueInput
+    create: XOR<FriendCreateWithoutFromUserInput, FriendUncheckedCreateWithoutFromUserInput>
+  }
+
+  export type FriendCreateManyFromUserInputEnvelope = {
+    data: FriendCreateManyFromUserInput | FriendCreateManyFromUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FriendCreateWithoutToUserInput = {
+    isFavorite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromUser: UserCreateNestedOneWithoutSentFriendRequestsInput
+  }
+
+  export type FriendUncheckedCreateWithoutToUserInput = {
+    fromUserId: bigint | number
+    isFavorite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendCreateOrConnectWithoutToUserInput = {
+    where: FriendWhereUniqueInput
+    create: XOR<FriendCreateWithoutToUserInput, FriendUncheckedCreateWithoutToUserInput>
+  }
+
+  export type FriendCreateManyToUserInputEnvelope = {
+    data: FriendCreateManyToUserInput | FriendCreateManyToUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type OAuthUserUpsertWithWhereUniqueWithoutUserInput = {
     where: OAuthUserWhereUniqueInput
     update: XOR<OAuthUserUpdateWithoutUserInput, OAuthUserUncheckedUpdateWithoutUserInput>
@@ -11120,22 +11462,209 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"OAuthUser"> | Date | string
   }
 
+  export type FriendUpsertWithWhereUniqueWithoutFromUserInput = {
+    where: FriendWhereUniqueInput
+    update: XOR<FriendUpdateWithoutFromUserInput, FriendUncheckedUpdateWithoutFromUserInput>
+    create: XOR<FriendCreateWithoutFromUserInput, FriendUncheckedCreateWithoutFromUserInput>
+  }
+
+  export type FriendUpdateWithWhereUniqueWithoutFromUserInput = {
+    where: FriendWhereUniqueInput
+    data: XOR<FriendUpdateWithoutFromUserInput, FriendUncheckedUpdateWithoutFromUserInput>
+  }
+
+  export type FriendUpdateManyWithWhereWithoutFromUserInput = {
+    where: FriendScalarWhereInput
+    data: XOR<FriendUpdateManyMutationInput, FriendUncheckedUpdateManyWithoutFromUserInput>
+  }
+
+  export type FriendScalarWhereInput = {
+    AND?: FriendScalarWhereInput | FriendScalarWhereInput[]
+    OR?: FriendScalarWhereInput[]
+    NOT?: FriendScalarWhereInput | FriendScalarWhereInput[]
+    fromUserId?: BigIntFilter<"Friend"> | bigint | number
+    toUserId?: BigIntFilter<"Friend"> | bigint | number
+    isFavorite?: BoolFilter<"Friend"> | boolean
+    createdAt?: DateTimeFilter<"Friend"> | Date | string
+    updatedAt?: DateTimeFilter<"Friend"> | Date | string
+  }
+
+  export type FriendUpsertWithWhereUniqueWithoutToUserInput = {
+    where: FriendWhereUniqueInput
+    update: XOR<FriendUpdateWithoutToUserInput, FriendUncheckedUpdateWithoutToUserInput>
+    create: XOR<FriendCreateWithoutToUserInput, FriendUncheckedCreateWithoutToUserInput>
+  }
+
+  export type FriendUpdateWithWhereUniqueWithoutToUserInput = {
+    where: FriendWhereUniqueInput
+    data: XOR<FriendUpdateWithoutToUserInput, FriendUncheckedUpdateWithoutToUserInput>
+  }
+
+  export type FriendUpdateManyWithWhereWithoutToUserInput = {
+    where: FriendScalarWhereInput
+    data: XOR<FriendUpdateManyMutationInput, FriendUncheckedUpdateManyWithoutToUserInput>
+  }
+
+  export type UserCreateWithoutSentFriendRequestsInput = {
+    id?: bigint | number
+    name: string
+    nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
+    profileImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    OAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
+    receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSentFriendRequestsInput = {
+    id?: bigint | number
+    name: string
+    nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
+    profileImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    OAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
+    receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSentFriendRequestsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSentFriendRequestsInput, UserUncheckedCreateWithoutSentFriendRequestsInput>
+  }
+
+  export type UserCreateWithoutReceivedFriendRequestsInput = {
+    id?: bigint | number
+    name: string
+    nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
+    profileImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    OAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
+    sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
+  }
+
+  export type UserUncheckedCreateWithoutReceivedFriendRequestsInput = {
+    id?: bigint | number
+    name: string
+    nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
+    profileImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    OAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
+    sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
+  }
+
+  export type UserCreateOrConnectWithoutReceivedFriendRequestsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReceivedFriendRequestsInput, UserUncheckedCreateWithoutReceivedFriendRequestsInput>
+  }
+
+  export type UserUpsertWithoutSentFriendRequestsInput = {
+    update: XOR<UserUpdateWithoutSentFriendRequestsInput, UserUncheckedUpdateWithoutSentFriendRequestsInput>
+    create: XOR<UserCreateWithoutSentFriendRequestsInput, UserUncheckedCreateWithoutSentFriendRequestsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSentFriendRequestsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSentFriendRequestsInput, UserUncheckedUpdateWithoutSentFriendRequestsInput>
+  }
+
+  export type UserUpdateWithoutSentFriendRequestsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    OAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
+    receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSentFriendRequestsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    OAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
+    receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
+  }
+
+  export type UserUpsertWithoutReceivedFriendRequestsInput = {
+    update: XOR<UserUpdateWithoutReceivedFriendRequestsInput, UserUncheckedUpdateWithoutReceivedFriendRequestsInput>
+    create: XOR<UserCreateWithoutReceivedFriendRequestsInput, UserUncheckedCreateWithoutReceivedFriendRequestsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReceivedFriendRequestsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReceivedFriendRequestsInput, UserUncheckedUpdateWithoutReceivedFriendRequestsInput>
+  }
+
+  export type UserUpdateWithoutReceivedFriendRequestsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    OAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
+    sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReceivedFriendRequestsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    OAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
+    sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
+  }
+
   export type UserCreateWithoutOAuthUserInput = {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
+    receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
 
   export type UserUncheckedCreateWithoutOAuthUserInput = {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
+    receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
 
   export type UserCreateOrConnectWithoutOAuthUserInput = {
@@ -11158,23 +11687,45 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
+    receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOAuthUserInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
+    receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
 
   export type OAuthUserCreateManyUserInput = {
     oauthProvider: string
     oauthId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendCreateManyFromUserInput = {
+    toUserId: bigint | number
+    isFavorite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendCreateManyToUserInput = {
+    fromUserId: bigint | number
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11196,6 +11747,48 @@ export namespace Prisma {
   export type OAuthUserUncheckedUpdateManyWithoutUserInput = {
     oauthProvider?: StringFieldUpdateOperationsInput | string
     oauthId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendUpdateWithoutFromUserInput = {
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    toUser?: UserUpdateOneRequiredWithoutReceivedFriendRequestsNestedInput
+  }
+
+  export type FriendUncheckedUpdateWithoutFromUserInput = {
+    toUserId?: BigIntFieldUpdateOperationsInput | bigint | number
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendUncheckedUpdateManyWithoutFromUserInput = {
+    toUserId?: BigIntFieldUpdateOperationsInput | bigint | number
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendUpdateWithoutToUserInput = {
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromUser?: UserUpdateOneRequiredWithoutSentFriendRequestsNestedInput
+  }
+
+  export type FriendUncheckedUpdateWithoutToUserInput = {
+    fromUserId?: BigIntFieldUpdateOperationsInput | bigint | number
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendUncheckedUpdateManyWithoutToUserInput = {
+    fromUserId?: BigIntFieldUpdateOperationsInput | bigint | number
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

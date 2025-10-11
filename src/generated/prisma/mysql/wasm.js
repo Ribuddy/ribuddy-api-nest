@@ -124,16 +124,17 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   nickname: 'nickname',
+  oneLineIntroduction: 'oneLineIntroduction',
+  ribuddyId: 'ribuddyId',
   profileImage: 'profileImage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
 exports.Prisma.FriendScalarFieldEnum = {
-  user1: 'user1',
-  user2: 'user2',
-  user1Favorite: 'user1Favorite',
-  user2Favorite: 'user2Favorite',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  isFavorite: 'isFavorite',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -204,6 +205,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
   name: 'name',
   nickname: 'nickname',
+  oneLineIntroduction: 'oneLineIntroduction',
+  ribuddyId: 'ribuddyId',
   profileImage: 'profileImage'
 };
 

@@ -1,6 +1,7 @@
 import { Controller, Delete, Post, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { API_TAGS } from '@common/constants/api-tags.constants';
 import { ResponseMessage } from '@common/decorators/response/response-message.decorator';
 
 import { RegisterJwtGuard } from '@modules/auth/guards/register-jwt.guard';
@@ -9,11 +10,12 @@ import { RegisterJwtGuard } from '@modules/auth/guards/register-jwt.guard';
   version: '1',
   path: 'auth',
 })
+@ApiTags(API_TAGS.AUTH)
+@ApiBearerAuth()
 export class AuthV1Controller {
   constructor() {}
 
   @UseGuards(RegisterJwtGuard)
-  @ApiBearerAuth()
   @Post('token/reissue')
   @ApiOperation({
     summary: '[WIP] RefreshToken을 이용한 AccessToken 재발급',
