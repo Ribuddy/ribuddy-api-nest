@@ -1,19 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, LoggerService } from '@nestjs/common';
 import { ConfigService, ConfigType } from '@nestjs/config';
 
 import { OAuth2Client } from 'google-auth-library';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { AuthErrorCode } from '@common/codes/error/auth.error.code';
 
 import { GOOGLE_OAUTH_CONFIG, GoogleOAuthConfig } from '@modules/auth/config/google-oauth-config';
+import { TokenAuthService } from '@modules/auth/services/token.auth.service';
+import { OAuthUserService } from '@modules/users/services/oauth.users.service';
+import { GoogleOAuthUserData, OAuthProvider } from '@modules/users/types/oauth.users.types';
 
 @Injectable()
 export class GoogleOAuthService {
   private readonly client: OAuth2Client;
   private readonly googleConfig: ConfigType<typeof GoogleOAuthConfig>;
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly oauthUserService: OAuthUserService,
+    private readonly tokenAuthService: TokenAuthService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
+  ) {
     this.googleConfig =
       this.configService.getOrThrow<ConfigType<typeof GoogleOAuthConfig>>(GOOGLE_OAUTH_CONFIG);
     this.client = new OAuth2Client({
@@ -26,26 +35,23 @@ export class GoogleOAuthService {
   async verifyGoogleToken(idToken: string) {
     const client = new OAuth2Client(this.googleConfig.clientId);
 
-    try {
-      // 1. verifyIdToken 메서드 호출
-      const ticket = await client.verifyIdToken({
-        idToken: idToken,
-        // audience: this.googleConfig.clientId, // 내 앱의 클라이언트 ID
-      });
+    const ticket = await client.verifyIdToken({ idToken });
 
-      // 2. 검증 성공 시 페이로드(사용자 정보) 반환
-      const payload = ticket.getPayload();
-      if (payload) {
-        const userId = payload['sub']; // 사용자의 고유 Google ID
-        const email = payload['email'];
-        console.log('Google User ID:', userId);
-        return payload;
-      }
-    } catch (error) {
-      // 3. 검증 실패 시 (서명 불일치, 만료 등) 에러 발생
-      console.error('Token verification failed:', error);
-      throw new CustomException(AuthErrorCode.INVALID_GOOGLE_ID_TOKEN);
-    }
+    const payload = ticket.getPayload();
+    if (!payload) throw new CustomException(AuthErrorCode.INVALID_GOOGLE_ID_TOKEN);
+
+    const user: GoogleOAuthUserData = {
+      oauthProvider: OAuthProvider.GOOGLE,
+      oauthId: payload.sub,
+      name: `${payload.family_name ?? ''} ${payload.given_name ?? ''}`.trim() ?? '알수없음',
+      displayName: payload.name ?? '알수없음',
+      profileImage: payload.picture ?? '',
+    };
+
+    // TODO: 제거 바람
+    this.logger.log(payload);
+
+    return user;
   }
 
   async getToken() {
@@ -54,5 +60,16 @@ export class GoogleOAuthService {
       redirect_uri: 'http://localhost:7777/test/basic/mirror',
       scope: ['profile'],
     });
+  }
+
+  async googleOAuthLoginOrRegister(googleData: GoogleOAuthUserData) {
+    const user = await this.oauthUserService.getUserByOAuth(googleData);
+
+    if (!user) {
+      const newUserId = await this.oauthUserService.createOAuthUserWithGoogle(googleData);
+      return this.tokenAuthService.generateTokens(newUserId);
+    } else {
+      return this.tokenAuthService.generateTokens(user.userId);
+    }
   }
 }

@@ -6,6 +6,7 @@ import { API_TAGS } from '@common/constants/api-tags.constants';
 import { Public } from '@modules/auth/decorators/public.decorator';
 import { OAUTH_CALLBACK, OAUTH_LOGIN } from '@modules/auth/docs/oauth.docs';
 import { GoogleOAuthGuard } from '@modules/auth/guards/google-oauth.guard';
+import { GoogleOAuthService } from '@modules/auth/services/google-oauth.auth.service';
 import { OAuthAuthService } from '@modules/auth/services/oauth.auth.service';
 
 @Controller({
@@ -15,7 +16,7 @@ import { OAuthAuthService } from '@modules/auth/services/oauth.auth.service';
 @ApiTags(API_TAGS.OAUTH)
 @ApiBearerAuth()
 export class OAuthV1Controller {
-  constructor(private readonly oAuthAuthService: OAuthAuthService) {}
+  constructor(private readonly googleService: GoogleOAuthService) {}
 
   @ApiOperation(OAUTH_LOGIN('Google', '/auth/google/login'))
   @ApiResponse({
@@ -38,6 +39,6 @@ export class OAuthV1Controller {
   async googleCallback(@Request() req: any) {
     // console.log('Google OAuth Callback:', req.user);
 
-    return await this.oAuthAuthService.googleOAuthLoginOrRegister(req.user);
+    return await this.googleService.googleOAuthLoginOrRegister(req.user);
   }
 }
