@@ -1,5 +1,7 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+import { API_TAGS } from '@common/constants/api-tags.constants';
 
 import { Public } from '@modules/auth/decorators/public.decorator';
 import { OAUTH_CALLBACK, OAUTH_LOGIN } from '@modules/auth/docs/oauth.docs';
@@ -10,6 +12,8 @@ import { OAuthAuthService } from '@modules/auth/services/oauth.auth.service';
   version: '1',
   path: 'auth',
 })
+@ApiTags(API_TAGS.OAUTH)
+@ApiBearerAuth()
 export class OAuthV1Controller {
   constructor(private readonly oAuthAuthService: OAuthAuthService) {}
 

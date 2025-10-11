@@ -9,6 +9,7 @@ import { WinstonModule } from 'nest-winston';
 import { winstonLoggerOptions } from '@common/configs/winston.config';
 import { AllExceptionsFilter } from '@common/filters/all-exception.filter';
 import { HttpExceptionFilter } from '@common/filters/http-exception.filter';
+import { PrismaExceptionFilter } from '@common/filters/prisma-exception.filter';
 import { ResponseInterceptor } from '@common/interceptors/response.interceptor';
 import { LoggerMiddleware } from '@common/middleware/logger.middleware';
 import { RequestContextMiddleware } from '@common/middleware/request-context.middleware';
@@ -94,6 +95,10 @@ const validate = (config: Record<string, unknown>) => {
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: PrismaExceptionFilter,
     },
     // ===== PIPE =====
     {

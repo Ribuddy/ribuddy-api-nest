@@ -1,6 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { API_TAGS } from '@common/constants/api-tags.constants';
+
 import {
   AccidentEventDto,
   SuddenSpeedChangeEventDto,
@@ -10,7 +12,8 @@ import {
   path: 'driving/event',
   version: '1',
 })
-@ApiTags('주행 중 이벤트')
+@ApiTags(API_TAGS.DRIVING_EVENT)
+@ApiBearerAuth()
 export class DrivingEventsV1Controller {
   constructor() {}
 
@@ -18,7 +21,6 @@ export class DrivingEventsV1Controller {
     summary: '급가속/급정거 등 순간적인 속도 변화 발생 보고',
     description: 'FE단에서 급가속 이벤트 감지 시, 관련 정보와 함께 호출해주시면 됩니다.',
   })
-  @ApiBearerAuth()
   @Post('sudden-speed-change')
   suddenSpeedChange(@Body() eventData: SuddenSpeedChangeEventDto) {
     console.log(eventData.trackSegments.map((point) => `${point.lat}, ${point.lon}`));

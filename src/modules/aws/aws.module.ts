@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AwsController } from '@modules/aws/aws.controller';
+import { AwsController } from '@modules/aws/controllers/aws.controller';
 import { AwsS3Service } from '@modules/aws/services/aws.s3.service';
 
 @Module({

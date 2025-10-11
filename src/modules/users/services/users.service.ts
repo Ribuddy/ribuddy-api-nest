@@ -39,11 +39,93 @@ export class UsersService {
       Object.entries(partialUser).filter(([_, v]) => v !== undefined),
     );
 
-    const updatedUser = await this.prisma.user.update({
-      where: { id: userId },
-      data: filteredData,
+    try {
+      const updatedUser = await this.prisma.user.update({
+        where: { id: userId },
+        data: filteredData,
+      });
+
+      return { ...updatedUser, id: updatedUser.id.toString() };
+    } catch (_err) {
+      // throw _err;
+      throw new CustomException(UserErrorCode.DUPLICATE_RIBUDDY_ID);
+    }
+  }
+
+  async addFriend(fromUserId: bigint, toUserId: bigint) {
+    if (fromUserId === toUserId) {
+      throw new CustomException(UserErrorCode.CANNOT_ADD_SELF_AS_FRIEND);
+    }
+
+    // 이미 친구인지 확인
+    const existingFriendship = await this.prisma.friend.findUnique({
+      where: {
+        fromUserId_toUserId: {
+          fromUserId,
+          toUserId,
+        },
+      },
     });
 
-    return { ...updatedUser, id: updatedUser.id.toString() };
+    if (existingFriendship) {
+      throw new CustomException(UserErrorCode.ALREADY_FRIEND);
+    }
+
+    // 친구 추가
+    await this.prisma.friend.create({
+      data: {
+        fromUserId,
+        toUserId,
+      },
+    });
+
+    return;
+  }
+
+  async deleteFriend(fromUserId: bigint, toUserId: bigint) {
+    // 그냥 delete 쓰면 prisma error 발생하므로 deleteMany 사용
+    const deleted = await this.prisma.friend.deleteMany({
+      where: {
+        fromUserId,
+        toUserId,
+      },
+    });
+
+    if (deleted.count === 0) {
+      throw new CustomException(UserErrorCode.NOT_A_FRIEND);
+    }
+
+    return;
+  }
+
+  async changeFavoriteFriendStatus(fromUserId: bigint, toUserId: bigint, isFavorite: boolean) {
+    try {
+      await this.prisma.friend.update({
+        where: {
+          fromUserId_toUserId: {
+            fromUserId,
+            toUserId,
+          },
+        },
+        data: {
+          isFavorite,
+        },
+      });
+      return;
+    } catch (_err) {
+      throw new CustomException(UserErrorCode.NOT_A_FRIEND);
+    }
+  }
+
+  async getUserIdByRiBuddyId(ribuddyId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { ribuddyId },
+    });
+
+    if (!user) {
+      throw new CustomException(UserErrorCode.NO_USER);
+    }
+
+    return user.id;
   }
 }
