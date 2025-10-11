@@ -1,5 +1,5 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { API_TAGS } from '@common/constants/api-tags.constants';
 
@@ -23,6 +23,10 @@ export class OAuthV1Controller {
   })
   @Public()
   @UseGuards(GoogleOAuthGuard)
+  @ApiQuery({
+    name: 'code',
+    required: false,
+  })
   @Get('google/login')
   googleLogin() {}
   //  http://localhost:7777/v1/auth/google/login

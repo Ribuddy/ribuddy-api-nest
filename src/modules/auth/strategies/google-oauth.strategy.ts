@@ -31,10 +31,14 @@ export class GoogleOAuthStrategy extends PassportStrategy(Strategy, GOOGLE_OAUTH
       name: { familyName: string | undefined; givenName: string | undefined };
       emails: { value: string }[];
       photos: { value: string }[];
+      _raw: string;
     },
     done: VerifyCallback,
   ) {
+    console.log(__accessToken, '!!!!!', __refreshToken, profile);
     // console.log('Google OAUTH PROFILE:', profile);
+    // console.log('Google ID Token Raw', profile._raw);
+    // console.log('Google ID params', params);
 
     const user: GoogleOAuthUserData = {
       oauthProvider: OAuthProvider.GOOGLE,
