@@ -24,8 +24,8 @@ export class OAuthV2Controller {
   @Post('google/login')
   async googleLoginWithToken(@Body() req: GoogleOAuthDto) {
     // console.log('Google OAuth Callback:', req.user);
-
-    return req;
+    const googleUser = await this.googleService.verifyGoogleToken(req.idToken);
+    return this.googleService.googleOAuthLoginOrRegister(googleUser);
   }
 
   @Public()
