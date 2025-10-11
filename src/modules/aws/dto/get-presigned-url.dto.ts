@@ -2,15 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 
-export enum UploadDomain {
-  EVENTS = 'events',
-  COMMUNITY = 'community',
-}
-
-export enum UploadKind {
-  IMAGE = 'image',
-  VIDEO = 'video',
-}
+import { UploadDomain, UploadKind } from '@modules/aws/types/aws.types';
 
 export class GetPresignedUrlDto {
   @ApiProperty({ enum: UploadDomain })
