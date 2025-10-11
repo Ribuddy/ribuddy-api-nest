@@ -1,5 +1,6 @@
 import { Inject, Injectable, LoggerService, NestMiddleware } from '@nestjs/common';
 
+import * as Sentry from '@sentry/nestjs';
 import { NextFunction, Request, Response } from 'express';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
@@ -52,11 +53,8 @@ export class LoggerMiddleware implements NestMiddleware {
         this.logger.warn(logPayload);
       } else {
         this.logger.log(logPayload);
-        // this.logger.warn('WARN MESSAGE');
-        // this.logger.error('ERROR MESSAGE');
-        // this.logger.debug?.('DEBUG MESSAGE');
-        // this.logger.verbose?.('VERBOSE MESSAGE');
       }
+      Sentry.logger.info(logPayload.message, logPayload);
     });
 
     next();

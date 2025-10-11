@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { PassportModule } from '@nestjs/passport';
 
+import { SentryModule } from '@sentry/nestjs/setup';
 import cookieParser from 'cookie-parser';
 import { WinstonModule } from 'nest-winston';
 
@@ -43,7 +44,6 @@ const validate = (config: Record<string, unknown>) => {
 
 @Module({
   imports: [
-    PassportModule,
     // Global
     ConfigModule.forRoot({
       isGlobal: true,
@@ -61,7 +61,9 @@ const validate = (config: Record<string, unknown>) => {
       // validate,
     }),
     WinstonModule.forRoot(winstonLoggerOptions),
+    SentryModule.forRoot(),
     AlsModule,
+    PassportModule,
     // Non-Global
     AuthModule,
     UsersModule,

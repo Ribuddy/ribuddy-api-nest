@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Res, Version } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import { Response } from 'express';
 
 import { API_TAGS } from '@common/constants/api-tags.constants';
 
@@ -34,9 +36,18 @@ export class OAuthV2Controller {
     return this.googleService.verifyGoogleToken(req.idToken);
   }
 
+  // http://localhost:7777/v3/auth/google/login
   @Public()
-  @Get('test')
-  test() {
-    return this.googleService.getToken();
+  @Version('3')
+  @Get('google/login')
+  manualGoogleLogin(@Res() res: Response) {
+    res.redirect(this.googleService.getGoogleOAuthUrlV3());
+  }
+
+  @Public()
+  @Version('3')
+  @Get('google/callback')
+  manualGoogleCallback(@Query() query: any) {
+    return this.googleService.getGoogleTokenV3(query.code);
   }
 }

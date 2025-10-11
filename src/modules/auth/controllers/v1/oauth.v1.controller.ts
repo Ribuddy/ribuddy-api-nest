@@ -24,10 +24,6 @@ export class OAuthV1Controller {
   })
   @Public()
   @UseGuards(GoogleOAuthGuard)
-  @ApiQuery({
-    name: 'code',
-    required: false,
-  })
   @Get('google/login')
   googleLogin() {}
   //  http://localhost:7777/v1/auth/google/login

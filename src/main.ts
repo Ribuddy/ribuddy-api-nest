@@ -2,12 +2,19 @@ import { VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import * as Sentry from '@sentry/nestjs';
+
 import { corsOptions } from '@common/configs/cors-options.config';
-import { CookieName } from '@common/constants/cookie.constants';
 
 import { AppModule } from '@modules/app/app.module';
 
 async function bootstrap() {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN ?? '',
+    tracesSampleRate: 1.0,
+    enableLogs: true,
+  });
+
   const app = await NestFactory.create(AppModule, {
     cors: corsOptions,
     // logger: WinstonModule.createLogger(winstonLoggerOptions),

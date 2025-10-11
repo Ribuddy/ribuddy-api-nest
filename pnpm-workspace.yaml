@@ -5,6 +5,7 @@ onlyBuiltDependencies:
   - '@nestjs/core'
   - '@prisma/client'
   - '@prisma/engines'
+  - '@sentry-internal/node-cpu-profiler'
   - '@swc/core'
   - lefthook
   - prisma

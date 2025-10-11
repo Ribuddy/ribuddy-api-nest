@@ -28,7 +28,7 @@ export class GoogleOAuthService {
     this.client = new OAuth2Client({
       clientId: this.googleConfig.clientId,
       clientSecret: this.googleConfig.clientSecret,
-      redirectUri: this.googleConfig.callbackURL,
+      redirectUri: this.googleConfig.v1CallbackUrl,
     });
   }
 
@@ -54,11 +54,20 @@ export class GoogleOAuthService {
     return user;
   }
 
-  async getToken() {
+  getGoogleOAuthUrlV3() {
     // this.client.getToken()
     return this.client.generateAuthUrl({
-      redirect_uri: 'http://localhost:7777/test/basic/mirror',
-      scope: ['profile'],
+      redirect_uri: this.googleConfig.v3CallbackUrl,
+      scope: ['profile', 'email'],
+      access_type: 'offline',
+      prompt: 'consent',
+    });
+  }
+
+  getGoogleTokenV3(code: string) {
+    return this.client.getToken({
+      code: code,
+      redirect_uri: this.googleConfig.v3CallbackUrl,
     });
   }
 
