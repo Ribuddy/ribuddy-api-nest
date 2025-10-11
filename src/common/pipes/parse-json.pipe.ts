@@ -4,19 +4,17 @@ import {
   Inject,
   Injectable,
   InternalServerErrorException,
-  Logger,
+  LoggerService,
   PipeTransform,
 } from '@nestjs/common';
 
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-
-import { inspectObject } from '@common/utils/inspect-object.util';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 @Injectable()
 export class ParseJsonPipe implements PipeTransform {
-  constructor(@Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger) {}
+  constructor(@Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService) {}
   async transform(value: string, metadata: ArgumentMetadata) {
     // metadata.metatype에 DTO 클래스가 들어옵니다.
     const metatype = metadata.metatype;
@@ -30,7 +28,7 @@ export class ParseJsonPipe implements PipeTransform {
     const dtoInstance = plainToInstance(metatype, object);
     const errors = await validate(dtoInstance);
 
-    this.logger.verbose(`PARSE_JSON_PIPE: ${inspectObject(dtoInstance)}`);
+    // this.logger.verbose(`PARSE_JSON_PIPE: ${inspectObject(dtoInstance)}`);
 
     if (errors.length > 0) {
       throw new BadRequestException(`Validation failed: ${errors}`);

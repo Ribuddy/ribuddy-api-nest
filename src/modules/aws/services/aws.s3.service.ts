@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
 
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
@@ -15,14 +15,14 @@ import {
   MAX_VIDEO_SIZE,
   MAX_VIDEO_SIZE_GB,
 } from '@modules/aws/configs/aws-upload.config';
-import { AwsConfig } from '@modules/aws/configs/aws.config';
+import { AWS_CONFIG, AwsConfig } from '@modules/aws/configs/aws.config';
 import {
   ImageMaximumBatchCountExceededException,
   SingleImageMaximumSizedExceededException,
   TotalImageMaximumSizeExceededException,
   VideoMaximumSizeExceededException,
 } from '@modules/aws/exceptions/aws-upload.exception';
-import { AwsUploadDomain, AwsUploadFileType } from '@modules/aws/types/aws.types';
+import { AwsUploadFileType, UploadDomain } from '@modules/aws/types/aws.types';
 import { mimeToExt } from '@modules/aws/utils/mime-transfer';
 import { PrismaService } from '@modules/prisma/prisma.service';
 
@@ -31,11 +31,14 @@ export class AwsS3Service {
   private readonly s3: S3Client;
   private readonly bucket: string;
   private readonly cdn: string;
+  private readonly awsConfig: ConfigType<typeof AwsConfig>;
 
   constructor(
-    @Inject(AwsConfig.KEY) private readonly awsConfig: ConfigType<typeof AwsConfig>,
+    private readonly configService: ConfigService,
     private readonly prisma: PrismaService,
   ) {
+    this.awsConfig = this.configService.getOrThrow<ConfigType<typeof AwsConfig>>(AWS_CONFIG);
+
     this.bucket = this.awsConfig.bucket;
     this.cdn = this.awsConfig.cdnBaseUrl;
 
@@ -50,7 +53,7 @@ export class AwsS3Service {
   }
 
   async getPresignedPutUrl(opts: {
-    domain: AwsUploadDomain; // events나 community
+    domain: UploadDomain;
     kind: AwsUploadFileType; // image나 video
     contentType: string;
     size?: number; // 현재 파일 용량
@@ -59,33 +62,9 @@ export class AwsS3Service {
     ext?: string; // 확장자 (직접 전달 안 하면 mimeToExt로 자동 결정)
     expiresIn?: number; // Presigned URL 유효 시간
   }) {
-    const { domain, kind, contentType, size, totalSize, batchCount, ext, expiresIn = 600 } = opts;
+    const { domain, kind, contentType, size, ext, expiresIn = 600 } = opts;
 
-    // MIME 정책
-    if (kind === 'image' && !ALLOWED_IMAGE_MIME.has(contentType)) {
-      throw new BadRequestException(
-        `Unsupported image type. Allowed: ${[...ALLOWED_IMAGE_MIME].join(', ')}`,
-      );
-    } else if (kind === 'video' && !ALLOWED_VIDEO_MIME.has(contentType)) {
-      throw new BadRequestException(
-        `Unsupported video type. Allowed: ${[...ALLOWED_VIDEO_MIME].join(', ')}`,
-      );
-    }
-
-    // 용량 정책
-    if (kind === 'image') {
-      if (typeof size === 'number' && size > MAX_IMAGE_SIZE) {
-        throw new SingleImageMaximumSizedExceededException();
-      }
-      if (typeof totalSize === 'number' && totalSize > MAX_TOTAL_IMAGE_SIZE) {
-        throw new TotalImageMaximumSizeExceededException();
-      }
-      if (typeof batchCount === 'number' && batchCount > MAX_BATCH_IMAGES) {
-        throw new ImageMaximumBatchCountExceededException();
-      }
-    } else if (kind === 'video' && typeof size === 'number' && size > MAX_VIDEO_SIZE) {
-      throw new VideoMaximumSizeExceededException();
-    }
+    this.validateOptions(opts);
 
     const now = new Date();
     const yyyy = String(now.getUTCFullYear());
@@ -129,5 +108,41 @@ export class AwsS3Service {
     };
 
     return { uploadUrl, key, publicUrl, expiresIn, upload };
+  }
+
+  validateOptions(opts: {
+    kind: AwsUploadFileType; // image나 video
+    contentType: string;
+    size?: number; // 현재 파일 용량
+    totalSize?: number; // 배치 업로드 총합
+    batchCount?: number; // 업로드 총 장수
+  }) {
+    const { kind, contentType, size, totalSize, batchCount } = opts;
+
+    // MIME 정책
+    if (kind === 'image' && !ALLOWED_IMAGE_MIME.has(contentType)) {
+      throw new BadRequestException(
+        `Unsupported image type. Allowed: ${[...ALLOWED_IMAGE_MIME].join(', ')}`,
+      );
+    } else if (kind === 'video' && !ALLOWED_VIDEO_MIME.has(contentType)) {
+      throw new BadRequestException(
+        `Unsupported video type. Allowed: ${[...ALLOWED_VIDEO_MIME].join(', ')}`,
+      );
+    }
+
+    // 용량 정책
+    if (kind === 'image') {
+      if (typeof size === 'number' && size > MAX_IMAGE_SIZE) {
+        throw new SingleImageMaximumSizedExceededException();
+      }
+      if (typeof totalSize === 'number' && totalSize > MAX_TOTAL_IMAGE_SIZE) {
+        throw new TotalImageMaximumSizeExceededException();
+      }
+      if (typeof batchCount === 'number' && batchCount > MAX_BATCH_IMAGES) {
+        throw new ImageMaximumBatchCountExceededException();
+      }
+    } else if (kind === 'video' && typeof size === 'number' && size > MAX_VIDEO_SIZE) {
+      throw new VideoMaximumSizeExceededException();
+    }
   }
 }
