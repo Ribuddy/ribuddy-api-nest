@@ -26,6 +26,8 @@ export class DBTestController {
   async mongoCreateTest() {
     const result = await this.mongo.trackPoint.create({
       data: {
+        userId: BigInt(1),
+        ridingRecordId: BigInt(1),
         lat: 37.7749,
         lon: -122.4194,
         timestamp: new Date(),
