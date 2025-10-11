@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Inject,
+  Query,
   UseGuards,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
@@ -17,6 +18,7 @@ import { CustomResponse } from '@common/decorators/response/custom-response.deco
 import { ALS, AlsInstance } from '@modules/als/constants/als.constants';
 import { RequestContextService } from '@modules/als/services/request-context.service';
 import { Public } from '@modules/auth/decorators/public.decorator';
+import { ErrorType, ErrorTypeDto } from '@modules/test/dto/error.dto';
 
 @Controller({
   version: VERSION_NEUTRAL,
@@ -55,32 +57,22 @@ export class ErrorTestController {
     // };
   }
 
-  @Get('exception/normal')
+  @Get('exception')
   @ApiOperation({
     summary: 'Normal Error 발생 테스트 API',
-    description: `\`CustomException\`이나 \`HttpException\`에 모두 해당하지 않는, General한 Error를 throw 합니다.
-    \n비즈니스 로직에서 의도되지 않은 Exception이며, 외부 패키지 단에서 예상하지 못한 오류가 발생하는 경우가 해당합니다.
-    \n응답을 참고해주세요.`,
+    description: `Query String에 Error type을 명시하면 됩니다.`,
   })
-  raiseError() {
-    throw new Error('[NORMAL ERROR] 테스트 에러입니다.');
-  }
+  raiseError(@Query() query: ErrorTypeDto) {
+    const { type } = query;
 
-  @Get('exception/http')
-  @ApiOperation({
-    summary: 'HttpException 발생 테스트 API',
-    description: `HttpException를 throw 하는 API 입니다. 응답을 참고해주세요.`,
-  })
-  raiseHttpError(): string {
-    throw new BadRequestException('[HTTP ERROR] 테스트 에러입니다.');
-  }
-
-  @Get('exception/custom')
-  @ApiOperation({
-    summary: 'CustomException 발생 테스트 API',
-    description: `CustomException을 throw 하는 API 입니다. 응답을 참고해주세요.`,
-  })
-  raiseCustomError() {
-    throw new CustomException(CommonErrorCode.TEST_CUSTOM_ERROR);
+    if (type == ErrorType.NORMAL) {
+      throw new Error('[NORMAL ERROR] 테스트 에러입니다.');
+    } else if (type == ErrorType.HTTP) {
+      throw new BadRequestException('[HTTP ERROR] 테스트 에러입니다.');
+    } else if (type == ErrorType.CUSTOM) {
+      throw new CustomException(CommonErrorCode.TEST_CUSTOM_ERROR);
+    } else {
+      return 'type 쿼리를 normal, custom, http 중 하나로 설정해주세요.';
+    }
   }
 }
