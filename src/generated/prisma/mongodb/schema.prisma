@@ -13,13 +13,15 @@ datasource db {
 }
 
 model TrackPoint {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  lat       Float
-  lon       Float
-  altitude  Float?
-  timestamp DateTime @db.Timestamp()
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp()
-  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp()
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         BigInt   @map("user_id")
+  ridingRecordId BigInt   @map("riding_record_id")
+  lat            Float
+  lon            Float
+  ele            Float?
+  timestamp      DateTime @db.Timestamp()
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt      DateTime @default(now()) @map("updated_at") @db.Timestamp()
 
   @@map("track_point")
 }

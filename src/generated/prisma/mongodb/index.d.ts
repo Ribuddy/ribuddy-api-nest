@@ -68,6 +68,13 @@ export class PrismaClient<
    */
   $disconnect(): $Utils.JsPromise<void>;
 
+  /**
+   * Add a middleware
+   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
+   * @see https://pris.ly/d/extensions
+   */
+  $use(cb: Prisma.Middleware): void
+
 /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
    * @example
@@ -171,8 +178,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.17.0
-   * Query Engine version: c0aafc03b8ef6cdced8654b9a817999e02457d6a
+   * Prisma Client JS version: 6.13.0
+   * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
    */
   export type PrismaVersion = {
     client: string
@@ -788,6 +795,25 @@ export namespace Prisma {
     | 'findRaw'
     | 'groupBy'
 
+  /**
+   * These options are being passed into the middleware as "params"
+   */
+  export type MiddlewareParams = {
+    model?: ModelName
+    action: PrismaAction
+    args: any
+    dataPath: string[]
+    runInTransaction: boolean
+  }
+
+  /**
+   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
+   */
+  export type Middleware<T = any> = (
+    params: MiddlewareParams,
+    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
+  ) => $Utils.JsPromise<T>
+
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
 
@@ -823,22 +849,28 @@ export namespace Prisma {
   }
 
   export type TrackPointAvgAggregateOutputType = {
+    userId: number | null
+    ridingRecordId: number | null
     lat: number | null
     lon: number | null
-    altitude: number | null
+    ele: number | null
   }
 
   export type TrackPointSumAggregateOutputType = {
+    userId: bigint | null
+    ridingRecordId: bigint | null
     lat: number | null
     lon: number | null
-    altitude: number | null
+    ele: number | null
   }
 
   export type TrackPointMinAggregateOutputType = {
     id: string | null
+    userId: bigint | null
+    ridingRecordId: bigint | null
     lat: number | null
     lon: number | null
-    altitude: number | null
+    ele: number | null
     timestamp: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -846,9 +878,11 @@ export namespace Prisma {
 
   export type TrackPointMaxAggregateOutputType = {
     id: string | null
+    userId: bigint | null
+    ridingRecordId: bigint | null
     lat: number | null
     lon: number | null
-    altitude: number | null
+    ele: number | null
     timestamp: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -856,9 +890,11 @@ export namespace Prisma {
 
   export type TrackPointCountAggregateOutputType = {
     id: number
+    userId: number
+    ridingRecordId: number
     lat: number
     lon: number
-    altitude: number
+    ele: number
     timestamp: number
     createdAt: number
     updatedAt: number
@@ -867,22 +903,28 @@ export namespace Prisma {
 
 
   export type TrackPointAvgAggregateInputType = {
+    userId?: true
+    ridingRecordId?: true
     lat?: true
     lon?: true
-    altitude?: true
+    ele?: true
   }
 
   export type TrackPointSumAggregateInputType = {
+    userId?: true
+    ridingRecordId?: true
     lat?: true
     lon?: true
-    altitude?: true
+    ele?: true
   }
 
   export type TrackPointMinAggregateInputType = {
     id?: true
+    userId?: true
+    ridingRecordId?: true
     lat?: true
     lon?: true
-    altitude?: true
+    ele?: true
     timestamp?: true
     createdAt?: true
     updatedAt?: true
@@ -890,9 +932,11 @@ export namespace Prisma {
 
   export type TrackPointMaxAggregateInputType = {
     id?: true
+    userId?: true
+    ridingRecordId?: true
     lat?: true
     lon?: true
-    altitude?: true
+    ele?: true
     timestamp?: true
     createdAt?: true
     updatedAt?: true
@@ -900,9 +944,11 @@ export namespace Prisma {
 
   export type TrackPointCountAggregateInputType = {
     id?: true
+    userId?: true
+    ridingRecordId?: true
     lat?: true
     lon?: true
-    altitude?: true
+    ele?: true
     timestamp?: true
     createdAt?: true
     updatedAt?: true
@@ -997,9 +1043,11 @@ export namespace Prisma {
 
   export type TrackPointGroupByOutputType = {
     id: string
+    userId: bigint
+    ridingRecordId: bigint
     lat: number
     lon: number
-    altitude: number | null
+    ele: number | null
     timestamp: Date
     createdAt: Date
     updatedAt: Date
@@ -1026,9 +1074,11 @@ export namespace Prisma {
 
   export type TrackPointSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
+    ridingRecordId?: boolean
     lat?: boolean
     lon?: boolean
-    altitude?: boolean
+    ele?: boolean
     timestamp?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1038,24 +1088,28 @@ export namespace Prisma {
 
   export type TrackPointSelectScalar = {
     id?: boolean
+    userId?: boolean
+    ridingRecordId?: boolean
     lat?: boolean
     lon?: boolean
-    altitude?: boolean
+    ele?: boolean
     timestamp?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TrackPointOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "lat" | "lon" | "altitude" | "timestamp" | "createdAt" | "updatedAt", ExtArgs["result"]["trackPoint"]>
+  export type TrackPointOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "ridingRecordId" | "lat" | "lon" | "ele" | "timestamp" | "createdAt" | "updatedAt", ExtArgs["result"]["trackPoint"]>
 
   export type $TrackPointPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TrackPoint"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      userId: bigint
+      ridingRecordId: bigint
       lat: number
       lon: number
-      altitude: number | null
+      ele: number | null
       timestamp: Date
       createdAt: Date
       updatedAt: Date
@@ -1452,9 +1506,11 @@ export namespace Prisma {
    */
   interface TrackPointFieldRefs {
     readonly id: FieldRef<"TrackPoint", 'String'>
+    readonly userId: FieldRef<"TrackPoint", 'BigInt'>
+    readonly ridingRecordId: FieldRef<"TrackPoint", 'BigInt'>
     readonly lat: FieldRef<"TrackPoint", 'Float'>
     readonly lon: FieldRef<"TrackPoint", 'Float'>
-    readonly altitude: FieldRef<"TrackPoint", 'Float'>
+    readonly ele: FieldRef<"TrackPoint", 'Float'>
     readonly timestamp: FieldRef<"TrackPoint", 'DateTime'>
     readonly createdAt: FieldRef<"TrackPoint", 'DateTime'>
     readonly updatedAt: FieldRef<"TrackPoint", 'DateTime'>
@@ -1812,9 +1868,11 @@ export namespace Prisma {
 
   export const TrackPointScalarFieldEnum: {
     id: 'id',
+    userId: 'userId',
+    ridingRecordId: 'ridingRecordId',
     lat: 'lat',
     lon: 'lon',
-    altitude: 'altitude',
+    ele: 'ele',
     timestamp: 'timestamp',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -1855,6 +1913,20 @@ export namespace Prisma {
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt'
+   */
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt[]'
+   */
+  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
 
 
@@ -1908,9 +1980,11 @@ export namespace Prisma {
     OR?: TrackPointWhereInput[]
     NOT?: TrackPointWhereInput | TrackPointWhereInput[]
     id?: StringFilter<"TrackPoint"> | string
+    userId?: BigIntFilter<"TrackPoint"> | bigint | number
+    ridingRecordId?: BigIntFilter<"TrackPoint"> | bigint | number
     lat?: FloatFilter<"TrackPoint"> | number
     lon?: FloatFilter<"TrackPoint"> | number
-    altitude?: FloatNullableFilter<"TrackPoint"> | number | null
+    ele?: FloatNullableFilter<"TrackPoint"> | number | null
     timestamp?: DateTimeFilter<"TrackPoint"> | Date | string
     createdAt?: DateTimeFilter<"TrackPoint"> | Date | string
     updatedAt?: DateTimeFilter<"TrackPoint"> | Date | string
@@ -1918,9 +1992,11 @@ export namespace Prisma {
 
   export type TrackPointOrderByWithRelationInput = {
     id?: SortOrder
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
     lat?: SortOrder
     lon?: SortOrder
-    altitude?: SortOrder
+    ele?: SortOrder
     timestamp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -1931,9 +2007,11 @@ export namespace Prisma {
     AND?: TrackPointWhereInput | TrackPointWhereInput[]
     OR?: TrackPointWhereInput[]
     NOT?: TrackPointWhereInput | TrackPointWhereInput[]
+    userId?: BigIntFilter<"TrackPoint"> | bigint | number
+    ridingRecordId?: BigIntFilter<"TrackPoint"> | bigint | number
     lat?: FloatFilter<"TrackPoint"> | number
     lon?: FloatFilter<"TrackPoint"> | number
-    altitude?: FloatNullableFilter<"TrackPoint"> | number | null
+    ele?: FloatNullableFilter<"TrackPoint"> | number | null
     timestamp?: DateTimeFilter<"TrackPoint"> | Date | string
     createdAt?: DateTimeFilter<"TrackPoint"> | Date | string
     updatedAt?: DateTimeFilter<"TrackPoint"> | Date | string
@@ -1941,9 +2019,11 @@ export namespace Prisma {
 
   export type TrackPointOrderByWithAggregationInput = {
     id?: SortOrder
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
     lat?: SortOrder
     lon?: SortOrder
-    altitude?: SortOrder
+    ele?: SortOrder
     timestamp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -1959,9 +2039,11 @@ export namespace Prisma {
     OR?: TrackPointScalarWhereWithAggregatesInput[]
     NOT?: TrackPointScalarWhereWithAggregatesInput | TrackPointScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"TrackPoint"> | string
+    userId?: BigIntWithAggregatesFilter<"TrackPoint"> | bigint | number
+    ridingRecordId?: BigIntWithAggregatesFilter<"TrackPoint"> | bigint | number
     lat?: FloatWithAggregatesFilter<"TrackPoint"> | number
     lon?: FloatWithAggregatesFilter<"TrackPoint"> | number
-    altitude?: FloatNullableWithAggregatesFilter<"TrackPoint"> | number | null
+    ele?: FloatNullableWithAggregatesFilter<"TrackPoint"> | number | null
     timestamp?: DateTimeWithAggregatesFilter<"TrackPoint"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"TrackPoint"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TrackPoint"> | Date | string
@@ -1969,9 +2051,11 @@ export namespace Prisma {
 
   export type TrackPointCreateInput = {
     id?: string
+    userId: bigint | number
+    ridingRecordId: bigint | number
     lat: number
     lon: number
-    altitude?: number | null
+    ele?: number | null
     timestamp: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -1979,27 +2063,33 @@ export namespace Prisma {
 
   export type TrackPointUncheckedCreateInput = {
     id?: string
+    userId: bigint | number
+    ridingRecordId: bigint | number
     lat: number
     lon: number
-    altitude?: number | null
+    ele?: number | null
     timestamp: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TrackPointUpdateInput = {
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
     lat?: FloatFieldUpdateOperationsInput | number
     lon?: FloatFieldUpdateOperationsInput | number
-    altitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    ele?: NullableFloatFieldUpdateOperationsInput | number | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TrackPointUncheckedUpdateInput = {
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
     lat?: FloatFieldUpdateOperationsInput | number
     lon?: FloatFieldUpdateOperationsInput | number
-    altitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    ele?: NullableFloatFieldUpdateOperationsInput | number | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -2007,27 +2097,33 @@ export namespace Prisma {
 
   export type TrackPointCreateManyInput = {
     id?: string
+    userId: bigint | number
+    ridingRecordId: bigint | number
     lat: number
     lon: number
-    altitude?: number | null
+    ele?: number | null
     timestamp: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TrackPointUpdateManyMutationInput = {
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
     lat?: FloatFieldUpdateOperationsInput | number
     lon?: FloatFieldUpdateOperationsInput | number
-    altitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    ele?: NullableFloatFieldUpdateOperationsInput | number | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TrackPointUncheckedUpdateManyInput = {
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
     lat?: FloatFieldUpdateOperationsInput | number
     lon?: FloatFieldUpdateOperationsInput | number
-    altitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    ele?: NullableFloatFieldUpdateOperationsInput | number | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -2046,6 +2142,17 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type BigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -2084,25 +2191,31 @@ export namespace Prisma {
 
   export type TrackPointCountOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
     lat?: SortOrder
     lon?: SortOrder
-    altitude?: SortOrder
+    ele?: SortOrder
     timestamp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TrackPointAvgOrderByAggregateInput = {
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
     lat?: SortOrder
     lon?: SortOrder
-    altitude?: SortOrder
+    ele?: SortOrder
   }
 
   export type TrackPointMaxOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
     lat?: SortOrder
     lon?: SortOrder
-    altitude?: SortOrder
+    ele?: SortOrder
     timestamp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -2110,18 +2223,22 @@ export namespace Prisma {
 
   export type TrackPointMinOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
     lat?: SortOrder
     lon?: SortOrder
-    altitude?: SortOrder
+    ele?: SortOrder
     timestamp?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TrackPointSumOrderByAggregateInput = {
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
     lat?: SortOrder
     lon?: SortOrder
-    altitude?: SortOrder
+    ele?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2140,6 +2257,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -2189,6 +2322,14 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -2222,6 +2363,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedBigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
@@ -2284,6 +2436,22 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {

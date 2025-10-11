@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// prisma generate --schema=prisma/mysql/schema.prisma
+// prisma db push --schema=prisma/mysql/schema.prisma
 
 generator client {
   provider      = "prisma-client-js"
@@ -29,6 +26,18 @@ model User {
   OAuthUser OAuthUser[]
 
   @@map("user")
+}
+
+model Friend {
+  user1         BigInt
+  user2         BigInt
+  user1Favorite Boolean @map("user1_favorite")
+  user2Favorite Boolean @map("user2_favorite")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
+
+  @@id([user1, user2])
 }
 
 model OAuthUser {

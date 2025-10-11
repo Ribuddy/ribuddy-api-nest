@@ -24,7 +24,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:generate": "prisma generate",
-    "prisma:db-push": "prisma db push"
+    "prisma:db-push": "prisma db push",
+    "prisma:generate-all": "pnpm prisma generate --schema=prisma/mysql/schema.prisma && pnpm prisma generate --schema=prisma/mongodb/schema.prisma",
+    "prisma:push-all": "pnpm prisma db push --schema=prisma/mysql/schema.prisma && pnpm prisma db push --schema=prisma/mongodb/schema.prisma"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.899.0",
