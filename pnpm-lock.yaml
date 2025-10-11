@@ -71,6 +71,9 @@ importers:
       gpx-builder:
         specifier: ^5.6.0
         version: 5.6.0
+      nanoid:
+        specifier: ^5.1.6
+        version: 5.1.6
       nest-winston:
         specifier: ^1.10.2
         version: 1.10.2(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(winston@3.18.2)
@@ -3835,6 +3838,11 @@ packages:
   mute-stream@2.0.0:
     resolution: {integrity: sha512-WWdIxpyjEn+FhQJQQv9aQAYlHoNVdzIzUySNV1gHUPDSdZJ3yZn7pAAbQcV7B56Mvu881q9FZV+0Vx2xC44VWA==}
     engines: {node: ^18.17.0 || >=20.5.0}
+
+  nanoid@5.1.6:
+    resolution: {integrity: sha512-c7+7RQ+dMB5dPwwCp4ee1/iV/q2P6aK1mTZcfr1BTuVlyW9hJYiMPybJCcnBlQtuSmTIWNeazm/zqNoZSSElBg==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
@@ -9511,6 +9519,8 @@ snapshots:
       xtend: 4.0.2
 
   mute-stream@2.0.0: {}
+
+  nanoid@5.1.6: {}
 
   natural-compare@1.4.0: {}
 
