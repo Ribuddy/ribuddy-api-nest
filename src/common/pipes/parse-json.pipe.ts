@@ -10,9 +10,7 @@ import {
 
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-import { WINSTON_MODULE_NEST_PROVIDER, WINSTON_MODULE_PROVIDER } from 'nest-winston';
-
-import { inspectObject } from '@common/utils/inspect-object.util';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 @Injectable()
 export class ParseJsonPipe implements PipeTransform {
