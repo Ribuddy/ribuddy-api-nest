@@ -7,6 +7,7 @@ import {
   LoggerService,
 } from '@nestjs/common';
 
+import { SentryExceptionCaptured } from '@sentry/nestjs';
 import { Request, Response } from 'express';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
@@ -23,6 +24,7 @@ import {
 export class HttpExceptionFilter implements ExceptionFilter {
   constructor(@Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService) {}
 
+  @SentryExceptionCaptured()
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
