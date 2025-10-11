@@ -7,7 +7,7 @@ import {
 } from '@modules/driving/dto/event.driving.dto';
 
 @Controller({
-  path: 'event',
+  path: 'driving/event',
   version: '1',
 })
 @ApiTags('주행 중 이벤트')

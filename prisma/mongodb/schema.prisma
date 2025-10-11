@@ -1,0 +1,27 @@
+// prisma generate --schema=prisma/mongodb/schema.prisma
+// prisma db push --schema=prisma/mongodb/schema.prisma
+
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../../src/generated/prisma/mongodb"
+  binaryTargets = ["native", "darwin", "darwin-arm64", "linux-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x", "windows", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL_MONGODB")
+}
+
+model TrackPoint {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         BigInt   @map("user_id")
+  ridingRecordId BigInt   @map("riding_record_id")
+  lat            Float
+  lon            Float
+  ele            Float?
+  timestamp      DateTime @db.Timestamp()
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt      DateTime @default(now()) @map("updated_at") @db.Timestamp()
+
+  @@map("track_point")
+}

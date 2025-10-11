@@ -15,7 +15,10 @@ import {
 import { UsersService } from '@modules/users/services/users.service';
 
 @ApiTags('users')
-@Controller('users')
+@Controller({
+  path: 'users',
+  version: '1',
+})
 export class UsersV1Controller {
   constructor(
     private readonly usersService: UsersService,

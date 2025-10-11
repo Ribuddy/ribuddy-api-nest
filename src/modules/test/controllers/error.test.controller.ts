@@ -19,7 +19,7 @@ import { Public } from '@modules/auth/decorators/public.decorator';
 
 @Controller({
   version: VERSION_NEUTRAL,
-  path: 'test',
+  path: 'test/error',
 })
 @Public()
 @ApiTags('Test API')
