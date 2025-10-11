@@ -3,12 +3,12 @@ import { Injectable } from '@nestjs/common';
 import { CustomException } from '@common/codes/custom.exception';
 import { UserErrorCode } from '@common/codes/error/user.error.code';
 
-import { PrismaService } from '@modules/prisma/prisma.service';
+import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.service';
 import { EditUserProfileRequestDto } from '@modules/users/dto/user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: MySQLPrismaService) {}
 
   /**
    * 내 정보 조회

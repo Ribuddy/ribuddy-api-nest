@@ -24,7 +24,7 @@ import {
 } from '@modules/aws/exceptions/aws-upload.exception';
 import { AwsUploadFileType, UploadDomain } from '@modules/aws/types/aws.types';
 import { mimeToExt } from '@modules/aws/utils/mime-transfer';
-import { PrismaService } from '@modules/prisma/prisma.service';
+import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.service';
 
 @Injectable()
 export class AwsS3Service {
@@ -35,7 +35,7 @@ export class AwsS3Service {
 
   constructor(
     private readonly configService: ConfigService,
-    private readonly prisma: PrismaService,
+    private readonly prisma: MySQLPrismaService,
   ) {
     this.awsConfig = this.configService.getOrThrow<ConfigType<typeof AwsConfig>>(AWS_CONFIG);
 

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { PrismaService } from '@modules/prisma/prisma.service';
+import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.service';
 import { GoogleOAuthUserData, OAuthUserInfo } from '@modules/users/types/oauth.users.types';
 
 @Injectable()
 export class OAuthUserService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prismaService: MySQLPrismaService) {}
 
   async getUserByOAuth(oauthData: OAuthUserInfo) {
     return this.prismaService.oAuthUser.findUnique({

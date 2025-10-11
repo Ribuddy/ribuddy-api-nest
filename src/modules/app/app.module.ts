@@ -57,7 +57,7 @@ const validate = (config: Record<string, unknown>) => {
         FrontendUrlConfig,
         TmapConfig,
       ],
-      validate,
+      // validate,
     }),
     WinstonModule.forRoot(winstonLoggerOptions),
     AlsModule,
