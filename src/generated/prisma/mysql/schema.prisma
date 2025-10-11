@@ -13,15 +13,17 @@ datasource db {
 }
 
 model User {
-  id           BigInt   @id @default(autoincrement())
-  name         String   @db.VarChar(128)
-  nickname     String   @db.VarChar(128)
+  id                  BigInt   @id @default(autoincrement())
+  name                String   @db.VarChar(128)
+  nickname            String   @db.VarChar(128)
+  oneLineIntroduction String?  @map("one_line_introduction") @db.VarChar(128)
+  ribuddyId           String   @unique() @map("ribuddy_id")
   // gender        String   @db.VarChar(10)
   // birthdate     DateTime @db.Date
-  profileImage String?  @map("profile_image") @db.VarChar(512)
+  profileImage        String?  @map("profile_image") @db.VarChar(512)
   // phoneNumber   String?  @map("phone_number") @db.VarChar(15)
-  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt    DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt           DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
 
   OAuthUser OAuthUser[]
 
@@ -34,7 +36,7 @@ model User {
 model Friend {
   fromUserId BigInt
   toUserId   BigInt
-  isFavorite Boolean @map("is_favorite")
+  isFavorite Boolean @default(false) @map("is_favorite")
 
   fromUser User @relation("FriendRequestSender", fields: [fromUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   toUser   User @relation("FriendRequestReceiver", fields: [toUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -43,6 +45,7 @@ model Friend {
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
 
   @@id([fromUserId, toUserId])
+  @@map("friend")
 }
 
 model OAuthUser {

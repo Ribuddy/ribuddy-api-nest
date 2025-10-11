@@ -1515,6 +1515,8 @@ export namespace Prisma {
     id: bigint | null
     name: string | null
     nickname: string | null
+    oneLineIntroduction: string | null
+    ribuddyId: string | null
     profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1524,6 +1526,8 @@ export namespace Prisma {
     id: bigint | null
     name: string | null
     nickname: string | null
+    oneLineIntroduction: string | null
+    ribuddyId: string | null
     profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1533,6 +1537,8 @@ export namespace Prisma {
     id: number
     name: number
     nickname: number
+    oneLineIntroduction: number
+    ribuddyId: number
     profileImage: number
     createdAt: number
     updatedAt: number
@@ -1552,6 +1558,8 @@ export namespace Prisma {
     id?: true
     name?: true
     nickname?: true
+    oneLineIntroduction?: true
+    ribuddyId?: true
     profileImage?: true
     createdAt?: true
     updatedAt?: true
@@ -1561,6 +1569,8 @@ export namespace Prisma {
     id?: true
     name?: true
     nickname?: true
+    oneLineIntroduction?: true
+    ribuddyId?: true
     profileImage?: true
     createdAt?: true
     updatedAt?: true
@@ -1570,6 +1580,8 @@ export namespace Prisma {
     id?: true
     name?: true
     nickname?: true
+    oneLineIntroduction?: true
+    ribuddyId?: true
     profileImage?: true
     createdAt?: true
     updatedAt?: true
@@ -1666,6 +1678,8 @@ export namespace Prisma {
     id: bigint
     name: string
     nickname: string
+    oneLineIntroduction: string | null
+    ribuddyId: string
     profileImage: string | null
     createdAt: Date
     updatedAt: Date
@@ -1694,6 +1708,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     nickname?: boolean
+    oneLineIntroduction?: boolean
+    ribuddyId?: boolean
     profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1709,12 +1725,14 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     nickname?: boolean
+    oneLineIntroduction?: boolean
+    ribuddyId?: boolean
     profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "nickname" | "profileImage" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "nickname" | "oneLineIntroduction" | "ribuddyId" | "profileImage" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     OAuthUser?: boolean | User$OAuthUserArgs<ExtArgs>
     sentFriendRequests?: boolean | User$sentFriendRequestsArgs<ExtArgs>
@@ -1733,6 +1751,8 @@ export namespace Prisma {
       id: bigint
       name: string
       nickname: string
+      oneLineIntroduction: string | null
+      ribuddyId: string
       profileImage: string | null
       createdAt: Date
       updatedAt: Date
@@ -2111,6 +2131,8 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'BigInt'>
     readonly name: FieldRef<"User", 'String'>
     readonly nickname: FieldRef<"User", 'String'>
+    readonly oneLineIntroduction: FieldRef<"User", 'String'>
+    readonly ribuddyId: FieldRef<"User", 'String'>
     readonly profileImage: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -9060,6 +9082,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     nickname: 'nickname',
+    oneLineIntroduction: 'oneLineIntroduction',
+    ribuddyId: 'ribuddyId',
     profileImage: 'profileImage',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -9169,6 +9193,8 @@ export namespace Prisma {
   export const UserOrderByRelevanceFieldEnum: {
     name: 'name',
     nickname: 'nickname',
+    oneLineIntroduction: 'oneLineIntroduction',
+    ribuddyId: 'ribuddyId',
     profileImage: 'profileImage'
   };
 
@@ -9272,6 +9298,8 @@ export namespace Prisma {
     id?: BigIntFilter<"User"> | bigint | number
     name?: StringFilter<"User"> | string
     nickname?: StringFilter<"User"> | string
+    oneLineIntroduction?: StringNullableFilter<"User"> | string | null
+    ribuddyId?: StringFilter<"User"> | string
     profileImage?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -9284,6 +9312,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrderInput | SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9295,23 +9325,27 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
+    ribuddyId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     nickname?: StringFilter<"User"> | string
+    oneLineIntroduction?: StringNullableFilter<"User"> | string | null
     profileImage?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     OAuthUser?: OAuthUserListRelationFilter
     sentFriendRequests?: FriendListRelationFilter
     receivedFriendRequests?: FriendListRelationFilter
-  }, "id">
+  }, "id" | "ribuddyId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrderInput | SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9329,6 +9363,8 @@ export namespace Prisma {
     id?: BigIntWithAggregatesFilter<"User"> | bigint | number
     name?: StringWithAggregatesFilter<"User"> | string
     nickname?: StringWithAggregatesFilter<"User"> | string
+    oneLineIntroduction?: StringNullableWithAggregatesFilter<"User"> | string | null
+    ribuddyId?: StringWithAggregatesFilter<"User"> | string
     profileImage?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -9758,6 +9794,8 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9770,6 +9808,8 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9782,6 +9822,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9794,6 +9836,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9806,6 +9850,8 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9815,6 +9861,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9824,13 +9872,15 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FriendCreateInput = {
-    isFavorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     fromUser: UserCreateNestedOneWithoutSentFriendRequestsInput
@@ -9840,7 +9890,7 @@ export namespace Prisma {
   export type FriendUncheckedCreateInput = {
     fromUserId: bigint | number
     toUserId: bigint | number
-    isFavorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9864,7 +9914,7 @@ export namespace Prisma {
   export type FriendCreateManyInput = {
     fromUserId: bigint | number
     toUserId: bigint | number
-    isFavorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10310,6 +10360,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10323,6 +10375,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10332,6 +10386,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     nickname?: SortOrder
+    oneLineIntroduction?: SortOrder
+    ribuddyId?: SortOrder
     profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11332,7 +11388,7 @@ export namespace Prisma {
   }
 
   export type FriendCreateWithoutFromUserInput = {
-    isFavorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     toUser: UserCreateNestedOneWithoutReceivedFriendRequestsInput
@@ -11340,7 +11396,7 @@ export namespace Prisma {
 
   export type FriendUncheckedCreateWithoutFromUserInput = {
     toUserId: bigint | number
-    isFavorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11356,7 +11412,7 @@ export namespace Prisma {
   }
 
   export type FriendCreateWithoutToUserInput = {
-    isFavorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     fromUser: UserCreateNestedOneWithoutSentFriendRequestsInput
@@ -11364,7 +11420,7 @@ export namespace Prisma {
 
   export type FriendUncheckedCreateWithoutToUserInput = {
     fromUserId: bigint | number
-    isFavorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11453,6 +11509,8 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11464,6 +11522,8 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11480,6 +11540,8 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11491,6 +11553,8 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11518,6 +11582,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11529,6 +11595,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11551,6 +11619,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11562,6 +11632,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11573,6 +11645,8 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11584,6 +11658,8 @@ export namespace Prisma {
     id?: bigint | number
     name: string
     nickname: string
+    oneLineIntroduction?: string | null
+    ribuddyId: string
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11611,6 +11687,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11622,6 +11700,8 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
+    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
+    ribuddyId?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11638,14 +11718,14 @@ export namespace Prisma {
 
   export type FriendCreateManyFromUserInput = {
     toUserId: bigint | number
-    isFavorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type FriendCreateManyToUserInput = {
     fromUserId: bigint | number
-    isFavorite: boolean
+    isFavorite?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }

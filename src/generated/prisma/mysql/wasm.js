@@ -124,6 +124,8 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   nickname: 'nickname',
+  oneLineIntroduction: 'oneLineIntroduction',
+  ribuddyId: 'ribuddyId',
   profileImage: 'profileImage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -203,6 +205,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
   name: 'name',
   nickname: 'nickname',
+  oneLineIntroduction: 'oneLineIntroduction',
+  ribuddyId: 'ribuddyId',
   profileImage: 'profileImage'
 };
 
