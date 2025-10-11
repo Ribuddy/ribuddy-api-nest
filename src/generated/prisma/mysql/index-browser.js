@@ -150,6 +150,8 @@ exports.Prisma.OAuthUserScalarFieldEnum = {
 exports.Prisma.TeamScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  description: 'description',
+  isCrew: 'isCrew',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -158,6 +160,14 @@ exports.Prisma.TeamMemberScalarFieldEnum = {
   teamId: 'teamId',
   userId: 'userId',
   role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TeamJoinCodeScalarFieldEnum = {
+  teamId: 'teamId',
+  code: 'code',
+  expiresAt: 'expiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -216,11 +226,12 @@ exports.Prisma.OAuthUserOrderByRelevanceFieldEnum = {
 };
 
 exports.Prisma.TeamOrderByRelevanceFieldEnum = {
-  name: 'name'
+  name: 'name',
+  description: 'description'
 };
 
-exports.Prisma.TeamMemberOrderByRelevanceFieldEnum = {
-  role: 'role'
+exports.Prisma.TeamJoinCodeOrderByRelevanceFieldEnum = {
+  code: 'code'
 };
 
 exports.Prisma.RefreshTokenOrderByRelevanceFieldEnum = {
@@ -234,7 +245,10 @@ exports.Prisma.S3UploadedFilesOrderByRelevanceFieldEnum = {
   url: 'url',
   mimeType: 'mimeType'
 };
-
+exports.TeamMemberRole = exports.$Enums.TeamMemberRole = {
+  LEADER: 'LEADER',
+  MEMBER: 'MEMBER'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -242,6 +256,7 @@ exports.Prisma.ModelName = {
   OAuthUser: 'OAuthUser',
   Team: 'Team',
   TeamMember: 'TeamMember',
+  TeamJoinCode: 'TeamJoinCode',
   RidingRecord: 'RidingRecord',
   RefreshToken: 'RefreshToken',
   S3UploadedFiles: 'S3UploadedFiles'
