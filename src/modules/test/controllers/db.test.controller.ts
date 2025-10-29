@@ -1,6 +1,8 @@
 import { Controller, Get, Post, VERSION_NEUTRAL } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+import { RedisService } from '@liaoliaots/nestjs-redis';
+
 import { API_TAGS } from '@common/constants/api-tags.constants';
 
 import { Public } from '@modules/auth/decorators/public.decorator';
@@ -18,6 +20,7 @@ export class DBTestController {
   constructor(
     private readonly mysql: MySQLPrismaService,
     private readonly mongo: MongoDBPrismaService,
+    private readonly redis: RedisService,
   ) {}
   @Get('mysql/all-users')
   async mysqlTest() {
@@ -38,5 +41,12 @@ export class DBTestController {
     });
 
     return result;
+  }
+
+  @Post('redis/set-test')
+  redisSetTest() {
+    const redis = this.redis.getOrThrow();
+    // redis.geoadd()
+    return redis.set('test-key', 'test-value');
   }
 }
