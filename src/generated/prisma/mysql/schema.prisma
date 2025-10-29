@@ -25,8 +25,9 @@ model User {
   createdAt           DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt           DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
 
-  OAuthUser  OAuthUser[]
-  TeamMember TeamMember[]
+  OAuthUser    OAuthUser[]
+  TeamMember   TeamMember[]
+  RidingMember RidingMember[]
 
   sentFriendRequests     Friend[] @relation("FriendRequestSender")
   receivedFriendRequests Friend[] @relation("FriendRequestReceiver")
@@ -67,20 +68,25 @@ model Team {
   name        String  @db.VarChar(20)
   description String? @db.VarChar(255)
   isCrew      Boolean @default(false) @map("is_crew")
+  isDeleted   Boolean @default(false) @map("is_deleted")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
 
-  members  TeamMember[]
-  joinCode TeamJoinCode[]
+  members       TeamMember[]
+  joinCode      TeamJoinCode[]
+  ridingMembers RidingMember[]
+  RidingRecord  RidingRecord[]
 
   @@map("team")
 }
 
 model TeamMember {
-  teamId BigInt         @map("team_id")
-  userId BigInt         @map("user_id")
-  role   TeamMemberRole
+  teamId BigInt @map("team_id")
+  userId BigInt @map("user_id")
+
+  isAdmin         Boolean @default(false) @map("is_admin")
+  isCurrentMember Boolean @default(true) @map("is_member")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
@@ -109,18 +115,40 @@ model TeamJoinCode {
 
 model RidingRecord {
   id          BigInt               @id @default(autoincrement())
-  userId      BigInt?              @map("user_id")
-  teamId      BigInt?              @map("team_id")
+  type        RidingType           @map("riding_type")
   distance    Float
   duration    Int
   startPos    Unsupported("POINT") @map("start_pos")
   stopOverPos Unsupported("POINT") @map("stop_over_pos")
   endPos      Unsupported("POINT") @map("end_pos")
-  createdAt   DateTime             @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt   DateTime             @default(now()) @map("updated_at") @db.Timestamp(6)
 
-  @@index([userId], name: "idx_user_id")
+  // 팀으로 라이딩한 경우 팀 같이 기록해두기
+  TeamId BigInt? @map("team_id")
+  Team   Team?   @relation(fields: [TeamId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
+
+  RidingMember RidingMember[]
+
   @@map("riding_record")
+}
+
+model RidingMember {
+  ridingRecordId BigInt  @map("riding_record_id")
+  userId         BigInt  @map("user_id")
+  teamId         BigInt? @map("team_id")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
+
+  RidingRecord RidingRecord @relation(fields: [ridingRecordId], references: [id])
+  User         User         @relation(fields: [userId], references: [id])
+  Team         Team?        @relation(fields: [teamId], references: [id])
+
+  @@id([ridingRecordId, userId])
+  @@index([userId], name: "idx_user_id")
+  @@map("riding_member")
 }
 
 model RefreshToken {
@@ -148,7 +176,7 @@ model S3UploadedFiles {
   @@map("s3_uploaded_files")
 }
 
-enum TeamMemberRole {
-  LEADER
-  MEMBER
+enum RidingType {
+  SOLO
+  TEAM
 }
