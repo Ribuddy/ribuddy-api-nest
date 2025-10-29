@@ -23,14 +23,14 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prisma:generate": "prisma generate",
-    "prisma:db-push": "prisma db push",
-    "prisma:generate-all": "pnpm prisma generate --schema=prisma/mysql/schema.prisma && pnpm prisma generate --schema=prisma/mongodb/schema.prisma",
-    "prisma:push-all": "pnpm prisma db push --schema=prisma/mysql/schema.prisma && pnpm prisma db push --schema=prisma/mongodb/schema.prisma"
+    "prisma:format": "pnpm prisma format --schema=prisma/mysql/schema.prisma && pnpm prisma format --schema=prisma/mongodb/schema.prisma",
+    "prisma:generate": "pnpm prisma generate --schema=prisma/mysql/schema.prisma && pnpm prisma generate --schema=prisma/mongodb/schema.prisma",
+    "prisma:push": "pnpm prisma db push --schema=prisma/mysql/schema.prisma && pnpm prisma db push --schema=prisma/mongodb/schema.prisma"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.899.0",
     "@aws-sdk/s3-request-presigner": "^3.899.0",
+    "@liaoliaots/nestjs-redis": "^10.0.0",
     "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.1.6",
     "@nestjs/config": "^4.0.2",
@@ -50,6 +50,7 @@
     "cookie-parser": "^1.4.7",
     "google-auth-library": "^10.4.0",
     "gpx-builder": "^5.6.0",
+    "ioredis": "^5.8.2",
     "nanoid": "^5.1.6",
     "nest-winston": "^1.10.2",
     "passport": "^0.7.0",
