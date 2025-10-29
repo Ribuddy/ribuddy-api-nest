@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as Sentry from '@sentry/nestjs';
 
 import { corsOptions } from '@common/configs/cors-options.config';
+import { API_TAGS } from '@common/constants/api-tags.constants';
 
 import { AppModule } from '@modules/app/app.module';
 
@@ -25,15 +26,22 @@ async function bootstrap() {
   });
 
   // DocumentBuilder를 이용해 Swagger 문서 기본 정보 구성
-  const config = new DocumentBuilder()
+  const configBuilder = new DocumentBuilder()
     .setTitle('RiBuddy Nest API Documentation')
     .setDescription('Chung-Ang University Software Capstone Design')
     .setVersion('0.1.0')
     .addBearerAuth()
     .addServer('http://localhost:7777', 'Local server')
     .addServer('https://ribuddy.kyeoungwoon.kr', 'Dev server (Home)')
-    .setLicense('MIT', 'https://opensource.org/license/mit/')
-    .build();
+    .setLicense('MIT', 'https://opensource.org/license/mit/');
+
+  // 2. 정의된 순서대로 .addTag() 호출
+  Object.values(API_TAGS).forEach((tag) => {
+    configBuilder.addTag(tag, `APIs`); // 각 태그에 설명 추가
+  });
+
+  // 3. 빌드 완료
+  const config = configBuilder.build();
 
   // 설정을 바탕으로 문서 생성
   const document = SwaggerModule.createDocument(app, config);

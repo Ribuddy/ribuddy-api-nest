@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { API_TAGS } from '@common/constants/api-tags.constants';
 
@@ -21,12 +21,20 @@ export class MapV1Controller {
     private readonly tmapSearchService: TmapSearchService,
   ) {}
 
+  @ApiOperation({
+    summary: '[WIP] Tmap 길찾기 API',
+    deprecated: true,
+  })
   @Post('routes')
   @Public()
   getRoute(@Body() routeRequestDto: RouteRequestDto) {
     return this.tmapRouteService.findRoute(routeRequestDto);
   }
 
+  @ApiOperation({
+    summary: '[WIP] Tmap 장소 찾기 API',
+    deprecated: true,
+  })
   @Post('search')
   @Public()
   searchPoi(@Body() poiRequestDto: PoiSearchRequestDto) {

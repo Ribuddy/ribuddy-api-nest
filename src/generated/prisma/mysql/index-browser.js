@@ -152,6 +152,7 @@ exports.Prisma.TeamScalarFieldEnum = {
   name: 'name',
   description: 'description',
   isCrew: 'isCrew',
+  isDeleted: 'isDeleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -159,7 +160,8 @@ exports.Prisma.TeamScalarFieldEnum = {
 exports.Prisma.TeamMemberScalarFieldEnum = {
   teamId: 'teamId',
   userId: 'userId',
-  role: 'role',
+  isAdmin: 'isAdmin',
+  isCurrentMember: 'isCurrentMember',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -174,10 +176,18 @@ exports.Prisma.TeamJoinCodeScalarFieldEnum = {
 
 exports.Prisma.RidingRecordScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  teamId: 'teamId',
+  type: 'type',
   distance: 'distance',
   duration: 'duration',
+  TeamId: 'TeamId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RidingMemberScalarFieldEnum = {
+  ridingRecordId: 'ridingRecordId',
+  userId: 'userId',
+  teamId: 'teamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -245,9 +255,9 @@ exports.Prisma.S3UploadedFilesOrderByRelevanceFieldEnum = {
   url: 'url',
   mimeType: 'mimeType'
 };
-exports.TeamMemberRole = exports.$Enums.TeamMemberRole = {
-  LEADER: 'LEADER',
-  MEMBER: 'MEMBER'
+exports.RidingType = exports.$Enums.RidingType = {
+  SOLO: 'SOLO',
+  TEAM: 'TEAM'
 };
 
 exports.Prisma.ModelName = {
@@ -258,6 +268,7 @@ exports.Prisma.ModelName = {
   TeamMember: 'TeamMember',
   TeamJoinCode: 'TeamJoinCode',
   RidingRecord: 'RidingRecord',
+  RidingMember: 'RidingMember',
   RefreshToken: 'RefreshToken',
   S3UploadedFiles: 'S3UploadedFiles'
 };

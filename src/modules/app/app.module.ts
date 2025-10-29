@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { PassportModule } from '@nestjs/passport';
 
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { SentryModule } from '@sentry/nestjs/setup';
 import cookieParser from 'cookie-parser';
 import { WinstonModule } from 'nest-winston';
@@ -62,6 +63,14 @@ const validate = (config: Record<string, unknown>) => {
     }),
     WinstonModule.forRoot(winstonLoggerOptions),
     SentryModule.forRoot(),
+    RedisModule.forRoot({
+      config: {
+        host: process.env.REDIS_URL as string,
+        port: process.env.REDIS_PORT as unknown as number,
+        password: process.env.REDIS_PASSWORD as string,
+        // 비밀번호 등 필요한 설정 추가 가능
+      },
+    }),
     AlsModule,
     PassportModule,
     // Non-Global

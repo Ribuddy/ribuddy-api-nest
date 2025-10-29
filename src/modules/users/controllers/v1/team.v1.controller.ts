@@ -32,7 +32,7 @@ export class TeamV1Controller {
 
   @Post('join')
   @ApiOperation({
-    summary: '라이딩 팀 참여하기',
+    summary: '팀 참여하기',
     description: '팀 ID를 통해 해당 팀에 참여합니다.',
   })
   joinTeam(@Body() body: JoinOrLeaveTeamRequestDto) {
@@ -43,7 +43,7 @@ export class TeamV1Controller {
 
   @Post()
   @ApiOperation({
-    summary: '라이딩 팀 생성',
+    summary: '팀 생성',
     description: '라이딩 팀을 생성합니다.',
   })
   makeTeam(@Body() body: MakeTeamRequestDto) {
@@ -58,12 +58,20 @@ export class TeamV1Controller {
   }
 
   @Delete()
+  @ApiOperation({
+    summary: '팀 탈퇴하기',
+    description: '팀을 탈퇴합니다.',
+  })
   async leaveTeam(@Body() body: JoinOrLeaveTeamRequestDto) {
     const userId = this.requestContextService.getOrThrowUserId();
     return this.teamService.leaveTeam(userId, body.id);
   }
 
   @Get('join-code/:id')
+  @ApiOperation({
+    summary: 'Team ID를 받아, 해당 팀에 대한 참여 코드를 생성합니다.',
+    description: '사용자는 해당 팀에 속해 있어야 합니다.',
+  })
   async getTeamJoinCode(@Param('id', ParseBigIntPipe) teamId: bigint) {
     const userId = this.requestContextService.getOrThrowUserId();
 

@@ -8,7 +8,7 @@ GPX 파일 구성
 gpx-builder를 사용해서 object 등을 생성하겠지만, 기본 DTO는 직접 제작해서 사용 예정
 
  */
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 
 import { Transform, Type } from 'class-transformer';
 import { IsDate, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
@@ -63,3 +63,5 @@ export class GpxTrack {
     return this._trkseg;
   }
 }
+
+export class LatLonEleDto extends PickType(GpxTrackPoint, ['lat', 'lon', 'ele'] as const) {}
