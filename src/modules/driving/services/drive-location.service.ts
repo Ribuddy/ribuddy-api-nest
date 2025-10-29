@@ -20,16 +20,16 @@ export class DriveLocationService {
   }
 
   async setUserLocation(userId: bigint, lat: number, lon: number) {
-    const member = REDIS.USER_LOCATION.member(userId);
-    await this.redis.geoadd(REDIS.USER_LOCATION.key, lon, lat, member);
+    const member = REDIS.USER_LOCATION.MEMBER_KEY(userId);
+    await this.redis.geoadd(REDIS.USER_LOCATION.COLLECTION_KEY, lon, lat, member);
 
     return;
   }
 
   // 사용자 ID를 받아서, 해당 사용자의 위치 정보를 가져오는 service
   async getUserLocation(userId: bigint): Promise<UserLocation | null> {
-    const member = REDIS.USER_LOCATION.member(userId);
-    const result = await this.redis.geopos(REDIS.USER_LOCATION.key, member);
+    const member = REDIS.USER_LOCATION.MEMBER_KEY(userId);
+    const result = await this.redis.geopos(REDIS.USER_LOCATION.COLLECTION_KEY, member);
 
     if (result && result[0]) {
       const [lon, lat] = result[0];
@@ -41,16 +41,15 @@ export class DriveLocationService {
 
   // teamId를 받아서, redis에 해당 팀이 라이딩을 시작한 것을 기록함
   async startTeamRiding(teamId: bigint) {
-    const member = REDIS.CURRENT_RIDING_TEAM.member(teamId);
-    await this.redis.set(REDIS.CURRENT_RIDING_TEAM.key, member);
+    await this.redis.set(REDIS.CURRENT_RIDING_TEAM.KEY(teamId), 1);
 
     return;
   }
 
   // teamId를 받아서, '라이딩 중인 팀'에서 제거함
   async endTeamRiding(teamId: bigint) {
-    const member = REDIS.CURRENT_RIDING_TEAM.member(teamId);
-    await this.redis.del(member);
+    const key = REDIS.CURRENT_RIDING_TEAM.KEY(teamId);
+    await this.redis.del(key);
 
     return;
   }
@@ -59,11 +58,17 @@ export class DriveLocationService {
   async getUsersFromCurrentRidingTeam(userId: bigint) {
     const userTeamList = await this.teamUserService.getTeamList(userId);
 
-    const currentRidingTeam = userTeamList.filter(async (team) => {
-      const member = REDIS.CURRENT_RIDING_TEAM.member(BigInt(team.id));
-      const isRiding = await this.redis.exists(member);
-      return isRiding === 1;
-    });
+    const ridingStatusChecks = await Promise.all(
+      userTeamList.map(async (team) => {
+        const member = REDIS.CURRENT_RIDING_TEAM.KEY(BigInt(team.id));
+        const isRiding = await this.redis.exists(member);
+        return { team, isRiding: isRiding === 1 };
+      }),
+    );
+
+    const currentRidingTeam = ridingStatusChecks
+      .filter(({ isRiding }) => isRiding)
+      .map(({ team }) => team);
 
     const ridingMember = new Set<string>();
 

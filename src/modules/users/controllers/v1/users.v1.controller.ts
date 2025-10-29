@@ -43,7 +43,10 @@ export class UsersV1Controller {
     return this.usersService.getUserInfo(userId);
   }
 
-  @ApiOperation({ summary: '다른 사용자 정보 조회' })
+  @ApiOperation({
+    summary: '다른 사용자 정보 조회',
+    description: '현재 로그인한 사용자가 아닌, 다른 사용자에 대한 정보를 조회하는 API 입니다.',
+  })
   @ApiOkResponse({
     description: '내 정보 조회 성공',
     type: UserProfileResponseDto,

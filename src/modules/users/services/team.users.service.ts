@@ -56,14 +56,12 @@ export class TeamUsersService {
 
   // 팀 참여
   async joinTeam(userId: bigint, teamId: bigint) {
-    // 이미 팀의 사용자는 아닌지 확인 (팀에 속해있다가 탈퇴한 멤버 또한 보기)
-    const existingMembership = await this.prisma.teamMember.findUnique({
+    // 이미 팀의 사용자는 아닌지 확인
+    const existingMembership = await this.prisma.teamMember.findFirst({
       where: {
-        teamId_userId: {
-          teamId,
-          userId,
-        },
-        isCurrentMember: false,
+        teamId,
+        userId,
+        isCurrentMember: true,
       },
     });
 
@@ -109,7 +107,7 @@ export class TeamUsersService {
       throw new CustomException(UserErrorCode.NOT_IN_TEAM);
     }
 
-    // 시용자를 팀에서 제거 (soft delete)
+    // 사용자를 팀에서 제거 (soft delete)
     await this.prisma.teamMember.update({
       where: {
         teamId_userId: {
