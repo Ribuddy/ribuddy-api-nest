@@ -12,6 +12,6 @@ import { UsersService } from '@modules/users/services/users.service';
   imports: [JwtModule.registerAsync(JwtConfig.asProvider())],
   controllers: [UsersV1Controller, TeamV1Controller],
   providers: [UsersService, OAuthUserService, TeamUsersService],
-  exports: [UsersService, OAuthUserService],
+  exports: [UsersService, OAuthUserService, TeamUsersService],
 })
 export class UsersModule {}
