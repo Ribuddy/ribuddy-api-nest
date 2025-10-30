@@ -1197,6 +1197,14 @@ export namespace Prisma {
             args: Prisma.RidingRecordFindManyArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>[]
           }
+          create: {
+            args: Prisma.RidingRecordCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>
+          }
+          createMany: {
+            args: Prisma.RidingRecordCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
           delete: {
             args: Prisma.RidingRecordDeleteArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>
@@ -1212,6 +1220,10 @@ export namespace Prisma {
           updateMany: {
             args: Prisma.RidingRecordUpdateManyArgs<ExtArgs>
             result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.RidingRecordUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>
           }
           aggregate: {
             args: Prisma.RidingRecordAggregateArgs<ExtArgs>
@@ -1626,17 +1638,17 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    OAuthUser: number
-    TeamMember: number
-    RidingMember: number
+    oAuthUser: number
+    teamMember: number
+    ridingMember: number
     sentFriendRequests: number
     receivedFriendRequests: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    OAuthUser?: boolean | UserCountOutputTypeCountOAuthUserArgs
-    TeamMember?: boolean | UserCountOutputTypeCountTeamMemberArgs
-    RidingMember?: boolean | UserCountOutputTypeCountRidingMemberArgs
+    oAuthUser?: boolean | UserCountOutputTypeCountOAuthUserArgs
+    teamMember?: boolean | UserCountOutputTypeCountTeamMemberArgs
+    ridingMember?: boolean | UserCountOutputTypeCountRidingMemberArgs
     sentFriendRequests?: boolean | UserCountOutputTypeCountSentFriendRequestsArgs
     receivedFriendRequests?: boolean | UserCountOutputTypeCountReceivedFriendRequestsArgs
   }
@@ -1696,14 +1708,14 @@ export namespace Prisma {
     members: number
     joinCode: number
     ridingMembers: number
-    RidingRecord: number
+    ridingRecord: number
   }
 
   export type TeamCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | TeamCountOutputTypeCountMembersArgs
     joinCode?: boolean | TeamCountOutputTypeCountJoinCodeArgs
     ridingMembers?: boolean | TeamCountOutputTypeCountRidingMembersArgs
-    RidingRecord?: boolean | TeamCountOutputTypeCountRidingRecordArgs
+    ridingRecord?: boolean | TeamCountOutputTypeCountRidingRecordArgs
   }
 
   // Custom InputTypes
@@ -1751,11 +1763,11 @@ export namespace Prisma {
    */
 
   export type RidingRecordCountOutputType = {
-    RidingMember: number
+    ridingMember: number
   }
 
   export type RidingRecordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    RidingMember?: boolean | RidingRecordCountOutputTypeCountRidingMemberArgs
+    ridingMember?: boolean | RidingRecordCountOutputTypeCountRidingMemberArgs
   }
 
   // Custom InputTypes
@@ -2003,9 +2015,9 @@ export namespace Prisma {
     profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    OAuthUser?: boolean | User$OAuthUserArgs<ExtArgs>
-    TeamMember?: boolean | User$TeamMemberArgs<ExtArgs>
-    RidingMember?: boolean | User$RidingMemberArgs<ExtArgs>
+    oAuthUser?: boolean | User$oAuthUserArgs<ExtArgs>
+    teamMember?: boolean | User$teamMemberArgs<ExtArgs>
+    ridingMember?: boolean | User$ridingMemberArgs<ExtArgs>
     sentFriendRequests?: boolean | User$sentFriendRequestsArgs<ExtArgs>
     receivedFriendRequests?: boolean | User$receivedFriendRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2026,9 +2038,9 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "nickname" | "oneLineIntroduction" | "ribuddyId" | "profileImage" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    OAuthUser?: boolean | User$OAuthUserArgs<ExtArgs>
-    TeamMember?: boolean | User$TeamMemberArgs<ExtArgs>
-    RidingMember?: boolean | User$RidingMemberArgs<ExtArgs>
+    oAuthUser?: boolean | User$oAuthUserArgs<ExtArgs>
+    teamMember?: boolean | User$teamMemberArgs<ExtArgs>
+    ridingMember?: boolean | User$ridingMemberArgs<ExtArgs>
     sentFriendRequests?: boolean | User$sentFriendRequestsArgs<ExtArgs>
     receivedFriendRequests?: boolean | User$receivedFriendRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2037,9 +2049,9 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      OAuthUser: Prisma.$OAuthUserPayload<ExtArgs>[]
-      TeamMember: Prisma.$TeamMemberPayload<ExtArgs>[]
-      RidingMember: Prisma.$RidingMemberPayload<ExtArgs>[]
+      oAuthUser: Prisma.$OAuthUserPayload<ExtArgs>[]
+      teamMember: Prisma.$TeamMemberPayload<ExtArgs>[]
+      ridingMember: Prisma.$RidingMemberPayload<ExtArgs>[]
       sentFriendRequests: Prisma.$FriendPayload<ExtArgs>[]
       receivedFriendRequests: Prisma.$FriendPayload<ExtArgs>[]
     }
@@ -2392,9 +2404,9 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    OAuthUser<T extends User$OAuthUserArgs<ExtArgs> = {}>(args?: Subset<T, User$OAuthUserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    TeamMember<T extends User$TeamMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$TeamMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    RidingMember<T extends User$RidingMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$RidingMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    oAuthUser<T extends User$oAuthUserArgs<ExtArgs> = {}>(args?: Subset<T, User$oAuthUserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    teamMember<T extends User$teamMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$teamMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ridingMember<T extends User$ridingMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$ridingMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sentFriendRequests<T extends User$sentFriendRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$sentFriendRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receivedFriendRequests<T extends User$receivedFriendRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedFriendRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -2777,9 +2789,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.OAuthUser
+   * User.oAuthUser
    */
-  export type User$OAuthUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$oAuthUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the OAuthUser
      */
@@ -2801,9 +2813,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.TeamMember
+   * User.teamMember
    */
-  export type User$TeamMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$teamMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the TeamMember
      */
@@ -2825,9 +2837,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.RidingMember
+   * User.ridingMember
    */
-  export type User$RidingMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$ridingMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the RidingMember
      */
@@ -5066,7 +5078,7 @@ export namespace Prisma {
     members?: boolean | Team$membersArgs<ExtArgs>
     joinCode?: boolean | Team$joinCodeArgs<ExtArgs>
     ridingMembers?: boolean | Team$ridingMembersArgs<ExtArgs>
-    RidingRecord?: boolean | Team$RidingRecordArgs<ExtArgs>
+    ridingRecord?: boolean | Team$ridingRecordArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["team"]>
 
@@ -5087,7 +5099,7 @@ export namespace Prisma {
     members?: boolean | Team$membersArgs<ExtArgs>
     joinCode?: boolean | Team$joinCodeArgs<ExtArgs>
     ridingMembers?: boolean | Team$ridingMembersArgs<ExtArgs>
-    RidingRecord?: boolean | Team$RidingRecordArgs<ExtArgs>
+    ridingRecord?: boolean | Team$ridingRecordArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -5097,7 +5109,7 @@ export namespace Prisma {
       members: Prisma.$TeamMemberPayload<ExtArgs>[]
       joinCode: Prisma.$TeamJoinCodePayload<ExtArgs>[]
       ridingMembers: Prisma.$RidingMemberPayload<ExtArgs>[]
-      RidingRecord: Prisma.$RidingRecordPayload<ExtArgs>[]
+      ridingRecord: Prisma.$RidingRecordPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -5450,7 +5462,7 @@ export namespace Prisma {
     members<T extends Team$membersArgs<ExtArgs> = {}>(args?: Subset<T, Team$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     joinCode<T extends Team$joinCodeArgs<ExtArgs> = {}>(args?: Subset<T, Team$joinCodeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamJoinCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ridingMembers<T extends Team$ridingMembersArgs<ExtArgs> = {}>(args?: Subset<T, Team$ridingMembersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    RidingRecord<T extends Team$RidingRecordArgs<ExtArgs> = {}>(args?: Subset<T, Team$RidingRecordArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ridingRecord<T extends Team$ridingRecordArgs<ExtArgs> = {}>(args?: Subset<T, Team$ridingRecordArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5902,9 +5914,9 @@ export namespace Prisma {
   }
 
   /**
-   * Team.RidingRecord
+   * Team.ridingRecord
    */
-  export type Team$RidingRecordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Team$ridingRecordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the RidingRecord
      */
@@ -6154,7 +6166,7 @@ export namespace Prisma {
     isCurrentMember?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    Team?: boolean | TeamDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
     member?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["teamMember"]>
 
@@ -6171,14 +6183,14 @@ export namespace Prisma {
 
   export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"teamId" | "userId" | "isAdmin" | "isCurrentMember" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
   export type TeamMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Team?: boolean | TeamDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
     member?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $TeamMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TeamMember"
     objects: {
-      Team: Prisma.$TeamPayload<ExtArgs>
+      team: Prisma.$TeamPayload<ExtArgs>
       member: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -6528,7 +6540,7 @@ export namespace Prisma {
    */
   export interface Prisma__TeamMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    Team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     member<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7124,7 +7136,7 @@ export namespace Prisma {
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    Team?: boolean | TeamDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["teamJoinCode"]>
 
 
@@ -7139,13 +7151,13 @@ export namespace Prisma {
 
   export type TeamJoinCodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"teamId" | "code" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["teamJoinCode"]>
   export type TeamJoinCodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Team?: boolean | TeamDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
   }
 
   export type $TeamJoinCodePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TeamJoinCode"
     objects: {
-      Team: Prisma.$TeamPayload<ExtArgs>
+      team: Prisma.$TeamPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       teamId: bigint
@@ -7493,7 +7505,7 @@ export namespace Prisma {
    */
   export interface Prisma__TeamJoinCodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    Team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7905,14 +7917,14 @@ export namespace Prisma {
     id: number | null
     distance: number | null
     duration: number | null
-    TeamId: number | null
+    teamId: number | null
   }
 
   export type RidingRecordSumAggregateOutputType = {
     id: bigint | null
     distance: number | null
     duration: number | null
-    TeamId: bigint | null
+    teamId: bigint | null
   }
 
   export type RidingRecordMinAggregateOutputType = {
@@ -7920,7 +7932,12 @@ export namespace Prisma {
     type: $Enums.RidingType | null
     distance: number | null
     duration: number | null
-    TeamId: bigint | null
+    departure: string | null
+    stopover1: string | null
+    stopover2: string | null
+    stopover3: string | null
+    arrival: string | null
+    teamId: bigint | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7930,7 +7947,12 @@ export namespace Prisma {
     type: $Enums.RidingType | null
     distance: number | null
     duration: number | null
-    TeamId: bigint | null
+    departure: string | null
+    stopover1: string | null
+    stopover2: string | null
+    stopover3: string | null
+    arrival: string | null
+    teamId: bigint | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7940,7 +7962,12 @@ export namespace Prisma {
     type: number
     distance: number
     duration: number
-    TeamId: number
+    departure: number
+    stopover1: number
+    stopover2: number
+    stopover3: number
+    arrival: number
+    teamId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -7951,14 +7978,14 @@ export namespace Prisma {
     id?: true
     distance?: true
     duration?: true
-    TeamId?: true
+    teamId?: true
   }
 
   export type RidingRecordSumAggregateInputType = {
     id?: true
     distance?: true
     duration?: true
-    TeamId?: true
+    teamId?: true
   }
 
   export type RidingRecordMinAggregateInputType = {
@@ -7966,7 +7993,12 @@ export namespace Prisma {
     type?: true
     distance?: true
     duration?: true
-    TeamId?: true
+    departure?: true
+    stopover1?: true
+    stopover2?: true
+    stopover3?: true
+    arrival?: true
+    teamId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -7976,7 +8008,12 @@ export namespace Prisma {
     type?: true
     distance?: true
     duration?: true
-    TeamId?: true
+    departure?: true
+    stopover1?: true
+    stopover2?: true
+    stopover3?: true
+    arrival?: true
+    teamId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -7986,7 +8023,12 @@ export namespace Prisma {
     type?: true
     distance?: true
     duration?: true
-    TeamId?: true
+    departure?: true
+    stopover1?: true
+    stopover2?: true
+    stopover3?: true
+    arrival?: true
+    teamId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -8083,7 +8125,12 @@ export namespace Prisma {
     type: $Enums.RidingType
     distance: number
     duration: number
-    TeamId: bigint | null
+    departure: string
+    stopover1: string | null
+    stopover2: string | null
+    stopover3: string | null
+    arrival: string
+    teamId: bigint | null
     createdAt: Date
     updatedAt: Date
     _count: RidingRecordCountAggregateOutputType | null
@@ -8112,11 +8159,16 @@ export namespace Prisma {
     type?: boolean
     distance?: boolean
     duration?: boolean
-    TeamId?: boolean
+    departure?: boolean
+    stopover1?: boolean
+    stopover2?: boolean
+    stopover3?: boolean
+    arrival?: boolean
+    teamId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    Team?: boolean | RidingRecord$TeamArgs<ExtArgs>
-    RidingMember?: boolean | RidingRecord$RidingMemberArgs<ExtArgs>
+    team?: boolean | RidingRecord$teamArgs<ExtArgs>
+    ridingMember?: boolean | RidingRecord$ridingMemberArgs<ExtArgs>
     _count?: boolean | RidingRecordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ridingRecord"]>
 
@@ -8127,30 +8179,40 @@ export namespace Prisma {
     type?: boolean
     distance?: boolean
     duration?: boolean
-    TeamId?: boolean
+    departure?: boolean
+    stopover1?: boolean
+    stopover2?: boolean
+    stopover3?: boolean
+    arrival?: boolean
+    teamId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RidingRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "distance" | "duration" | "TeamId" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingRecord"]>
+  export type RidingRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "distance" | "duration" | "departure" | "stopover1" | "stopover2" | "stopover3" | "arrival" | "teamId" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingRecord"]>
   export type RidingRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Team?: boolean | RidingRecord$TeamArgs<ExtArgs>
-    RidingMember?: boolean | RidingRecord$RidingMemberArgs<ExtArgs>
+    team?: boolean | RidingRecord$teamArgs<ExtArgs>
+    ridingMember?: boolean | RidingRecord$ridingMemberArgs<ExtArgs>
     _count?: boolean | RidingRecordCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $RidingRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "RidingRecord"
     objects: {
-      Team: Prisma.$TeamPayload<ExtArgs> | null
-      RidingMember: Prisma.$RidingMemberPayload<ExtArgs>[]
+      team: Prisma.$TeamPayload<ExtArgs> | null
+      ridingMember: Prisma.$RidingMemberPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       type: $Enums.RidingType
       distance: number
       duration: number
-      TeamId: bigint | null
+      departure: string
+      stopover1: string | null
+      stopover2: string | null
+      stopover3: string | null
+      arrival: string
+      teamId: bigint | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["ridingRecord"]>
@@ -8243,6 +8305,34 @@ export namespace Prisma {
     findMany<T extends RidingRecordFindManyArgs>(args?: SelectSubset<T, RidingRecordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
+     * Create a RidingRecord.
+     * @param {RidingRecordCreateArgs} args - Arguments to create a RidingRecord.
+     * @example
+     * // Create one RidingRecord
+     * const RidingRecord = await prisma.ridingRecord.create({
+     *   data: {
+     *     // ... data to create a RidingRecord
+     *   }
+     * })
+     * 
+     */
+    create<T extends RidingRecordCreateArgs>(args: SelectSubset<T, RidingRecordCreateArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RidingRecords.
+     * @param {RidingRecordCreateManyArgs} args - Arguments to create many RidingRecords.
+     * @example
+     * // Create many RidingRecords
+     * const ridingRecord = await prisma.ridingRecord.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RidingRecordCreateManyArgs>(args?: SelectSubset<T, RidingRecordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
      * Delete a RidingRecord.
      * @param {RidingRecordDeleteArgs} args - Arguments to delete one RidingRecord.
      * @example
@@ -8305,6 +8395,25 @@ export namespace Prisma {
      * 
      */
     updateMany<T extends RidingRecordUpdateManyArgs>(args: SelectSubset<T, RidingRecordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one RidingRecord.
+     * @param {RidingRecordUpsertArgs} args - Arguments to update or create a RidingRecord.
+     * @example
+     * // Update or create a RidingRecord
+     * const ridingRecord = await prisma.ridingRecord.upsert({
+     *   create: {
+     *     // ... data to create a RidingRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RidingRecord we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RidingRecordUpsertArgs>(args: SelectSubset<T, RidingRecordUpsertArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
@@ -8446,8 +8555,8 @@ export namespace Prisma {
    */
   export interface Prisma__RidingRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    Team<T extends RidingRecord$TeamArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecord$TeamArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    RidingMember<T extends RidingRecord$RidingMemberArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecord$RidingMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    team<T extends RidingRecord$teamArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecord$teamArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    ridingMember<T extends RidingRecord$ridingMemberArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecord$ridingMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8481,7 +8590,12 @@ export namespace Prisma {
     readonly type: FieldRef<"RidingRecord", 'RidingType'>
     readonly distance: FieldRef<"RidingRecord", 'Float'>
     readonly duration: FieldRef<"RidingRecord", 'Int'>
-    readonly TeamId: FieldRef<"RidingRecord", 'BigInt'>
+    readonly departure: FieldRef<"RidingRecord", 'String'>
+    readonly stopover1: FieldRef<"RidingRecord", 'String'>
+    readonly stopover2: FieldRef<"RidingRecord", 'String'>
+    readonly stopover3: FieldRef<"RidingRecord", 'String'>
+    readonly arrival: FieldRef<"RidingRecord", 'String'>
+    readonly teamId: FieldRef<"RidingRecord", 'BigInt'>
     readonly createdAt: FieldRef<"RidingRecord", 'DateTime'>
     readonly updatedAt: FieldRef<"RidingRecord", 'DateTime'>
   }
@@ -8684,6 +8798,39 @@ export namespace Prisma {
   }
 
   /**
+   * RidingRecord create
+   */
+  export type RidingRecordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingRecord
+     */
+    select?: RidingRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingRecord
+     */
+    omit?: RidingRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingRecordInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RidingRecord.
+     */
+    data: XOR<RidingRecordCreateInput, RidingRecordUncheckedCreateInput>
+  }
+
+  /**
+   * RidingRecord createMany
+   */
+  export type RidingRecordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RidingRecords.
+     */
+    data: RidingRecordCreateManyInput | RidingRecordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
    * RidingRecord update
    */
   export type RidingRecordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8728,6 +8875,36 @@ export namespace Prisma {
   }
 
   /**
+   * RidingRecord upsert
+   */
+  export type RidingRecordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingRecord
+     */
+    select?: RidingRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingRecord
+     */
+    omit?: RidingRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingRecordInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RidingRecord to update in case it exists.
+     */
+    where: RidingRecordWhereUniqueInput
+    /**
+     * In case the RidingRecord found by the `where` argument doesn't exist, create a new RidingRecord with this data.
+     */
+    create: XOR<RidingRecordCreateInput, RidingRecordUncheckedCreateInput>
+    /**
+     * In case the RidingRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RidingRecordUpdateInput, RidingRecordUncheckedUpdateInput>
+  }
+
+  /**
    * RidingRecord delete
    */
   export type RidingRecordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8764,9 +8941,9 @@ export namespace Prisma {
   }
 
   /**
-   * RidingRecord.Team
+   * RidingRecord.team
    */
-  export type RidingRecord$TeamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RidingRecord$teamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Team
      */
@@ -8783,9 +8960,9 @@ export namespace Prisma {
   }
 
   /**
-   * RidingRecord.RidingMember
+   * RidingRecord.ridingMember
    */
-  export type RidingRecord$RidingMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RidingRecord$ridingMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the RidingMember
      */
@@ -9031,9 +9208,9 @@ export namespace Prisma {
     teamId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    RidingRecord?: boolean | RidingRecordDefaultArgs<ExtArgs>
-    User?: boolean | UserDefaultArgs<ExtArgs>
-    Team?: boolean | RidingMember$TeamArgs<ExtArgs>
+    ridingRecord?: boolean | RidingRecordDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    team?: boolean | RidingMember$teamArgs<ExtArgs>
   }, ExtArgs["result"]["ridingMember"]>
 
 
@@ -9048,17 +9225,17 @@ export namespace Prisma {
 
   export type RidingMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"ridingRecordId" | "userId" | "teamId" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingMember"]>
   export type RidingMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    RidingRecord?: boolean | RidingRecordDefaultArgs<ExtArgs>
-    User?: boolean | UserDefaultArgs<ExtArgs>
-    Team?: boolean | RidingMember$TeamArgs<ExtArgs>
+    ridingRecord?: boolean | RidingRecordDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    team?: boolean | RidingMember$teamArgs<ExtArgs>
   }
 
   export type $RidingMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "RidingMember"
     objects: {
-      RidingRecord: Prisma.$RidingRecordPayload<ExtArgs>
-      User: Prisma.$UserPayload<ExtArgs>
-      Team: Prisma.$TeamPayload<ExtArgs> | null
+      ridingRecord: Prisma.$RidingRecordPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+      team: Prisma.$TeamPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       ridingRecordId: bigint
@@ -9406,9 +9583,9 @@ export namespace Prisma {
    */
   export interface Prisma__RidingMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    RidingRecord<T extends RidingRecordDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecordDefaultArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    Team<T extends RidingMember$TeamArgs<ExtArgs> = {}>(args?: Subset<T, RidingMember$TeamArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    ridingRecord<T extends RidingRecordDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecordDefaultArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    team<T extends RidingMember$teamArgs<ExtArgs> = {}>(args?: Subset<T, RidingMember$teamArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9786,9 +9963,9 @@ export namespace Prisma {
   }
 
   /**
-   * RidingMember.Team
+   * RidingMember.team
    */
-  export type RidingMember$TeamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RidingMember$teamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Team
      */
@@ -11798,7 +11975,12 @@ export namespace Prisma {
     type: 'type',
     distance: 'distance',
     duration: 'duration',
-    TeamId: 'TeamId',
+    departure: 'departure',
+    stopover1: 'stopover1',
+    stopover2: 'stopover2',
+    stopover3: 'stopover3',
+    arrival: 'arrival',
+    teamId: 'teamId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -11893,6 +12075,17 @@ export namespace Prisma {
   export type TeamJoinCodeOrderByRelevanceFieldEnum = (typeof TeamJoinCodeOrderByRelevanceFieldEnum)[keyof typeof TeamJoinCodeOrderByRelevanceFieldEnum]
 
 
+  export const RidingRecordOrderByRelevanceFieldEnum: {
+    departure: 'departure',
+    stopover1: 'stopover1',
+    stopover2: 'stopover2',
+    stopover3: 'stopover3',
+    arrival: 'arrival'
+  };
+
+  export type RidingRecordOrderByRelevanceFieldEnum = (typeof RidingRecordOrderByRelevanceFieldEnum)[keyof typeof RidingRecordOrderByRelevanceFieldEnum]
+
+
   export const RefreshTokenOrderByRelevanceFieldEnum: {
     token: 'token'
   };
@@ -11980,9 +12173,9 @@ export namespace Prisma {
     profileImage?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    OAuthUser?: OAuthUserListRelationFilter
-    TeamMember?: TeamMemberListRelationFilter
-    RidingMember?: RidingMemberListRelationFilter
+    oAuthUser?: OAuthUserListRelationFilter
+    teamMember?: TeamMemberListRelationFilter
+    ridingMember?: RidingMemberListRelationFilter
     sentFriendRequests?: FriendListRelationFilter
     receivedFriendRequests?: FriendListRelationFilter
   }
@@ -11996,9 +12189,9 @@ export namespace Prisma {
     profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    OAuthUser?: OAuthUserOrderByRelationAggregateInput
-    TeamMember?: TeamMemberOrderByRelationAggregateInput
-    RidingMember?: RidingMemberOrderByRelationAggregateInput
+    oAuthUser?: OAuthUserOrderByRelationAggregateInput
+    teamMember?: TeamMemberOrderByRelationAggregateInput
+    ridingMember?: RidingMemberOrderByRelationAggregateInput
     sentFriendRequests?: FriendOrderByRelationAggregateInput
     receivedFriendRequests?: FriendOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
@@ -12016,9 +12209,9 @@ export namespace Prisma {
     profileImage?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    OAuthUser?: OAuthUserListRelationFilter
-    TeamMember?: TeamMemberListRelationFilter
-    RidingMember?: RidingMemberListRelationFilter
+    oAuthUser?: OAuthUserListRelationFilter
+    teamMember?: TeamMemberListRelationFilter
+    ridingMember?: RidingMemberListRelationFilter
     sentFriendRequests?: FriendListRelationFilter
     receivedFriendRequests?: FriendListRelationFilter
   }, "id" | "ribuddyId">
@@ -12187,7 +12380,7 @@ export namespace Prisma {
     members?: TeamMemberListRelationFilter
     joinCode?: TeamJoinCodeListRelationFilter
     ridingMembers?: RidingMemberListRelationFilter
-    RidingRecord?: RidingRecordListRelationFilter
+    ridingRecord?: RidingRecordListRelationFilter
   }
 
   export type TeamOrderByWithRelationInput = {
@@ -12201,7 +12394,7 @@ export namespace Prisma {
     members?: TeamMemberOrderByRelationAggregateInput
     joinCode?: TeamJoinCodeOrderByRelationAggregateInput
     ridingMembers?: RidingMemberOrderByRelationAggregateInput
-    RidingRecord?: RidingRecordOrderByRelationAggregateInput
+    ridingRecord?: RidingRecordOrderByRelationAggregateInput
     _relevance?: TeamOrderByRelevanceInput
   }
 
@@ -12219,7 +12412,7 @@ export namespace Prisma {
     members?: TeamMemberListRelationFilter
     joinCode?: TeamJoinCodeListRelationFilter
     ridingMembers?: RidingMemberListRelationFilter
-    RidingRecord?: RidingRecordListRelationFilter
+    ridingRecord?: RidingRecordListRelationFilter
   }, "id">
 
   export type TeamOrderByWithAggregationInput = {
@@ -12260,7 +12453,7 @@ export namespace Prisma {
     isCurrentMember?: BoolFilter<"TeamMember"> | boolean
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
-    Team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
     member?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -12271,7 +12464,7 @@ export namespace Prisma {
     isCurrentMember?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    Team?: TeamOrderByWithRelationInput
+    team?: TeamOrderByWithRelationInput
     member?: UserOrderByWithRelationInput
   }
 
@@ -12286,7 +12479,7 @@ export namespace Prisma {
     isCurrentMember?: BoolFilter<"TeamMember"> | boolean
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
-    Team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
     member?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "teamId_userId">
 
@@ -12325,7 +12518,7 @@ export namespace Prisma {
     expiresAt?: DateTimeFilter<"TeamJoinCode"> | Date | string
     createdAt?: DateTimeFilter<"TeamJoinCode"> | Date | string
     updatedAt?: DateTimeFilter<"TeamJoinCode"> | Date | string
-    Team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
   }
 
   export type TeamJoinCodeOrderByWithRelationInput = {
@@ -12334,7 +12527,7 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    Team?: TeamOrderByWithRelationInput
+    team?: TeamOrderByWithRelationInput
     _relevance?: TeamJoinCodeOrderByRelevanceInput
   }
 
@@ -12348,7 +12541,7 @@ export namespace Prisma {
     expiresAt?: DateTimeFilter<"TeamJoinCode"> | Date | string
     createdAt?: DateTimeFilter<"TeamJoinCode"> | Date | string
     updatedAt?: DateTimeFilter<"TeamJoinCode"> | Date | string
-    Team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
   }, "teamId_code">
 
   export type TeamJoinCodeOrderByWithAggregationInput = {
@@ -12383,11 +12576,16 @@ export namespace Prisma {
     type?: EnumRidingTypeFilter<"RidingRecord"> | $Enums.RidingType
     distance?: FloatFilter<"RidingRecord"> | number
     duration?: IntFilter<"RidingRecord"> | number
-    TeamId?: BigIntNullableFilter<"RidingRecord"> | bigint | number | null
+    departure?: StringFilter<"RidingRecord"> | string
+    stopover1?: StringNullableFilter<"RidingRecord"> | string | null
+    stopover2?: StringNullableFilter<"RidingRecord"> | string | null
+    stopover3?: StringNullableFilter<"RidingRecord"> | string | null
+    arrival?: StringFilter<"RidingRecord"> | string
+    teamId?: BigIntNullableFilter<"RidingRecord"> | bigint | number | null
     createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
-    Team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
-    RidingMember?: RidingMemberListRelationFilter
+    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
+    ridingMember?: RidingMemberListRelationFilter
   }
 
   export type RidingRecordOrderByWithRelationInput = {
@@ -12395,11 +12593,17 @@ export namespace Prisma {
     type?: SortOrder
     distance?: SortOrder
     duration?: SortOrder
-    TeamId?: SortOrderInput | SortOrder
+    departure?: SortOrder
+    stopover1?: SortOrderInput | SortOrder
+    stopover2?: SortOrderInput | SortOrder
+    stopover3?: SortOrderInput | SortOrder
+    arrival?: SortOrder
+    teamId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    Team?: TeamOrderByWithRelationInput
-    RidingMember?: RidingMemberOrderByRelationAggregateInput
+    team?: TeamOrderByWithRelationInput
+    ridingMember?: RidingMemberOrderByRelationAggregateInput
+    _relevance?: RidingRecordOrderByRelevanceInput
   }
 
   export type RidingRecordWhereUniqueInput = Prisma.AtLeast<{
@@ -12410,11 +12614,16 @@ export namespace Prisma {
     type?: EnumRidingTypeFilter<"RidingRecord"> | $Enums.RidingType
     distance?: FloatFilter<"RidingRecord"> | number
     duration?: IntFilter<"RidingRecord"> | number
-    TeamId?: BigIntNullableFilter<"RidingRecord"> | bigint | number | null
+    departure?: StringFilter<"RidingRecord"> | string
+    stopover1?: StringNullableFilter<"RidingRecord"> | string | null
+    stopover2?: StringNullableFilter<"RidingRecord"> | string | null
+    stopover3?: StringNullableFilter<"RidingRecord"> | string | null
+    arrival?: StringFilter<"RidingRecord"> | string
+    teamId?: BigIntNullableFilter<"RidingRecord"> | bigint | number | null
     createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
-    Team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
-    RidingMember?: RidingMemberListRelationFilter
+    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
+    ridingMember?: RidingMemberListRelationFilter
   }, "id">
 
   export type RidingRecordOrderByWithAggregationInput = {
@@ -12422,7 +12631,12 @@ export namespace Prisma {
     type?: SortOrder
     distance?: SortOrder
     duration?: SortOrder
-    TeamId?: SortOrderInput | SortOrder
+    departure?: SortOrder
+    stopover1?: SortOrderInput | SortOrder
+    stopover2?: SortOrderInput | SortOrder
+    stopover3?: SortOrderInput | SortOrder
+    arrival?: SortOrder
+    teamId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: RidingRecordCountOrderByAggregateInput
@@ -12440,7 +12654,12 @@ export namespace Prisma {
     type?: EnumRidingTypeWithAggregatesFilter<"RidingRecord"> | $Enums.RidingType
     distance?: FloatWithAggregatesFilter<"RidingRecord"> | number
     duration?: IntWithAggregatesFilter<"RidingRecord"> | number
-    TeamId?: BigIntNullableWithAggregatesFilter<"RidingRecord"> | bigint | number | null
+    departure?: StringWithAggregatesFilter<"RidingRecord"> | string
+    stopover1?: StringNullableWithAggregatesFilter<"RidingRecord"> | string | null
+    stopover2?: StringNullableWithAggregatesFilter<"RidingRecord"> | string | null
+    stopover3?: StringNullableWithAggregatesFilter<"RidingRecord"> | string | null
+    arrival?: StringWithAggregatesFilter<"RidingRecord"> | string
+    teamId?: BigIntNullableWithAggregatesFilter<"RidingRecord"> | bigint | number | null
     createdAt?: DateTimeWithAggregatesFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"RidingRecord"> | Date | string
   }
@@ -12454,9 +12673,9 @@ export namespace Prisma {
     teamId?: BigIntNullableFilter<"RidingMember"> | bigint | number | null
     createdAt?: DateTimeFilter<"RidingMember"> | Date | string
     updatedAt?: DateTimeFilter<"RidingMember"> | Date | string
-    RidingRecord?: XOR<RidingRecordScalarRelationFilter, RidingRecordWhereInput>
-    User?: XOR<UserScalarRelationFilter, UserWhereInput>
-    Team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
+    ridingRecord?: XOR<RidingRecordScalarRelationFilter, RidingRecordWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
   }
 
   export type RidingMemberOrderByWithRelationInput = {
@@ -12465,9 +12684,9 @@ export namespace Prisma {
     teamId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    RidingRecord?: RidingRecordOrderByWithRelationInput
-    User?: UserOrderByWithRelationInput
-    Team?: TeamOrderByWithRelationInput
+    ridingRecord?: RidingRecordOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+    team?: TeamOrderByWithRelationInput
   }
 
   export type RidingMemberWhereUniqueInput = Prisma.AtLeast<{
@@ -12480,9 +12699,9 @@ export namespace Prisma {
     teamId?: BigIntNullableFilter<"RidingMember"> | bigint | number | null
     createdAt?: DateTimeFilter<"RidingMember"> | Date | string
     updatedAt?: DateTimeFilter<"RidingMember"> | Date | string
-    RidingRecord?: XOR<RidingRecordScalarRelationFilter, RidingRecordWhereInput>
-    User?: XOR<UserScalarRelationFilter, UserWhereInput>
-    Team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
+    ridingRecord?: XOR<RidingRecordScalarRelationFilter, RidingRecordWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
   }, "ridingRecordId_userId">
 
   export type RidingMemberOrderByWithAggregationInput = {
@@ -12648,9 +12867,9 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
-    TeamMember?: TeamMemberCreateNestedManyWithoutMemberInput
-    RidingMember?: RidingMemberCreateNestedManyWithoutUserInput
+    oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
+    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
@@ -12664,9 +12883,9 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
-    TeamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
-    RidingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
+    oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
+    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
@@ -12680,9 +12899,9 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
-    TeamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
-    RidingMember?: RidingMemberUpdateManyWithoutUserNestedInput
+    oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
+    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
@@ -12696,9 +12915,9 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
-    TeamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
-    RidingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
+    oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
+    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
@@ -12856,7 +13075,7 @@ export namespace Prisma {
     members?: TeamMemberCreateNestedManyWithoutTeamInput
     joinCode?: TeamJoinCodeCreateNestedManyWithoutTeamInput
     ridingMembers?: RidingMemberCreateNestedManyWithoutTeamInput
-    RidingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
+    ridingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateInput = {
@@ -12870,7 +13089,7 @@ export namespace Prisma {
     members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput
     joinCode?: TeamJoinCodeUncheckedCreateNestedManyWithoutTeamInput
     ridingMembers?: RidingMemberUncheckedCreateNestedManyWithoutTeamInput
-    RidingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
+    ridingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUpdateInput = {
@@ -12884,7 +13103,7 @@ export namespace Prisma {
     members?: TeamMemberUpdateManyWithoutTeamNestedInput
     joinCode?: TeamJoinCodeUpdateManyWithoutTeamNestedInput
     ridingMembers?: RidingMemberUpdateManyWithoutTeamNestedInput
-    RidingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
+    ridingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateInput = {
@@ -12898,7 +13117,7 @@ export namespace Prisma {
     members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
     joinCode?: TeamJoinCodeUncheckedUpdateManyWithoutTeamNestedInput
     ridingMembers?: RidingMemberUncheckedUpdateManyWithoutTeamNestedInput
-    RidingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
+    ridingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamCreateManyInput = {
@@ -12936,7 +13155,7 @@ export namespace Prisma {
     isCurrentMember?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    Team: TeamCreateNestedOneWithoutMembersInput
+    team: TeamCreateNestedOneWithoutMembersInput
     member: UserCreateNestedOneWithoutTeamMemberInput
   }
 
@@ -12954,7 +13173,7 @@ export namespace Prisma {
     isCurrentMember?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Team?: TeamUpdateOneRequiredWithoutMembersNestedInput
+    team?: TeamUpdateOneRequiredWithoutMembersNestedInput
     member?: UserUpdateOneRequiredWithoutTeamMemberNestedInput
   }
 
@@ -12997,7 +13216,7 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    Team: TeamCreateNestedOneWithoutJoinCodeInput
+    team: TeamCreateNestedOneWithoutJoinCodeInput
   }
 
   export type TeamJoinCodeUncheckedCreateInput = {
@@ -13013,7 +13232,7 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Team?: TeamUpdateOneRequiredWithoutJoinCodeNestedInput
+    team?: TeamUpdateOneRequiredWithoutJoinCodeNestedInput
   }
 
   export type TeamJoinCodeUncheckedUpdateInput = {
@@ -13047,15 +13266,52 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RidingRecordCreateInput = {
+    id?: bigint | number
+    type: $Enums.RidingType
+    distance: number
+    duration: number
+    departure: string
+    stopover1?: string | null
+    stopover2?: string | null
+    stopover3?: string | null
+    arrival: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    team?: TeamCreateNestedOneWithoutRidingRecordInput
+    ridingMember?: RidingMemberCreateNestedManyWithoutRidingRecordInput
+  }
+
+  export type RidingRecordUncheckedCreateInput = {
+    id?: bigint | number
+    type: $Enums.RidingType
+    distance: number
+    duration: number
+    departure: string
+    stopover1?: string | null
+    stopover2?: string | null
+    stopover3?: string | null
+    arrival: string
+    teamId?: bigint | number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutRidingRecordInput
+  }
+
   export type RidingRecordUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
     distance?: FloatFieldUpdateOperationsInput | number
     duration?: IntFieldUpdateOperationsInput | number
+    departure?: StringFieldUpdateOperationsInput | string
+    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
+    arrival?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Team?: TeamUpdateOneWithoutRidingRecordNestedInput
-    RidingMember?: RidingMemberUpdateManyWithoutRidingRecordNestedInput
+    team?: TeamUpdateOneWithoutRidingRecordNestedInput
+    ridingMember?: RidingMemberUpdateManyWithoutRidingRecordNestedInput
   }
 
   export type RidingRecordUncheckedUpdateInput = {
@@ -13063,10 +13319,30 @@ export namespace Prisma {
     type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
     distance?: FloatFieldUpdateOperationsInput | number
     duration?: IntFieldUpdateOperationsInput | number
-    TeamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    departure?: StringFieldUpdateOperationsInput | string
+    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
+    arrival?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RidingMember?: RidingMemberUncheckedUpdateManyWithoutRidingRecordNestedInput
+    ridingMember?: RidingMemberUncheckedUpdateManyWithoutRidingRecordNestedInput
+  }
+
+  export type RidingRecordCreateManyInput = {
+    id?: bigint | number
+    type: $Enums.RidingType
+    distance: number
+    duration: number
+    departure: string
+    stopover1?: string | null
+    stopover2?: string | null
+    stopover3?: string | null
+    arrival: string
+    teamId?: bigint | number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type RidingRecordUpdateManyMutationInput = {
@@ -13074,6 +13350,11 @@ export namespace Prisma {
     type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
     distance?: FloatFieldUpdateOperationsInput | number
     duration?: IntFieldUpdateOperationsInput | number
+    departure?: StringFieldUpdateOperationsInput | string
+    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
+    arrival?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13083,7 +13364,12 @@ export namespace Prisma {
     type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
     distance?: FloatFieldUpdateOperationsInput | number
     duration?: IntFieldUpdateOperationsInput | number
-    TeamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    departure?: StringFieldUpdateOperationsInput | string
+    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
+    arrival?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13091,9 +13377,9 @@ export namespace Prisma {
   export type RidingMemberCreateInput = {
     createdAt?: Date | string
     updatedAt?: Date | string
-    RidingRecord: RidingRecordCreateNestedOneWithoutRidingMemberInput
-    User: UserCreateNestedOneWithoutRidingMemberInput
-    Team?: TeamCreateNestedOneWithoutRidingMembersInput
+    ridingRecord: RidingRecordCreateNestedOneWithoutRidingMemberInput
+    user: UserCreateNestedOneWithoutRidingMemberInput
+    team?: TeamCreateNestedOneWithoutRidingMembersInput
   }
 
   export type RidingMemberUncheckedCreateInput = {
@@ -13107,9 +13393,9 @@ export namespace Prisma {
   export type RidingMemberUpdateInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RidingRecord?: RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput
-    User?: UserUpdateOneRequiredWithoutRidingMemberNestedInput
-    Team?: TeamUpdateOneWithoutRidingMembersNestedInput
+    ridingRecord?: RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput
+    user?: UserUpdateOneRequiredWithoutRidingMemberNestedInput
+    team?: TeamUpdateOneWithoutRidingMembersNestedInput
   }
 
   export type RidingMemberUncheckedUpdateInput = {
@@ -13790,12 +14076,23 @@ export namespace Prisma {
     isNot?: TeamWhereInput | null
   }
 
+  export type RidingRecordOrderByRelevanceInput = {
+    fields: RidingRecordOrderByRelevanceFieldEnum | RidingRecordOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
   export type RidingRecordCountOrderByAggregateInput = {
     id?: SortOrder
     type?: SortOrder
     distance?: SortOrder
     duration?: SortOrder
-    TeamId?: SortOrder
+    departure?: SortOrder
+    stopover1?: SortOrder
+    stopover2?: SortOrder
+    stopover3?: SortOrder
+    arrival?: SortOrder
+    teamId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13804,7 +14101,7 @@ export namespace Prisma {
     id?: SortOrder
     distance?: SortOrder
     duration?: SortOrder
-    TeamId?: SortOrder
+    teamId?: SortOrder
   }
 
   export type RidingRecordMaxOrderByAggregateInput = {
@@ -13812,7 +14109,12 @@ export namespace Prisma {
     type?: SortOrder
     distance?: SortOrder
     duration?: SortOrder
-    TeamId?: SortOrder
+    departure?: SortOrder
+    stopover1?: SortOrder
+    stopover2?: SortOrder
+    stopover3?: SortOrder
+    arrival?: SortOrder
+    teamId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13822,7 +14124,12 @@ export namespace Prisma {
     type?: SortOrder
     distance?: SortOrder
     duration?: SortOrder
-    TeamId?: SortOrder
+    departure?: SortOrder
+    stopover1?: SortOrder
+    stopover2?: SortOrder
+    stopover3?: SortOrder
+    arrival?: SortOrder
+    teamId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13831,7 +14138,7 @@ export namespace Prisma {
     id?: SortOrder
     distance?: SortOrder
     duration?: SortOrder
-    TeamId?: SortOrder
+    teamId?: SortOrder
   }
 
   export type EnumRidingTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -14355,6 +14662,9 @@ export namespace Prisma {
   }
 
   export type RidingRecordCreateNestedManyWithoutTeamInput = {
+    create?: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput> | RidingRecordCreateWithoutTeamInput[] | RidingRecordUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: RidingRecordCreateOrConnectWithoutTeamInput | RidingRecordCreateOrConnectWithoutTeamInput[]
+    createMany?: RidingRecordCreateManyTeamInputEnvelope
     connect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
   }
 
@@ -14380,6 +14690,9 @@ export namespace Prisma {
   }
 
   export type RidingRecordUncheckedCreateNestedManyWithoutTeamInput = {
+    create?: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput> | RidingRecordCreateWithoutTeamInput[] | RidingRecordUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: RidingRecordCreateOrConnectWithoutTeamInput | RidingRecordCreateOrConnectWithoutTeamInput[]
+    createMany?: RidingRecordCreateManyTeamInputEnvelope
     connect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
   }
 
@@ -14426,6 +14739,10 @@ export namespace Prisma {
   }
 
   export type RidingRecordUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput> | RidingRecordCreateWithoutTeamInput[] | RidingRecordUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: RidingRecordCreateOrConnectWithoutTeamInput | RidingRecordCreateOrConnectWithoutTeamInput[]
+    upsert?: RidingRecordUpsertWithWhereUniqueWithoutTeamInput | RidingRecordUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: RidingRecordCreateManyTeamInputEnvelope
     set?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
     disconnect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
     delete?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
@@ -14478,6 +14795,10 @@ export namespace Prisma {
   }
 
   export type RidingRecordUncheckedUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput> | RidingRecordCreateWithoutTeamInput[] | RidingRecordUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: RidingRecordCreateOrConnectWithoutTeamInput | RidingRecordCreateOrConnectWithoutTeamInput[]
+    upsert?: RidingRecordUpsertWithWhereUniqueWithoutTeamInput | RidingRecordUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: RidingRecordCreateManyTeamInputEnvelope
     set?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
     disconnect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
     delete?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
@@ -14527,6 +14848,26 @@ export namespace Prisma {
     upsert?: TeamUpsertWithoutJoinCodeInput
     connect?: TeamWhereUniqueInput
     update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutJoinCodeInput, TeamUpdateWithoutJoinCodeInput>, TeamUncheckedUpdateWithoutJoinCodeInput>
+  }
+
+  export type TeamCreateNestedOneWithoutRidingRecordInput = {
+    create?: XOR<TeamCreateWithoutRidingRecordInput, TeamUncheckedCreateWithoutRidingRecordInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutRidingRecordInput
+    connect?: TeamWhereUniqueInput
+  }
+
+  export type RidingMemberCreateNestedManyWithoutRidingRecordInput = {
+    create?: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput> | RidingMemberCreateWithoutRidingRecordInput[] | RidingMemberUncheckedCreateWithoutRidingRecordInput[]
+    connectOrCreate?: RidingMemberCreateOrConnectWithoutRidingRecordInput | RidingMemberCreateOrConnectWithoutRidingRecordInput[]
+    createMany?: RidingMemberCreateManyRidingRecordInputEnvelope
+    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
+  }
+
+  export type RidingMemberUncheckedCreateNestedManyWithoutRidingRecordInput = {
+    create?: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput> | RidingMemberCreateWithoutRidingRecordInput[] | RidingMemberUncheckedCreateWithoutRidingRecordInput[]
+    connectOrCreate?: RidingMemberCreateOrConnectWithoutRidingRecordInput | RidingMemberCreateOrConnectWithoutRidingRecordInput[]
+    createMany?: RidingMemberCreateManyRidingRecordInputEnvelope
+    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
   }
 
   export type EnumRidingTypeFieldUpdateOperationsInput = {
@@ -14596,6 +14937,8 @@ export namespace Prisma {
   }
 
   export type RidingRecordCreateNestedOneWithoutRidingMemberInput = {
+    create?: XOR<RidingRecordCreateWithoutRidingMemberInput, RidingRecordUncheckedCreateWithoutRidingMemberInput>
+    connectOrCreate?: RidingRecordCreateOrConnectWithoutRidingMemberInput
     connect?: RidingRecordWhereUniqueInput
   }
 
@@ -14612,6 +14955,9 @@ export namespace Prisma {
   }
 
   export type RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput = {
+    create?: XOR<RidingRecordCreateWithoutRidingMemberInput, RidingRecordUncheckedCreateWithoutRidingMemberInput>
+    connectOrCreate?: RidingRecordCreateOrConnectWithoutRidingMemberInput
+    upsert?: RidingRecordUpsertWithoutRidingMemberInput
     connect?: RidingRecordWhereUniqueInput
     update?: XOR<XOR<RidingRecordUpdateToOneWithWhereWithoutRidingMemberInput, RidingRecordUpdateWithoutRidingMemberInput>, RidingRecordUncheckedUpdateWithoutRidingMemberInput>
   }
@@ -14938,7 +15284,7 @@ export namespace Prisma {
     isCurrentMember?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    Team: TeamCreateNestedOneWithoutMembersInput
+    team: TeamCreateNestedOneWithoutMembersInput
   }
 
   export type TeamMemberUncheckedCreateWithoutMemberInput = {
@@ -14962,8 +15308,8 @@ export namespace Prisma {
   export type RidingMemberCreateWithoutUserInput = {
     createdAt?: Date | string
     updatedAt?: Date | string
-    RidingRecord: RidingRecordCreateNestedOneWithoutRidingMemberInput
-    Team?: TeamCreateNestedOneWithoutRidingMembersInput
+    ridingRecord: RidingRecordCreateNestedOneWithoutRidingMemberInput
+    team?: TeamCreateNestedOneWithoutRidingMembersInput
   }
 
   export type RidingMemberUncheckedCreateWithoutUserInput = {
@@ -15165,9 +15511,9 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
-    TeamMember?: TeamMemberCreateNestedManyWithoutMemberInput
-    RidingMember?: RidingMemberCreateNestedManyWithoutUserInput
+    oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
+    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
 
@@ -15180,9 +15526,9 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
-    TeamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
-    RidingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
+    oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
+    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
 
@@ -15200,9 +15546,9 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
-    TeamMember?: TeamMemberCreateNestedManyWithoutMemberInput
-    RidingMember?: RidingMemberCreateNestedManyWithoutUserInput
+    oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
+    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
   }
 
@@ -15215,9 +15561,9 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
-    TeamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
-    RidingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
+    oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
+    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
   }
 
@@ -15246,9 +15592,9 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
-    TeamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
-    RidingMember?: RidingMemberUpdateManyWithoutUserNestedInput
+    oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
+    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
 
@@ -15261,9 +15607,9 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
-    TeamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
-    RidingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
+    oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
+    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
 
@@ -15287,9 +15633,9 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
-    TeamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
-    RidingMember?: RidingMemberUpdateManyWithoutUserNestedInput
+    oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
+    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
   }
 
@@ -15302,9 +15648,9 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
-    TeamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
-    RidingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
+    oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
+    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
   }
 
@@ -15317,8 +15663,8 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    TeamMember?: TeamMemberCreateNestedManyWithoutMemberInput
-    RidingMember?: RidingMemberCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
+    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
@@ -15332,8 +15678,8 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    TeamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
-    RidingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
+    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
@@ -15363,8 +15709,8 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    TeamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
-    RidingMember?: RidingMemberUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
+    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
@@ -15378,8 +15724,8 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    TeamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
-    RidingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
+    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
@@ -15437,8 +15783,8 @@ export namespace Prisma {
   export type RidingMemberCreateWithoutTeamInput = {
     createdAt?: Date | string
     updatedAt?: Date | string
-    RidingRecord: RidingRecordCreateNestedOneWithoutRidingMemberInput
-    User: UserCreateNestedOneWithoutRidingMemberInput
+    ridingRecord: RidingRecordCreateNestedOneWithoutRidingMemberInput
+    user: UserCreateNestedOneWithoutRidingMemberInput
   }
 
   export type RidingMemberUncheckedCreateWithoutTeamInput = {
@@ -15455,6 +15801,46 @@ export namespace Prisma {
 
   export type RidingMemberCreateManyTeamInputEnvelope = {
     data: RidingMemberCreateManyTeamInput | RidingMemberCreateManyTeamInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RidingRecordCreateWithoutTeamInput = {
+    id?: bigint | number
+    type: $Enums.RidingType
+    distance: number
+    duration: number
+    departure: string
+    stopover1?: string | null
+    stopover2?: string | null
+    stopover3?: string | null
+    arrival: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ridingMember?: RidingMemberCreateNestedManyWithoutRidingRecordInput
+  }
+
+  export type RidingRecordUncheckedCreateWithoutTeamInput = {
+    id?: bigint | number
+    type: $Enums.RidingType
+    distance: number
+    duration: number
+    departure: string
+    stopover1?: string | null
+    stopover2?: string | null
+    stopover3?: string | null
+    arrival: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutRidingRecordInput
+  }
+
+  export type RidingRecordCreateOrConnectWithoutTeamInput = {
+    where: RidingRecordWhereUniqueInput
+    create: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput>
+  }
+
+  export type RidingRecordCreateManyTeamInputEnvelope = {
+    data: RidingRecordCreateManyTeamInput | RidingRecordCreateManyTeamInput[]
     skipDuplicates?: boolean
   }
 
@@ -15517,6 +15903,12 @@ export namespace Prisma {
     data: XOR<RidingMemberUpdateManyMutationInput, RidingMemberUncheckedUpdateManyWithoutTeamInput>
   }
 
+  export type RidingRecordUpsertWithWhereUniqueWithoutTeamInput = {
+    where: RidingRecordWhereUniqueInput
+    update: XOR<RidingRecordUpdateWithoutTeamInput, RidingRecordUncheckedUpdateWithoutTeamInput>
+    create: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput>
+  }
+
   export type RidingRecordUpdateWithWhereUniqueWithoutTeamInput = {
     where: RidingRecordWhereUniqueInput
     data: XOR<RidingRecordUpdateWithoutTeamInput, RidingRecordUncheckedUpdateWithoutTeamInput>
@@ -15535,7 +15927,12 @@ export namespace Prisma {
     type?: EnumRidingTypeFilter<"RidingRecord"> | $Enums.RidingType
     distance?: FloatFilter<"RidingRecord"> | number
     duration?: IntFilter<"RidingRecord"> | number
-    TeamId?: BigIntNullableFilter<"RidingRecord"> | bigint | number | null
+    departure?: StringFilter<"RidingRecord"> | string
+    stopover1?: StringNullableFilter<"RidingRecord"> | string | null
+    stopover2?: StringNullableFilter<"RidingRecord"> | string | null
+    stopover3?: StringNullableFilter<"RidingRecord"> | string | null
+    arrival?: StringFilter<"RidingRecord"> | string
+    teamId?: BigIntNullableFilter<"RidingRecord"> | bigint | number | null
     createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
   }
@@ -15550,7 +15947,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     joinCode?: TeamJoinCodeCreateNestedManyWithoutTeamInput
     ridingMembers?: RidingMemberCreateNestedManyWithoutTeamInput
-    RidingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
+    ridingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutMembersInput = {
@@ -15563,7 +15960,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     joinCode?: TeamJoinCodeUncheckedCreateNestedManyWithoutTeamInput
     ridingMembers?: RidingMemberUncheckedCreateNestedManyWithoutTeamInput
-    RidingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
+    ridingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutMembersInput = {
@@ -15580,8 +15977,8 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
-    RidingMember?: RidingMemberCreateNestedManyWithoutUserInput
+    oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
+    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
@@ -15595,8 +15992,8 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
-    RidingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
+    oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
+    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
@@ -15627,7 +16024,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     joinCode?: TeamJoinCodeUpdateManyWithoutTeamNestedInput
     ridingMembers?: RidingMemberUpdateManyWithoutTeamNestedInput
-    RidingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
+    ridingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutMembersInput = {
@@ -15640,7 +16037,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     joinCode?: TeamJoinCodeUncheckedUpdateManyWithoutTeamNestedInput
     ridingMembers?: RidingMemberUncheckedUpdateManyWithoutTeamNestedInput
-    RidingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
+    ridingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type UserUpsertWithoutTeamMemberInput = {
@@ -15663,8 +16060,8 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
-    RidingMember?: RidingMemberUpdateManyWithoutUserNestedInput
+    oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
+    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
@@ -15678,8 +16075,8 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
-    RidingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
+    oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
+    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
@@ -15694,7 +16091,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: TeamMemberCreateNestedManyWithoutTeamInput
     ridingMembers?: RidingMemberCreateNestedManyWithoutTeamInput
-    RidingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
+    ridingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutJoinCodeInput = {
@@ -15707,7 +16104,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput
     ridingMembers?: RidingMemberUncheckedCreateNestedManyWithoutTeamInput
-    RidingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
+    ridingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutJoinCodeInput = {
@@ -15736,7 +16133,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: TeamMemberUpdateManyWithoutTeamNestedInput
     ridingMembers?: RidingMemberUpdateManyWithoutTeamNestedInput
-    RidingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
+    ridingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutJoinCodeInput = {
@@ -15749,7 +16146,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
     ridingMembers?: RidingMemberUncheckedUpdateManyWithoutTeamNestedInput
-    RidingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
+    ridingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamCreateWithoutRidingRecordInput = {
@@ -15781,6 +16178,30 @@ export namespace Prisma {
   export type TeamCreateOrConnectWithoutRidingRecordInput = {
     where: TeamWhereUniqueInput
     create: XOR<TeamCreateWithoutRidingRecordInput, TeamUncheckedCreateWithoutRidingRecordInput>
+  }
+
+  export type RidingMemberCreateWithoutRidingRecordInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutRidingMemberInput
+    team?: TeamCreateNestedOneWithoutRidingMembersInput
+  }
+
+  export type RidingMemberUncheckedCreateWithoutRidingRecordInput = {
+    userId: bigint | number
+    teamId?: bigint | number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RidingMemberCreateOrConnectWithoutRidingRecordInput = {
+    where: RidingMemberWhereUniqueInput
+    create: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput>
+  }
+
+  export type RidingMemberCreateManyRidingRecordInputEnvelope = {
+    data: RidingMemberCreateManyRidingRecordInput | RidingMemberCreateManyRidingRecordInput[]
+    skipDuplicates?: boolean
   }
 
   export type TeamUpsertWithoutRidingRecordInput = {
@@ -15820,34 +16241,10 @@ export namespace Prisma {
     ridingMembers?: RidingMemberUncheckedUpdateManyWithoutTeamNestedInput
   }
 
-  export type RidingMemberCreateWithoutRidingRecordInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    User: UserCreateNestedOneWithoutRidingMemberInput
-    Team?: TeamCreateNestedOneWithoutRidingMembersInput
-  }
-
-  export type RidingMemberUncheckedCreateWithoutRidingRecordInput = {
-    userId: bigint | number
-    teamId?: bigint | number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingMemberCreateOrConnectWithoutRidingRecordInput = {
-    where: RidingMemberWhereUniqueInput
-    create: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput>
-  }
-
   export type RidingMemberUpsertWithWhereUniqueWithoutRidingRecordInput = {
     where: RidingMemberWhereUniqueInput
     update: XOR<RidingMemberUpdateWithoutRidingRecordInput, RidingMemberUncheckedUpdateWithoutRidingRecordInput>
     create: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput>
-  }
-
-  export type RidingMemberCreateManyRidingRecordInputEnvelope = {
-    data: RidingMemberCreateManyRidingRecordInput | RidingMemberCreateManyRidingRecordInput[]
-    skipDuplicates?: boolean
   }
 
   export type RidingMemberUpdateWithWhereUniqueWithoutRidingRecordInput = {
@@ -15860,6 +16257,41 @@ export namespace Prisma {
     data: XOR<RidingMemberUpdateManyMutationInput, RidingMemberUncheckedUpdateManyWithoutRidingRecordInput>
   }
 
+  export type RidingRecordCreateWithoutRidingMemberInput = {
+    id?: bigint | number
+    type: $Enums.RidingType
+    distance: number
+    duration: number
+    departure: string
+    stopover1?: string | null
+    stopover2?: string | null
+    stopover3?: string | null
+    arrival: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    team?: TeamCreateNestedOneWithoutRidingRecordInput
+  }
+
+  export type RidingRecordUncheckedCreateWithoutRidingMemberInput = {
+    id?: bigint | number
+    type: $Enums.RidingType
+    distance: number
+    duration: number
+    departure: string
+    stopover1?: string | null
+    stopover2?: string | null
+    stopover3?: string | null
+    arrival: string
+    teamId?: bigint | number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RidingRecordCreateOrConnectWithoutRidingMemberInput = {
+    where: RidingRecordWhereUniqueInput
+    create: XOR<RidingRecordCreateWithoutRidingMemberInput, RidingRecordUncheckedCreateWithoutRidingMemberInput>
+  }
+
   export type UserCreateWithoutRidingMemberInput = {
     id?: bigint | number
     name: string
@@ -15869,8 +16301,8 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
-    TeamMember?: TeamMemberCreateNestedManyWithoutMemberInput
+    oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
     sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
@@ -15884,8 +16316,8 @@ export namespace Prisma {
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
-    TeamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
+    oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
+    teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
     sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
@@ -15905,7 +16337,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: TeamMemberCreateNestedManyWithoutTeamInput
     joinCode?: TeamJoinCodeCreateNestedManyWithoutTeamInput
-    RidingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
+    ridingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutRidingMembersInput = {
@@ -15918,12 +16350,18 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput
     joinCode?: TeamJoinCodeUncheckedCreateNestedManyWithoutTeamInput
-    RidingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
+    ridingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutRidingMembersInput = {
     where: TeamWhereUniqueInput
     create: XOR<TeamCreateWithoutRidingMembersInput, TeamUncheckedCreateWithoutRidingMembersInput>
+  }
+
+  export type RidingRecordUpsertWithoutRidingMemberInput = {
+    update: XOR<RidingRecordUpdateWithoutRidingMemberInput, RidingRecordUncheckedUpdateWithoutRidingMemberInput>
+    create: XOR<RidingRecordCreateWithoutRidingMemberInput, RidingRecordUncheckedCreateWithoutRidingMemberInput>
+    where?: RidingRecordWhereInput
   }
 
   export type RidingRecordUpdateToOneWithWhereWithoutRidingMemberInput = {
@@ -15936,9 +16374,14 @@ export namespace Prisma {
     type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
     distance?: FloatFieldUpdateOperationsInput | number
     duration?: IntFieldUpdateOperationsInput | number
+    departure?: StringFieldUpdateOperationsInput | string
+    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
+    arrival?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Team?: TeamUpdateOneWithoutRidingRecordNestedInput
+    team?: TeamUpdateOneWithoutRidingRecordNestedInput
   }
 
   export type RidingRecordUncheckedUpdateWithoutRidingMemberInput = {
@@ -15946,7 +16389,12 @@ export namespace Prisma {
     type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
     distance?: FloatFieldUpdateOperationsInput | number
     duration?: IntFieldUpdateOperationsInput | number
-    TeamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    departure?: StringFieldUpdateOperationsInput | string
+    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
+    arrival?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15971,8 +16419,8 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
-    TeamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
+    oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
     sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
@@ -15986,8 +16434,8 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
-    TeamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
+    oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
+    teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
     sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
@@ -16013,7 +16461,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: TeamMemberUpdateManyWithoutTeamNestedInput
     joinCode?: TeamJoinCodeUpdateManyWithoutTeamNestedInput
-    RidingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
+    ridingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutRidingMembersInput = {
@@ -16026,7 +16474,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
     joinCode?: TeamJoinCodeUncheckedUpdateManyWithoutTeamNestedInput
-    RidingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
+    ridingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type OAuthUserCreateManyUserInput = {
@@ -16091,7 +16539,7 @@ export namespace Prisma {
     isCurrentMember?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Team?: TeamUpdateOneRequiredWithoutMembersNestedInput
+    team?: TeamUpdateOneRequiredWithoutMembersNestedInput
   }
 
   export type TeamMemberUncheckedUpdateWithoutMemberInput = {
@@ -16113,8 +16561,8 @@ export namespace Prisma {
   export type RidingMemberUpdateWithoutUserInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RidingRecord?: RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput
-    Team?: TeamUpdateOneWithoutRidingMembersNestedInput
+    ridingRecord?: RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput
+    team?: TeamUpdateOneWithoutRidingMembersNestedInput
   }
 
   export type RidingMemberUncheckedUpdateWithoutUserInput = {
@@ -16195,6 +16643,20 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type RidingRecordCreateManyTeamInput = {
+    id?: bigint | number
+    type: $Enums.RidingType
+    distance: number
+    duration: number
+    departure: string
+    stopover1?: string | null
+    stopover2?: string | null
+    stopover3?: string | null
+    arrival: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type TeamMemberUpdateWithoutTeamInput = {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     isCurrentMember?: BoolFieldUpdateOperationsInput | boolean
@@ -16243,8 +16705,8 @@ export namespace Prisma {
   export type RidingMemberUpdateWithoutTeamInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RidingRecord?: RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput
-    User?: UserUpdateOneRequiredWithoutRidingMemberNestedInput
+    ridingRecord?: RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput
+    user?: UserUpdateOneRequiredWithoutRidingMemberNestedInput
   }
 
   export type RidingMemberUncheckedUpdateWithoutTeamInput = {
@@ -16266,9 +16728,14 @@ export namespace Prisma {
     type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
     distance?: FloatFieldUpdateOperationsInput | number
     duration?: IntFieldUpdateOperationsInput | number
+    departure?: StringFieldUpdateOperationsInput | string
+    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
+    arrival?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RidingMember?: RidingMemberUpdateManyWithoutRidingRecordNestedInput
+    ridingMember?: RidingMemberUpdateManyWithoutRidingRecordNestedInput
   }
 
   export type RidingRecordUncheckedUpdateWithoutTeamInput = {
@@ -16276,9 +16743,14 @@ export namespace Prisma {
     type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
     distance?: FloatFieldUpdateOperationsInput | number
     duration?: IntFieldUpdateOperationsInput | number
+    departure?: StringFieldUpdateOperationsInput | string
+    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
+    arrival?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RidingMember?: RidingMemberUncheckedUpdateManyWithoutRidingRecordNestedInput
+    ridingMember?: RidingMemberUncheckedUpdateManyWithoutRidingRecordNestedInput
   }
 
   export type RidingRecordUncheckedUpdateManyWithoutTeamInput = {
@@ -16286,20 +16758,11 @@ export namespace Prisma {
     type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
     distance?: FloatFieldUpdateOperationsInput | number
     duration?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingMemberUpdateWithoutRidingRecordInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    User?: UserUpdateOneRequiredWithoutRidingMemberNestedInput
-    Team?: TeamUpdateOneWithoutRidingMembersNestedInput
-  }
-
-  export type RidingMemberUncheckedUpdateWithoutRidingRecordInput = {
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    departure?: StringFieldUpdateOperationsInput | string
+    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
+    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
+    arrival?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16309,6 +16772,20 @@ export namespace Prisma {
     teamId?: bigint | number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type RidingMemberUpdateWithoutRidingRecordInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutRidingMemberNestedInput
+    team?: TeamUpdateOneWithoutRidingMembersNestedInput
+  }
+
+  export type RidingMemberUncheckedUpdateWithoutRidingRecordInput = {
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RidingMemberUncheckedUpdateManyWithoutRidingRecordInput = {

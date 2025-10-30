@@ -179,7 +179,12 @@ exports.Prisma.RidingRecordScalarFieldEnum = {
   type: 'type',
   distance: 'distance',
   duration: 'duration',
-  TeamId: 'TeamId',
+  departure: 'departure',
+  stopover1: 'stopover1',
+  stopover2: 'stopover2',
+  stopover3: 'stopover3',
+  arrival: 'arrival',
+  teamId: 'teamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -242,6 +247,14 @@ exports.Prisma.TeamOrderByRelevanceFieldEnum = {
 
 exports.Prisma.TeamJoinCodeOrderByRelevanceFieldEnum = {
   code: 'code'
+};
+
+exports.Prisma.RidingRecordOrderByRelevanceFieldEnum = {
+  departure: 'departure',
+  stopover1: 'stopover1',
+  stopover2: 'stopover2',
+  stopover3: 'stopover3',
+  arrival: 'arrival'
 };
 
 exports.Prisma.RefreshTokenOrderByRelevanceFieldEnum = {
