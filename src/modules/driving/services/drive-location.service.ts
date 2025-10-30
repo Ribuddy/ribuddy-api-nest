@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 import { faker } from '@faker-js/faker';
+import { RidingRecordStatus } from '@generated/prisma/mongodb';
 import { RedisService } from '@liaoliaots/nestjs-redis';
 import Redis from 'ioredis';
 
@@ -23,6 +24,17 @@ export class DriveLocationService {
     private readonly mongo: MongoDBPrismaService,
   ) {
     this.redis = this.redisService.getOrThrow();
+  }
+
+  async changeRidingRecordStatus(ridingRecordId: string, status: RidingRecordStatus) {
+    const updatedRidingRecord = await this.mongo.ridingRecord.update({
+      where: { id: ridingRecordId },
+      data: {
+        status: status,
+      },
+    });
+
+    return updatedRidingRecord;
   }
 
   async getRidingRecordInfo(ridingRecordId: string) {
@@ -115,6 +127,7 @@ export class DriveLocationService {
     ridingRecordId: string,
     loc: LatLonEleDto,
     locationName?: string,
+    isArrival?: boolean,
   ) {
     const updateData: any = {
       route: {
@@ -126,6 +139,10 @@ export class DriveLocationService {
       updateData.departToArrival = {
         push: locationName,
       };
+    }
+
+    if (isArrival) {
+      updateData.status = RidingRecordStatus.COMPLETED;
     }
 
     await this.mongo.ridingRecord.update({
@@ -140,7 +157,7 @@ export class DriveLocationService {
   // 또한, 라이딩 레코드를 마무리합니다.
   async endTeamRiding(ridingRecordId: string, loc: LatLonEleDto, locationName: string) {
     const ridingRecord = await this.mongo.ridingRecord.findUnique({
-      where: { id: ridingRecordId },
+      where: { id: ridingRecordId, status: RidingRecordStatus.ONGOING },
     });
 
     // TODO: 커스텀 에러로 변환
@@ -148,12 +165,25 @@ export class DriveLocationService {
       throw new NotFoundException('RidingRecord ID 값에 해당하는 기록이 존재하지 않습니다.');
     }
 
-    // 팀 라이딩인 경우 해당 팀을 라이딩 중인 상태에서 제거
-    if (ridingRecord.teamId)
-      await this.removeTeamFromRedisCurrentRidingTeam(BigInt(ridingRecord.teamId));
+    // 팀 라이딩인 경우, 해당 팀의 모든 사람들의 ridingRecord가 completed 상태인 경우 제거
+    if (ridingRecord.teamId) {
+      const ongoingRecords = await this.mongo.ridingRecord.findMany({
+        where: {
+          teamId: ridingRecord.teamId,
+          status: RidingRecordStatus.ONGOING,
+        },
+      });
+
+      if (ongoingRecords.length > 1) {
+        // 아직 완료되지 않은 라이딩 기록이 남아있는 경우, 바로 종료하지 않음
+        await this.updateRidingRecordLocation(ridingRecordId, loc, locationName, true);
+        return;
+      } // else, 마지막 기록인 경우 redis 내 current riding team에서 제거
+      else await this.removeTeamFromRedisCurrentRidingTeam(BigInt(ridingRecord.teamId));
+    }
 
     // 라이딩 레코드 마무리 (예: 종료 시간 기록)
-    await this.updateRidingRecordLocation(ridingRecordId, loc, locationName);
+    await this.updateRidingRecordLocation(ridingRecordId, loc, locationName, true);
 
     return;
   }
