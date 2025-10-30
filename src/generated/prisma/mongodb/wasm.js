@@ -113,14 +113,13 @@ Prisma.NullTypes = {
  * Enums
  */
 
-exports.Prisma.TrackPointScalarFieldEnum = {
+exports.Prisma.RidingRecordScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  ridingRecordId: 'ridingRecordId',
-  lat: 'lat',
-  lon: 'lon',
-  ele: 'ele',
-  timestamp: 'timestamp',
+  recordOwnerId: 'recordOwnerId',
+  participants: 'participants',
+  teamId: 'teamId',
+  departToArrival: 'departToArrival',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -134,10 +133,13 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.RidingRecordStatus = exports.$Enums.RidingRecordStatus = {
+  ONGOING: 'ONGOING',
+  COMPLETED: 'COMPLETED'
+};
 
 exports.Prisma.ModelName = {
-  TrackPoint: 'TrackPoint'
+  RidingRecord: 'RidingRecord'
 };
 
 /**

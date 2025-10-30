@@ -44,21 +44,6 @@ export type TeamMember = $Result.DefaultSelection<Prisma.$TeamMemberPayload>
  */
 export type TeamJoinCode = $Result.DefaultSelection<Prisma.$TeamJoinCodePayload>
 /**
- * Model RidingRecord
- * 
- */
-export type RidingRecord = $Result.DefaultSelection<Prisma.$RidingRecordPayload>
-/**
- * Model RidingMember
- * 
- */
-export type RidingMember = $Result.DefaultSelection<Prisma.$RidingMemberPayload>
-/**
- * Model RefreshToken
- * 
- */
-export type RefreshToken = $Result.DefaultSelection<Prisma.$RefreshTokenPayload>
-/**
  * Model S3UploadedFiles
  * 
  */
@@ -265,36 +250,6 @@ export class PrismaClient<
     * ```
     */
   get teamJoinCode(): Prisma.TeamJoinCodeDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.ridingRecord`: Exposes CRUD operations for the **RidingRecord** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more RidingRecords
-    * const ridingRecords = await prisma.ridingRecord.findMany()
-    * ```
-    */
-  get ridingRecord(): Prisma.RidingRecordDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.ridingMember`: Exposes CRUD operations for the **RidingMember** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more RidingMembers
-    * const ridingMembers = await prisma.ridingMember.findMany()
-    * ```
-    */
-  get ridingMember(): Prisma.RidingMemberDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.refreshToken`: Exposes CRUD operations for the **RefreshToken** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more RefreshTokens
-    * const refreshTokens = await prisma.refreshToken.findMany()
-    * ```
-    */
-  get refreshToken(): Prisma.RefreshTokenDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.s3UploadedFiles`: Exposes CRUD operations for the **S3UploadedFiles** model.
@@ -751,9 +706,6 @@ export namespace Prisma {
     Team: 'Team',
     TeamMember: 'TeamMember',
     TeamJoinCode: 'TeamJoinCode',
-    RidingRecord: 'RidingRecord',
-    RidingMember: 'RidingMember',
-    RefreshToken: 'RefreshToken',
     S3UploadedFiles: 'S3UploadedFiles'
   };
 
@@ -773,7 +725,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "friend" | "oAuthUser" | "team" | "teamMember" | "teamJoinCode" | "ridingRecord" | "ridingMember" | "refreshToken" | "s3UploadedFiles"
+      modelProps: "user" | "friend" | "oAuthUser" | "team" | "teamMember" | "teamJoinCode" | "s3UploadedFiles"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1173,204 +1125,6 @@ export namespace Prisma {
           }
         }
       }
-      RidingRecord: {
-        payload: Prisma.$RidingRecordPayload<ExtArgs>
-        fields: Prisma.RidingRecordFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.RidingRecordFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.RidingRecordFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>
-          }
-          findFirst: {
-            args: Prisma.RidingRecordFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.RidingRecordFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>
-          }
-          findMany: {
-            args: Prisma.RidingRecordFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>[]
-          }
-          create: {
-            args: Prisma.RidingRecordCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>
-          }
-          createMany: {
-            args: Prisma.RidingRecordCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          delete: {
-            args: Prisma.RidingRecordDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>
-          }
-          update: {
-            args: Prisma.RidingRecordUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>
-          }
-          deleteMany: {
-            args: Prisma.RidingRecordDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.RidingRecordUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          upsert: {
-            args: Prisma.RidingRecordUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingRecordPayload>
-          }
-          aggregate: {
-            args: Prisma.RidingRecordAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRidingRecord>
-          }
-          groupBy: {
-            args: Prisma.RidingRecordGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RidingRecordGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.RidingRecordCountArgs<ExtArgs>
-            result: $Utils.Optional<RidingRecordCountAggregateOutputType> | number
-          }
-        }
-      }
-      RidingMember: {
-        payload: Prisma.$RidingMemberPayload<ExtArgs>
-        fields: Prisma.RidingMemberFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.RidingMemberFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingMemberPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.RidingMemberFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingMemberPayload>
-          }
-          findFirst: {
-            args: Prisma.RidingMemberFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingMemberPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.RidingMemberFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingMemberPayload>
-          }
-          findMany: {
-            args: Prisma.RidingMemberFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingMemberPayload>[]
-          }
-          create: {
-            args: Prisma.RidingMemberCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingMemberPayload>
-          }
-          createMany: {
-            args: Prisma.RidingMemberCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          delete: {
-            args: Prisma.RidingMemberDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingMemberPayload>
-          }
-          update: {
-            args: Prisma.RidingMemberUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingMemberPayload>
-          }
-          deleteMany: {
-            args: Prisma.RidingMemberDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.RidingMemberUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          upsert: {
-            args: Prisma.RidingMemberUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RidingMemberPayload>
-          }
-          aggregate: {
-            args: Prisma.RidingMemberAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRidingMember>
-          }
-          groupBy: {
-            args: Prisma.RidingMemberGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RidingMemberGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.RidingMemberCountArgs<ExtArgs>
-            result: $Utils.Optional<RidingMemberCountAggregateOutputType> | number
-          }
-        }
-      }
-      RefreshToken: {
-        payload: Prisma.$RefreshTokenPayload<ExtArgs>
-        fields: Prisma.RefreshTokenFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.RefreshTokenFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.RefreshTokenFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
-          }
-          findFirst: {
-            args: Prisma.RefreshTokenFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.RefreshTokenFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
-          }
-          findMany: {
-            args: Prisma.RefreshTokenFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>[]
-          }
-          create: {
-            args: Prisma.RefreshTokenCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
-          }
-          createMany: {
-            args: Prisma.RefreshTokenCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          delete: {
-            args: Prisma.RefreshTokenDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
-          }
-          update: {
-            args: Prisma.RefreshTokenUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
-          }
-          deleteMany: {
-            args: Prisma.RefreshTokenDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.RefreshTokenUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          upsert: {
-            args: Prisma.RefreshTokenUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RefreshTokenPayload>
-          }
-          aggregate: {
-            args: Prisma.RefreshTokenAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRefreshToken>
-          }
-          groupBy: {
-            args: Prisma.RefreshTokenGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RefreshTokenGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.RefreshTokenCountArgs<ExtArgs>
-            result: $Utils.Optional<RefreshTokenCountAggregateOutputType> | number
-          }
-        }
-      }
       S3UploadedFiles: {
         payload: Prisma.$S3UploadedFilesPayload<ExtArgs>
         fields: Prisma.S3UploadedFilesFieldRefs
@@ -1535,9 +1289,6 @@ export namespace Prisma {
     team?: TeamOmit
     teamMember?: TeamMemberOmit
     teamJoinCode?: TeamJoinCodeOmit
-    ridingRecord?: RidingRecordOmit
-    ridingMember?: RidingMemberOmit
-    refreshToken?: RefreshTokenOmit
     s3UploadedFiles?: S3UploadedFilesOmit
   }
 
@@ -1640,7 +1391,6 @@ export namespace Prisma {
   export type UserCountOutputType = {
     oAuthUser: number
     teamMember: number
-    ridingMember: number
     sentFriendRequests: number
     receivedFriendRequests: number
   }
@@ -1648,7 +1398,6 @@ export namespace Prisma {
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     oAuthUser?: boolean | UserCountOutputTypeCountOAuthUserArgs
     teamMember?: boolean | UserCountOutputTypeCountTeamMemberArgs
-    ridingMember?: boolean | UserCountOutputTypeCountRidingMemberArgs
     sentFriendRequests?: boolean | UserCountOutputTypeCountSentFriendRequestsArgs
     receivedFriendRequests?: boolean | UserCountOutputTypeCountReceivedFriendRequestsArgs
   }
@@ -1681,13 +1430,6 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountRidingMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RidingMemberWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
   export type UserCountOutputTypeCountSentFriendRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FriendWhereInput
   }
@@ -1707,15 +1449,11 @@ export namespace Prisma {
   export type TeamCountOutputType = {
     members: number
     joinCode: number
-    ridingMembers: number
-    ridingRecord: number
   }
 
   export type TeamCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | TeamCountOutputTypeCountMembersArgs
     joinCode?: boolean | TeamCountOutputTypeCountJoinCodeArgs
-    ridingMembers?: boolean | TeamCountOutputTypeCountRidingMembersArgs
-    ridingRecord?: boolean | TeamCountOutputTypeCountRidingRecordArgs
   }
 
   // Custom InputTypes
@@ -1741,51 +1479,6 @@ export namespace Prisma {
    */
   export type TeamCountOutputTypeCountJoinCodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TeamJoinCodeWhereInput
-  }
-
-  /**
-   * TeamCountOutputType without action
-   */
-  export type TeamCountOutputTypeCountRidingMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RidingMemberWhereInput
-  }
-
-  /**
-   * TeamCountOutputType without action
-   */
-  export type TeamCountOutputTypeCountRidingRecordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RidingRecordWhereInput
-  }
-
-
-  /**
-   * Count Type RidingRecordCountOutputType
-   */
-
-  export type RidingRecordCountOutputType = {
-    ridingMember: number
-  }
-
-  export type RidingRecordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    ridingMember?: boolean | RidingRecordCountOutputTypeCountRidingMemberArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * RidingRecordCountOutputType without action
-   */
-  export type RidingRecordCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecordCountOutputType
-     */
-    select?: RidingRecordCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * RidingRecordCountOutputType without action
-   */
-  export type RidingRecordCountOutputTypeCountRidingMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RidingMemberWhereInput
   }
 
 
@@ -2017,7 +1710,6 @@ export namespace Prisma {
     updatedAt?: boolean
     oAuthUser?: boolean | User$oAuthUserArgs<ExtArgs>
     teamMember?: boolean | User$teamMemberArgs<ExtArgs>
-    ridingMember?: boolean | User$ridingMemberArgs<ExtArgs>
     sentFriendRequests?: boolean | User$sentFriendRequestsArgs<ExtArgs>
     receivedFriendRequests?: boolean | User$receivedFriendRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2040,7 +1732,6 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     oAuthUser?: boolean | User$oAuthUserArgs<ExtArgs>
     teamMember?: boolean | User$teamMemberArgs<ExtArgs>
-    ridingMember?: boolean | User$ridingMemberArgs<ExtArgs>
     sentFriendRequests?: boolean | User$sentFriendRequestsArgs<ExtArgs>
     receivedFriendRequests?: boolean | User$receivedFriendRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2051,7 +1742,6 @@ export namespace Prisma {
     objects: {
       oAuthUser: Prisma.$OAuthUserPayload<ExtArgs>[]
       teamMember: Prisma.$TeamMemberPayload<ExtArgs>[]
-      ridingMember: Prisma.$RidingMemberPayload<ExtArgs>[]
       sentFriendRequests: Prisma.$FriendPayload<ExtArgs>[]
       receivedFriendRequests: Prisma.$FriendPayload<ExtArgs>[]
     }
@@ -2406,7 +2096,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     oAuthUser<T extends User$oAuthUserArgs<ExtArgs> = {}>(args?: Subset<T, User$oAuthUserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     teamMember<T extends User$teamMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$teamMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    ridingMember<T extends User$ridingMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$ridingMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sentFriendRequests<T extends User$sentFriendRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$sentFriendRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receivedFriendRequests<T extends User$receivedFriendRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedFriendRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -2834,30 +2523,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TeamMemberScalarFieldEnum | TeamMemberScalarFieldEnum[]
-  }
-
-  /**
-   * User.ridingMember
-   */
-  export type User$ridingMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    where?: RidingMemberWhereInput
-    orderBy?: RidingMemberOrderByWithRelationInput | RidingMemberOrderByWithRelationInput[]
-    cursor?: RidingMemberWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: RidingMemberScalarFieldEnum | RidingMemberScalarFieldEnum[]
   }
 
   /**
@@ -5077,8 +4742,6 @@ export namespace Prisma {
     updatedAt?: boolean
     members?: boolean | Team$membersArgs<ExtArgs>
     joinCode?: boolean | Team$joinCodeArgs<ExtArgs>
-    ridingMembers?: boolean | Team$ridingMembersArgs<ExtArgs>
-    ridingRecord?: boolean | Team$ridingRecordArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["team"]>
 
@@ -5098,8 +4761,6 @@ export namespace Prisma {
   export type TeamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | Team$membersArgs<ExtArgs>
     joinCode?: boolean | Team$joinCodeArgs<ExtArgs>
-    ridingMembers?: boolean | Team$ridingMembersArgs<ExtArgs>
-    ridingRecord?: boolean | Team$ridingRecordArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -5108,8 +4769,6 @@ export namespace Prisma {
     objects: {
       members: Prisma.$TeamMemberPayload<ExtArgs>[]
       joinCode: Prisma.$TeamJoinCodePayload<ExtArgs>[]
-      ridingMembers: Prisma.$RidingMemberPayload<ExtArgs>[]
-      ridingRecord: Prisma.$RidingRecordPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -5461,8 +5120,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     members<T extends Team$membersArgs<ExtArgs> = {}>(args?: Subset<T, Team$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     joinCode<T extends Team$joinCodeArgs<ExtArgs> = {}>(args?: Subset<T, Team$joinCodeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamJoinCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    ridingMembers<T extends Team$ridingMembersArgs<ExtArgs> = {}>(args?: Subset<T, Team$ridingMembersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    ridingRecord<T extends Team$ridingRecordArgs<ExtArgs> = {}>(args?: Subset<T, Team$ridingRecordArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5887,54 +5544,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TeamJoinCodeScalarFieldEnum | TeamJoinCodeScalarFieldEnum[]
-  }
-
-  /**
-   * Team.ridingMembers
-   */
-  export type Team$ridingMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    where?: RidingMemberWhereInput
-    orderBy?: RidingMemberOrderByWithRelationInput | RidingMemberOrderByWithRelationInput[]
-    cursor?: RidingMemberWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: RidingMemberScalarFieldEnum | RidingMemberScalarFieldEnum[]
-  }
-
-  /**
-   * Team.ridingRecord
-   */
-  export type Team$ridingRecordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    where?: RidingRecordWhereInput
-    orderBy?: RidingRecordOrderByWithRelationInput | RidingRecordOrderByWithRelationInput[]
-    cursor?: RidingRecordWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: RidingRecordScalarFieldEnum | RidingRecordScalarFieldEnum[]
   }
 
   /**
@@ -7902,3025 +7511,6 @@ export namespace Prisma {
 
 
   /**
-   * Model RidingRecord
-   */
-
-  export type AggregateRidingRecord = {
-    _count: RidingRecordCountAggregateOutputType | null
-    _avg: RidingRecordAvgAggregateOutputType | null
-    _sum: RidingRecordSumAggregateOutputType | null
-    _min: RidingRecordMinAggregateOutputType | null
-    _max: RidingRecordMaxAggregateOutputType | null
-  }
-
-  export type RidingRecordAvgAggregateOutputType = {
-    id: number | null
-    distance: number | null
-    duration: number | null
-    teamId: number | null
-  }
-
-  export type RidingRecordSumAggregateOutputType = {
-    id: bigint | null
-    distance: number | null
-    duration: number | null
-    teamId: bigint | null
-  }
-
-  export type RidingRecordMinAggregateOutputType = {
-    id: bigint | null
-    type: $Enums.RidingType | null
-    distance: number | null
-    duration: number | null
-    departure: string | null
-    stopover1: string | null
-    stopover2: string | null
-    stopover3: string | null
-    arrival: string | null
-    teamId: bigint | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type RidingRecordMaxAggregateOutputType = {
-    id: bigint | null
-    type: $Enums.RidingType | null
-    distance: number | null
-    duration: number | null
-    departure: string | null
-    stopover1: string | null
-    stopover2: string | null
-    stopover3: string | null
-    arrival: string | null
-    teamId: bigint | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type RidingRecordCountAggregateOutputType = {
-    id: number
-    type: number
-    distance: number
-    duration: number
-    departure: number
-    stopover1: number
-    stopover2: number
-    stopover3: number
-    arrival: number
-    teamId: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type RidingRecordAvgAggregateInputType = {
-    id?: true
-    distance?: true
-    duration?: true
-    teamId?: true
-  }
-
-  export type RidingRecordSumAggregateInputType = {
-    id?: true
-    distance?: true
-    duration?: true
-    teamId?: true
-  }
-
-  export type RidingRecordMinAggregateInputType = {
-    id?: true
-    type?: true
-    distance?: true
-    duration?: true
-    departure?: true
-    stopover1?: true
-    stopover2?: true
-    stopover3?: true
-    arrival?: true
-    teamId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type RidingRecordMaxAggregateInputType = {
-    id?: true
-    type?: true
-    distance?: true
-    duration?: true
-    departure?: true
-    stopover1?: true
-    stopover2?: true
-    stopover3?: true
-    arrival?: true
-    teamId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type RidingRecordCountAggregateInputType = {
-    id?: true
-    type?: true
-    distance?: true
-    duration?: true
-    departure?: true
-    stopover1?: true
-    stopover2?: true
-    stopover3?: true
-    arrival?: true
-    teamId?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type RidingRecordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which RidingRecord to aggregate.
-     */
-    where?: RidingRecordWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RidingRecords to fetch.
-     */
-    orderBy?: RidingRecordOrderByWithRelationInput | RidingRecordOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: RidingRecordWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RidingRecords from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RidingRecords.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned RidingRecords
-    **/
-    _count?: true | RidingRecordCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: RidingRecordAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: RidingRecordSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: RidingRecordMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: RidingRecordMaxAggregateInputType
-  }
-
-  export type GetRidingRecordAggregateType<T extends RidingRecordAggregateArgs> = {
-        [P in keyof T & keyof AggregateRidingRecord]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateRidingRecord[P]>
-      : GetScalarType<T[P], AggregateRidingRecord[P]>
-  }
-
-
-
-
-  export type RidingRecordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RidingRecordWhereInput
-    orderBy?: RidingRecordOrderByWithAggregationInput | RidingRecordOrderByWithAggregationInput[]
-    by: RidingRecordScalarFieldEnum[] | RidingRecordScalarFieldEnum
-    having?: RidingRecordScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: RidingRecordCountAggregateInputType | true
-    _avg?: RidingRecordAvgAggregateInputType
-    _sum?: RidingRecordSumAggregateInputType
-    _min?: RidingRecordMinAggregateInputType
-    _max?: RidingRecordMaxAggregateInputType
-  }
-
-  export type RidingRecordGroupByOutputType = {
-    id: bigint
-    type: $Enums.RidingType
-    distance: number
-    duration: number
-    departure: string
-    stopover1: string | null
-    stopover2: string | null
-    stopover3: string | null
-    arrival: string
-    teamId: bigint | null
-    createdAt: Date
-    updatedAt: Date
-    _count: RidingRecordCountAggregateOutputType | null
-    _avg: RidingRecordAvgAggregateOutputType | null
-    _sum: RidingRecordSumAggregateOutputType | null
-    _min: RidingRecordMinAggregateOutputType | null
-    _max: RidingRecordMaxAggregateOutputType | null
-  }
-
-  type GetRidingRecordGroupByPayload<T extends RidingRecordGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<RidingRecordGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof RidingRecordGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], RidingRecordGroupByOutputType[P]>
-            : GetScalarType<T[P], RidingRecordGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type RidingRecordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    type?: boolean
-    distance?: boolean
-    duration?: boolean
-    departure?: boolean
-    stopover1?: boolean
-    stopover2?: boolean
-    stopover3?: boolean
-    arrival?: boolean
-    teamId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    team?: boolean | RidingRecord$teamArgs<ExtArgs>
-    ridingMember?: boolean | RidingRecord$ridingMemberArgs<ExtArgs>
-    _count?: boolean | RidingRecordCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["ridingRecord"]>
-
-
-
-  export type RidingRecordSelectScalar = {
-    id?: boolean
-    type?: boolean
-    distance?: boolean
-    duration?: boolean
-    departure?: boolean
-    stopover1?: boolean
-    stopover2?: boolean
-    stopover3?: boolean
-    arrival?: boolean
-    teamId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type RidingRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "distance" | "duration" | "departure" | "stopover1" | "stopover2" | "stopover3" | "arrival" | "teamId" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingRecord"]>
-  export type RidingRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    team?: boolean | RidingRecord$teamArgs<ExtArgs>
-    ridingMember?: boolean | RidingRecord$ridingMemberArgs<ExtArgs>
-    _count?: boolean | RidingRecordCountOutputTypeDefaultArgs<ExtArgs>
-  }
-
-  export type $RidingRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "RidingRecord"
-    objects: {
-      team: Prisma.$TeamPayload<ExtArgs> | null
-      ridingMember: Prisma.$RidingMemberPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: bigint
-      type: $Enums.RidingType
-      distance: number
-      duration: number
-      departure: string
-      stopover1: string | null
-      stopover2: string | null
-      stopover3: string | null
-      arrival: string
-      teamId: bigint | null
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["ridingRecord"]>
-    composites: {}
-  }
-
-  type RidingRecordGetPayload<S extends boolean | null | undefined | RidingRecordDefaultArgs> = $Result.GetResult<Prisma.$RidingRecordPayload, S>
-
-  type RidingRecordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RidingRecordFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RidingRecordCountAggregateInputType | true
-    }
-
-  export interface RidingRecordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RidingRecord'], meta: { name: 'RidingRecord' } }
-    /**
-     * Find zero or one RidingRecord that matches the filter.
-     * @param {RidingRecordFindUniqueArgs} args - Arguments to find a RidingRecord
-     * @example
-     * // Get one RidingRecord
-     * const ridingRecord = await prisma.ridingRecord.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends RidingRecordFindUniqueArgs>(args: SelectSubset<T, RidingRecordFindUniqueArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one RidingRecord that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {RidingRecordFindUniqueOrThrowArgs} args - Arguments to find a RidingRecord
-     * @example
-     * // Get one RidingRecord
-     * const ridingRecord = await prisma.ridingRecord.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends RidingRecordFindUniqueOrThrowArgs>(args: SelectSubset<T, RidingRecordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first RidingRecord that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingRecordFindFirstArgs} args - Arguments to find a RidingRecord
-     * @example
-     * // Get one RidingRecord
-     * const ridingRecord = await prisma.ridingRecord.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends RidingRecordFindFirstArgs>(args?: SelectSubset<T, RidingRecordFindFirstArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first RidingRecord that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingRecordFindFirstOrThrowArgs} args - Arguments to find a RidingRecord
-     * @example
-     * // Get one RidingRecord
-     * const ridingRecord = await prisma.ridingRecord.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends RidingRecordFindFirstOrThrowArgs>(args?: SelectSubset<T, RidingRecordFindFirstOrThrowArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more RidingRecords that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingRecordFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all RidingRecords
-     * const ridingRecords = await prisma.ridingRecord.findMany()
-     * 
-     * // Get first 10 RidingRecords
-     * const ridingRecords = await prisma.ridingRecord.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const ridingRecordWithIdOnly = await prisma.ridingRecord.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends RidingRecordFindManyArgs>(args?: SelectSubset<T, RidingRecordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a RidingRecord.
-     * @param {RidingRecordCreateArgs} args - Arguments to create a RidingRecord.
-     * @example
-     * // Create one RidingRecord
-     * const RidingRecord = await prisma.ridingRecord.create({
-     *   data: {
-     *     // ... data to create a RidingRecord
-     *   }
-     * })
-     * 
-     */
-    create<T extends RidingRecordCreateArgs>(args: SelectSubset<T, RidingRecordCreateArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many RidingRecords.
-     * @param {RidingRecordCreateManyArgs} args - Arguments to create many RidingRecords.
-     * @example
-     * // Create many RidingRecords
-     * const ridingRecord = await prisma.ridingRecord.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends RidingRecordCreateManyArgs>(args?: SelectSubset<T, RidingRecordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a RidingRecord.
-     * @param {RidingRecordDeleteArgs} args - Arguments to delete one RidingRecord.
-     * @example
-     * // Delete one RidingRecord
-     * const RidingRecord = await prisma.ridingRecord.delete({
-     *   where: {
-     *     // ... filter to delete one RidingRecord
-     *   }
-     * })
-     * 
-     */
-    delete<T extends RidingRecordDeleteArgs>(args: SelectSubset<T, RidingRecordDeleteArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one RidingRecord.
-     * @param {RidingRecordUpdateArgs} args - Arguments to update one RidingRecord.
-     * @example
-     * // Update one RidingRecord
-     * const ridingRecord = await prisma.ridingRecord.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends RidingRecordUpdateArgs>(args: SelectSubset<T, RidingRecordUpdateArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more RidingRecords.
-     * @param {RidingRecordDeleteManyArgs} args - Arguments to filter RidingRecords to delete.
-     * @example
-     * // Delete a few RidingRecords
-     * const { count } = await prisma.ridingRecord.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends RidingRecordDeleteManyArgs>(args?: SelectSubset<T, RidingRecordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more RidingRecords.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingRecordUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many RidingRecords
-     * const ridingRecord = await prisma.ridingRecord.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends RidingRecordUpdateManyArgs>(args: SelectSubset<T, RidingRecordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one RidingRecord.
-     * @param {RidingRecordUpsertArgs} args - Arguments to update or create a RidingRecord.
-     * @example
-     * // Update or create a RidingRecord
-     * const ridingRecord = await prisma.ridingRecord.upsert({
-     *   create: {
-     *     // ... data to create a RidingRecord
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the RidingRecord we want to update
-     *   }
-     * })
-     */
-    upsert<T extends RidingRecordUpsertArgs>(args: SelectSubset<T, RidingRecordUpsertArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of RidingRecords.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingRecordCountArgs} args - Arguments to filter RidingRecords to count.
-     * @example
-     * // Count the number of RidingRecords
-     * const count = await prisma.ridingRecord.count({
-     *   where: {
-     *     // ... the filter for the RidingRecords we want to count
-     *   }
-     * })
-    **/
-    count<T extends RidingRecordCountArgs>(
-      args?: Subset<T, RidingRecordCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], RidingRecordCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a RidingRecord.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends RidingRecordAggregateArgs>(args: Subset<T, RidingRecordAggregateArgs>): Prisma.PrismaPromise<GetRidingRecordAggregateType<T>>
-
-    /**
-     * Group by RidingRecord.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingRecordGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends RidingRecordGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RidingRecordGroupByArgs['orderBy'] }
-        : { orderBy?: RidingRecordGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, RidingRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRidingRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the RidingRecord model
-   */
-  readonly fields: RidingRecordFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for RidingRecord.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__RidingRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    team<T extends RidingRecord$teamArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecord$teamArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    ridingMember<T extends RidingRecord$ridingMemberArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecord$ridingMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the RidingRecord model
-   */
-  interface RidingRecordFieldRefs {
-    readonly id: FieldRef<"RidingRecord", 'BigInt'>
-    readonly type: FieldRef<"RidingRecord", 'RidingType'>
-    readonly distance: FieldRef<"RidingRecord", 'Float'>
-    readonly duration: FieldRef<"RidingRecord", 'Int'>
-    readonly departure: FieldRef<"RidingRecord", 'String'>
-    readonly stopover1: FieldRef<"RidingRecord", 'String'>
-    readonly stopover2: FieldRef<"RidingRecord", 'String'>
-    readonly stopover3: FieldRef<"RidingRecord", 'String'>
-    readonly arrival: FieldRef<"RidingRecord", 'String'>
-    readonly teamId: FieldRef<"RidingRecord", 'BigInt'>
-    readonly createdAt: FieldRef<"RidingRecord", 'DateTime'>
-    readonly updatedAt: FieldRef<"RidingRecord", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * RidingRecord findUnique
-   */
-  export type RidingRecordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingRecord to fetch.
-     */
-    where: RidingRecordWhereUniqueInput
-  }
-
-  /**
-   * RidingRecord findUniqueOrThrow
-   */
-  export type RidingRecordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingRecord to fetch.
-     */
-    where: RidingRecordWhereUniqueInput
-  }
-
-  /**
-   * RidingRecord findFirst
-   */
-  export type RidingRecordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingRecord to fetch.
-     */
-    where?: RidingRecordWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RidingRecords to fetch.
-     */
-    orderBy?: RidingRecordOrderByWithRelationInput | RidingRecordOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RidingRecords.
-     */
-    cursor?: RidingRecordWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RidingRecords from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RidingRecords.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RidingRecords.
-     */
-    distinct?: RidingRecordScalarFieldEnum | RidingRecordScalarFieldEnum[]
-  }
-
-  /**
-   * RidingRecord findFirstOrThrow
-   */
-  export type RidingRecordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingRecord to fetch.
-     */
-    where?: RidingRecordWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RidingRecords to fetch.
-     */
-    orderBy?: RidingRecordOrderByWithRelationInput | RidingRecordOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RidingRecords.
-     */
-    cursor?: RidingRecordWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RidingRecords from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RidingRecords.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RidingRecords.
-     */
-    distinct?: RidingRecordScalarFieldEnum | RidingRecordScalarFieldEnum[]
-  }
-
-  /**
-   * RidingRecord findMany
-   */
-  export type RidingRecordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingRecords to fetch.
-     */
-    where?: RidingRecordWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RidingRecords to fetch.
-     */
-    orderBy?: RidingRecordOrderByWithRelationInput | RidingRecordOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing RidingRecords.
-     */
-    cursor?: RidingRecordWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RidingRecords from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RidingRecords.
-     */
-    skip?: number
-    distinct?: RidingRecordScalarFieldEnum | RidingRecordScalarFieldEnum[]
-  }
-
-  /**
-   * RidingRecord create
-   */
-  export type RidingRecordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    /**
-     * The data needed to create a RidingRecord.
-     */
-    data: XOR<RidingRecordCreateInput, RidingRecordUncheckedCreateInput>
-  }
-
-  /**
-   * RidingRecord createMany
-   */
-  export type RidingRecordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many RidingRecords.
-     */
-    data: RidingRecordCreateManyInput | RidingRecordCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * RidingRecord update
-   */
-  export type RidingRecordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    /**
-     * The data needed to update a RidingRecord.
-     */
-    data: XOR<RidingRecordUpdateInput, RidingRecordUncheckedUpdateInput>
-    /**
-     * Choose, which RidingRecord to update.
-     */
-    where: RidingRecordWhereUniqueInput
-  }
-
-  /**
-   * RidingRecord updateMany
-   */
-  export type RidingRecordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update RidingRecords.
-     */
-    data: XOR<RidingRecordUpdateManyMutationInput, RidingRecordUncheckedUpdateManyInput>
-    /**
-     * Filter which RidingRecords to update
-     */
-    where?: RidingRecordWhereInput
-    /**
-     * Limit how many RidingRecords to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * RidingRecord upsert
-   */
-  export type RidingRecordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    /**
-     * The filter to search for the RidingRecord to update in case it exists.
-     */
-    where: RidingRecordWhereUniqueInput
-    /**
-     * In case the RidingRecord found by the `where` argument doesn't exist, create a new RidingRecord with this data.
-     */
-    create: XOR<RidingRecordCreateInput, RidingRecordUncheckedCreateInput>
-    /**
-     * In case the RidingRecord was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<RidingRecordUpdateInput, RidingRecordUncheckedUpdateInput>
-  }
-
-  /**
-   * RidingRecord delete
-   */
-  export type RidingRecordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-    /**
-     * Filter which RidingRecord to delete.
-     */
-    where: RidingRecordWhereUniqueInput
-  }
-
-  /**
-   * RidingRecord deleteMany
-   */
-  export type RidingRecordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which RidingRecords to delete
-     */
-    where?: RidingRecordWhereInput
-    /**
-     * Limit how many RidingRecords to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * RidingRecord.team
-   */
-  export type RidingRecord$teamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Team
-     */
-    select?: TeamSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Team
-     */
-    omit?: TeamOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TeamInclude<ExtArgs> | null
-    where?: TeamWhereInput
-  }
-
-  /**
-   * RidingRecord.ridingMember
-   */
-  export type RidingRecord$ridingMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    where?: RidingMemberWhereInput
-    orderBy?: RidingMemberOrderByWithRelationInput | RidingMemberOrderByWithRelationInput[]
-    cursor?: RidingMemberWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: RidingMemberScalarFieldEnum | RidingMemberScalarFieldEnum[]
-  }
-
-  /**
-   * RidingRecord without action
-   */
-  export type RidingRecordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingRecord
-     */
-    select?: RidingRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingRecord
-     */
-    omit?: RidingRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingRecordInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model RidingMember
-   */
-
-  export type AggregateRidingMember = {
-    _count: RidingMemberCountAggregateOutputType | null
-    _avg: RidingMemberAvgAggregateOutputType | null
-    _sum: RidingMemberSumAggregateOutputType | null
-    _min: RidingMemberMinAggregateOutputType | null
-    _max: RidingMemberMaxAggregateOutputType | null
-  }
-
-  export type RidingMemberAvgAggregateOutputType = {
-    ridingRecordId: number | null
-    userId: number | null
-    teamId: number | null
-  }
-
-  export type RidingMemberSumAggregateOutputType = {
-    ridingRecordId: bigint | null
-    userId: bigint | null
-    teamId: bigint | null
-  }
-
-  export type RidingMemberMinAggregateOutputType = {
-    ridingRecordId: bigint | null
-    userId: bigint | null
-    teamId: bigint | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type RidingMemberMaxAggregateOutputType = {
-    ridingRecordId: bigint | null
-    userId: bigint | null
-    teamId: bigint | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type RidingMemberCountAggregateOutputType = {
-    ridingRecordId: number
-    userId: number
-    teamId: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type RidingMemberAvgAggregateInputType = {
-    ridingRecordId?: true
-    userId?: true
-    teamId?: true
-  }
-
-  export type RidingMemberSumAggregateInputType = {
-    ridingRecordId?: true
-    userId?: true
-    teamId?: true
-  }
-
-  export type RidingMemberMinAggregateInputType = {
-    ridingRecordId?: true
-    userId?: true
-    teamId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type RidingMemberMaxAggregateInputType = {
-    ridingRecordId?: true
-    userId?: true
-    teamId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type RidingMemberCountAggregateInputType = {
-    ridingRecordId?: true
-    userId?: true
-    teamId?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type RidingMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which RidingMember to aggregate.
-     */
-    where?: RidingMemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RidingMembers to fetch.
-     */
-    orderBy?: RidingMemberOrderByWithRelationInput | RidingMemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: RidingMemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RidingMembers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RidingMembers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned RidingMembers
-    **/
-    _count?: true | RidingMemberCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: RidingMemberAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: RidingMemberSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: RidingMemberMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: RidingMemberMaxAggregateInputType
-  }
-
-  export type GetRidingMemberAggregateType<T extends RidingMemberAggregateArgs> = {
-        [P in keyof T & keyof AggregateRidingMember]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateRidingMember[P]>
-      : GetScalarType<T[P], AggregateRidingMember[P]>
-  }
-
-
-
-
-  export type RidingMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RidingMemberWhereInput
-    orderBy?: RidingMemberOrderByWithAggregationInput | RidingMemberOrderByWithAggregationInput[]
-    by: RidingMemberScalarFieldEnum[] | RidingMemberScalarFieldEnum
-    having?: RidingMemberScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: RidingMemberCountAggregateInputType | true
-    _avg?: RidingMemberAvgAggregateInputType
-    _sum?: RidingMemberSumAggregateInputType
-    _min?: RidingMemberMinAggregateInputType
-    _max?: RidingMemberMaxAggregateInputType
-  }
-
-  export type RidingMemberGroupByOutputType = {
-    ridingRecordId: bigint
-    userId: bigint
-    teamId: bigint | null
-    createdAt: Date
-    updatedAt: Date
-    _count: RidingMemberCountAggregateOutputType | null
-    _avg: RidingMemberAvgAggregateOutputType | null
-    _sum: RidingMemberSumAggregateOutputType | null
-    _min: RidingMemberMinAggregateOutputType | null
-    _max: RidingMemberMaxAggregateOutputType | null
-  }
-
-  type GetRidingMemberGroupByPayload<T extends RidingMemberGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<RidingMemberGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof RidingMemberGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], RidingMemberGroupByOutputType[P]>
-            : GetScalarType<T[P], RidingMemberGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type RidingMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    ridingRecordId?: boolean
-    userId?: boolean
-    teamId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    ridingRecord?: boolean | RidingRecordDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    team?: boolean | RidingMember$teamArgs<ExtArgs>
-  }, ExtArgs["result"]["ridingMember"]>
-
-
-
-  export type RidingMemberSelectScalar = {
-    ridingRecordId?: boolean
-    userId?: boolean
-    teamId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type RidingMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"ridingRecordId" | "userId" | "teamId" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingMember"]>
-  export type RidingMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    ridingRecord?: boolean | RidingRecordDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    team?: boolean | RidingMember$teamArgs<ExtArgs>
-  }
-
-  export type $RidingMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "RidingMember"
-    objects: {
-      ridingRecord: Prisma.$RidingRecordPayload<ExtArgs>
-      user: Prisma.$UserPayload<ExtArgs>
-      team: Prisma.$TeamPayload<ExtArgs> | null
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      ridingRecordId: bigint
-      userId: bigint
-      teamId: bigint | null
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["ridingMember"]>
-    composites: {}
-  }
-
-  type RidingMemberGetPayload<S extends boolean | null | undefined | RidingMemberDefaultArgs> = $Result.GetResult<Prisma.$RidingMemberPayload, S>
-
-  type RidingMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RidingMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RidingMemberCountAggregateInputType | true
-    }
-
-  export interface RidingMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RidingMember'], meta: { name: 'RidingMember' } }
-    /**
-     * Find zero or one RidingMember that matches the filter.
-     * @param {RidingMemberFindUniqueArgs} args - Arguments to find a RidingMember
-     * @example
-     * // Get one RidingMember
-     * const ridingMember = await prisma.ridingMember.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends RidingMemberFindUniqueArgs>(args: SelectSubset<T, RidingMemberFindUniqueArgs<ExtArgs>>): Prisma__RidingMemberClient<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one RidingMember that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {RidingMemberFindUniqueOrThrowArgs} args - Arguments to find a RidingMember
-     * @example
-     * // Get one RidingMember
-     * const ridingMember = await prisma.ridingMember.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends RidingMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, RidingMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RidingMemberClient<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first RidingMember that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingMemberFindFirstArgs} args - Arguments to find a RidingMember
-     * @example
-     * // Get one RidingMember
-     * const ridingMember = await prisma.ridingMember.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends RidingMemberFindFirstArgs>(args?: SelectSubset<T, RidingMemberFindFirstArgs<ExtArgs>>): Prisma__RidingMemberClient<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first RidingMember that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingMemberFindFirstOrThrowArgs} args - Arguments to find a RidingMember
-     * @example
-     * // Get one RidingMember
-     * const ridingMember = await prisma.ridingMember.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends RidingMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, RidingMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__RidingMemberClient<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more RidingMembers that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingMemberFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all RidingMembers
-     * const ridingMembers = await prisma.ridingMember.findMany()
-     * 
-     * // Get first 10 RidingMembers
-     * const ridingMembers = await prisma.ridingMember.findMany({ take: 10 })
-     * 
-     * // Only select the `ridingRecordId`
-     * const ridingMemberWithRidingRecordIdOnly = await prisma.ridingMember.findMany({ select: { ridingRecordId: true } })
-     * 
-     */
-    findMany<T extends RidingMemberFindManyArgs>(args?: SelectSubset<T, RidingMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a RidingMember.
-     * @param {RidingMemberCreateArgs} args - Arguments to create a RidingMember.
-     * @example
-     * // Create one RidingMember
-     * const RidingMember = await prisma.ridingMember.create({
-     *   data: {
-     *     // ... data to create a RidingMember
-     *   }
-     * })
-     * 
-     */
-    create<T extends RidingMemberCreateArgs>(args: SelectSubset<T, RidingMemberCreateArgs<ExtArgs>>): Prisma__RidingMemberClient<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many RidingMembers.
-     * @param {RidingMemberCreateManyArgs} args - Arguments to create many RidingMembers.
-     * @example
-     * // Create many RidingMembers
-     * const ridingMember = await prisma.ridingMember.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends RidingMemberCreateManyArgs>(args?: SelectSubset<T, RidingMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a RidingMember.
-     * @param {RidingMemberDeleteArgs} args - Arguments to delete one RidingMember.
-     * @example
-     * // Delete one RidingMember
-     * const RidingMember = await prisma.ridingMember.delete({
-     *   where: {
-     *     // ... filter to delete one RidingMember
-     *   }
-     * })
-     * 
-     */
-    delete<T extends RidingMemberDeleteArgs>(args: SelectSubset<T, RidingMemberDeleteArgs<ExtArgs>>): Prisma__RidingMemberClient<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one RidingMember.
-     * @param {RidingMemberUpdateArgs} args - Arguments to update one RidingMember.
-     * @example
-     * // Update one RidingMember
-     * const ridingMember = await prisma.ridingMember.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends RidingMemberUpdateArgs>(args: SelectSubset<T, RidingMemberUpdateArgs<ExtArgs>>): Prisma__RidingMemberClient<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more RidingMembers.
-     * @param {RidingMemberDeleteManyArgs} args - Arguments to filter RidingMembers to delete.
-     * @example
-     * // Delete a few RidingMembers
-     * const { count } = await prisma.ridingMember.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends RidingMemberDeleteManyArgs>(args?: SelectSubset<T, RidingMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more RidingMembers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingMemberUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many RidingMembers
-     * const ridingMember = await prisma.ridingMember.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends RidingMemberUpdateManyArgs>(args: SelectSubset<T, RidingMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one RidingMember.
-     * @param {RidingMemberUpsertArgs} args - Arguments to update or create a RidingMember.
-     * @example
-     * // Update or create a RidingMember
-     * const ridingMember = await prisma.ridingMember.upsert({
-     *   create: {
-     *     // ... data to create a RidingMember
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the RidingMember we want to update
-     *   }
-     * })
-     */
-    upsert<T extends RidingMemberUpsertArgs>(args: SelectSubset<T, RidingMemberUpsertArgs<ExtArgs>>): Prisma__RidingMemberClient<$Result.GetResult<Prisma.$RidingMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of RidingMembers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingMemberCountArgs} args - Arguments to filter RidingMembers to count.
-     * @example
-     * // Count the number of RidingMembers
-     * const count = await prisma.ridingMember.count({
-     *   where: {
-     *     // ... the filter for the RidingMembers we want to count
-     *   }
-     * })
-    **/
-    count<T extends RidingMemberCountArgs>(
-      args?: Subset<T, RidingMemberCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], RidingMemberCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a RidingMember.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends RidingMemberAggregateArgs>(args: Subset<T, RidingMemberAggregateArgs>): Prisma.PrismaPromise<GetRidingMemberAggregateType<T>>
-
-    /**
-     * Group by RidingMember.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RidingMemberGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends RidingMemberGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RidingMemberGroupByArgs['orderBy'] }
-        : { orderBy?: RidingMemberGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, RidingMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRidingMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the RidingMember model
-   */
-  readonly fields: RidingMemberFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for RidingMember.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__RidingMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    ridingRecord<T extends RidingRecordDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecordDefaultArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    team<T extends RidingMember$teamArgs<ExtArgs> = {}>(args?: Subset<T, RidingMember$teamArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the RidingMember model
-   */
-  interface RidingMemberFieldRefs {
-    readonly ridingRecordId: FieldRef<"RidingMember", 'BigInt'>
-    readonly userId: FieldRef<"RidingMember", 'BigInt'>
-    readonly teamId: FieldRef<"RidingMember", 'BigInt'>
-    readonly createdAt: FieldRef<"RidingMember", 'DateTime'>
-    readonly updatedAt: FieldRef<"RidingMember", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * RidingMember findUnique
-   */
-  export type RidingMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingMember to fetch.
-     */
-    where: RidingMemberWhereUniqueInput
-  }
-
-  /**
-   * RidingMember findUniqueOrThrow
-   */
-  export type RidingMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingMember to fetch.
-     */
-    where: RidingMemberWhereUniqueInput
-  }
-
-  /**
-   * RidingMember findFirst
-   */
-  export type RidingMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingMember to fetch.
-     */
-    where?: RidingMemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RidingMembers to fetch.
-     */
-    orderBy?: RidingMemberOrderByWithRelationInput | RidingMemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RidingMembers.
-     */
-    cursor?: RidingMemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RidingMembers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RidingMembers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RidingMembers.
-     */
-    distinct?: RidingMemberScalarFieldEnum | RidingMemberScalarFieldEnum[]
-  }
-
-  /**
-   * RidingMember findFirstOrThrow
-   */
-  export type RidingMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingMember to fetch.
-     */
-    where?: RidingMemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RidingMembers to fetch.
-     */
-    orderBy?: RidingMemberOrderByWithRelationInput | RidingMemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RidingMembers.
-     */
-    cursor?: RidingMemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RidingMembers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RidingMembers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RidingMembers.
-     */
-    distinct?: RidingMemberScalarFieldEnum | RidingMemberScalarFieldEnum[]
-  }
-
-  /**
-   * RidingMember findMany
-   */
-  export type RidingMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which RidingMembers to fetch.
-     */
-    where?: RidingMemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RidingMembers to fetch.
-     */
-    orderBy?: RidingMemberOrderByWithRelationInput | RidingMemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing RidingMembers.
-     */
-    cursor?: RidingMemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RidingMembers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RidingMembers.
-     */
-    skip?: number
-    distinct?: RidingMemberScalarFieldEnum | RidingMemberScalarFieldEnum[]
-  }
-
-  /**
-   * RidingMember create
-   */
-  export type RidingMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    /**
-     * The data needed to create a RidingMember.
-     */
-    data: XOR<RidingMemberCreateInput, RidingMemberUncheckedCreateInput>
-  }
-
-  /**
-   * RidingMember createMany
-   */
-  export type RidingMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many RidingMembers.
-     */
-    data: RidingMemberCreateManyInput | RidingMemberCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * RidingMember update
-   */
-  export type RidingMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    /**
-     * The data needed to update a RidingMember.
-     */
-    data: XOR<RidingMemberUpdateInput, RidingMemberUncheckedUpdateInput>
-    /**
-     * Choose, which RidingMember to update.
-     */
-    where: RidingMemberWhereUniqueInput
-  }
-
-  /**
-   * RidingMember updateMany
-   */
-  export type RidingMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update RidingMembers.
-     */
-    data: XOR<RidingMemberUpdateManyMutationInput, RidingMemberUncheckedUpdateManyInput>
-    /**
-     * Filter which RidingMembers to update
-     */
-    where?: RidingMemberWhereInput
-    /**
-     * Limit how many RidingMembers to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * RidingMember upsert
-   */
-  export type RidingMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    /**
-     * The filter to search for the RidingMember to update in case it exists.
-     */
-    where: RidingMemberWhereUniqueInput
-    /**
-     * In case the RidingMember found by the `where` argument doesn't exist, create a new RidingMember with this data.
-     */
-    create: XOR<RidingMemberCreateInput, RidingMemberUncheckedCreateInput>
-    /**
-     * In case the RidingMember was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<RidingMemberUpdateInput, RidingMemberUncheckedUpdateInput>
-  }
-
-  /**
-   * RidingMember delete
-   */
-  export type RidingMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-    /**
-     * Filter which RidingMember to delete.
-     */
-    where: RidingMemberWhereUniqueInput
-  }
-
-  /**
-   * RidingMember deleteMany
-   */
-  export type RidingMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which RidingMembers to delete
-     */
-    where?: RidingMemberWhereInput
-    /**
-     * Limit how many RidingMembers to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * RidingMember.team
-   */
-  export type RidingMember$teamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Team
-     */
-    select?: TeamSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Team
-     */
-    omit?: TeamOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TeamInclude<ExtArgs> | null
-    where?: TeamWhereInput
-  }
-
-  /**
-   * RidingMember without action
-   */
-  export type RidingMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RidingMember
-     */
-    select?: RidingMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RidingMember
-     */
-    omit?: RidingMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RidingMemberInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model RefreshToken
-   */
-
-  export type AggregateRefreshToken = {
-    _count: RefreshTokenCountAggregateOutputType | null
-    _avg: RefreshTokenAvgAggregateOutputType | null
-    _sum: RefreshTokenSumAggregateOutputType | null
-    _min: RefreshTokenMinAggregateOutputType | null
-    _max: RefreshTokenMaxAggregateOutputType | null
-  }
-
-  export type RefreshTokenAvgAggregateOutputType = {
-    id: number | null
-    userId: number | null
-  }
-
-  export type RefreshTokenSumAggregateOutputType = {
-    id: bigint | null
-    userId: bigint | null
-  }
-
-  export type RefreshTokenMinAggregateOutputType = {
-    id: bigint | null
-    userId: bigint | null
-    token: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type RefreshTokenMaxAggregateOutputType = {
-    id: bigint | null
-    userId: bigint | null
-    token: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type RefreshTokenCountAggregateOutputType = {
-    id: number
-    userId: number
-    token: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type RefreshTokenAvgAggregateInputType = {
-    id?: true
-    userId?: true
-  }
-
-  export type RefreshTokenSumAggregateInputType = {
-    id?: true
-    userId?: true
-  }
-
-  export type RefreshTokenMinAggregateInputType = {
-    id?: true
-    userId?: true
-    token?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type RefreshTokenMaxAggregateInputType = {
-    id?: true
-    userId?: true
-    token?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type RefreshTokenCountAggregateInputType = {
-    id?: true
-    userId?: true
-    token?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type RefreshTokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which RefreshToken to aggregate.
-     */
-    where?: RefreshTokenWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RefreshTokens to fetch.
-     */
-    orderBy?: RefreshTokenOrderByWithRelationInput | RefreshTokenOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: RefreshTokenWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RefreshTokens from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RefreshTokens.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned RefreshTokens
-    **/
-    _count?: true | RefreshTokenCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: RefreshTokenAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: RefreshTokenSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: RefreshTokenMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: RefreshTokenMaxAggregateInputType
-  }
-
-  export type GetRefreshTokenAggregateType<T extends RefreshTokenAggregateArgs> = {
-        [P in keyof T & keyof AggregateRefreshToken]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateRefreshToken[P]>
-      : GetScalarType<T[P], AggregateRefreshToken[P]>
-  }
-
-
-
-
-  export type RefreshTokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RefreshTokenWhereInput
-    orderBy?: RefreshTokenOrderByWithAggregationInput | RefreshTokenOrderByWithAggregationInput[]
-    by: RefreshTokenScalarFieldEnum[] | RefreshTokenScalarFieldEnum
-    having?: RefreshTokenScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: RefreshTokenCountAggregateInputType | true
-    _avg?: RefreshTokenAvgAggregateInputType
-    _sum?: RefreshTokenSumAggregateInputType
-    _min?: RefreshTokenMinAggregateInputType
-    _max?: RefreshTokenMaxAggregateInputType
-  }
-
-  export type RefreshTokenGroupByOutputType = {
-    id: bigint
-    userId: bigint
-    token: string
-    createdAt: Date
-    updatedAt: Date
-    _count: RefreshTokenCountAggregateOutputType | null
-    _avg: RefreshTokenAvgAggregateOutputType | null
-    _sum: RefreshTokenSumAggregateOutputType | null
-    _min: RefreshTokenMinAggregateOutputType | null
-    _max: RefreshTokenMaxAggregateOutputType | null
-  }
-
-  type GetRefreshTokenGroupByPayload<T extends RefreshTokenGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<RefreshTokenGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof RefreshTokenGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], RefreshTokenGroupByOutputType[P]>
-            : GetScalarType<T[P], RefreshTokenGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type RefreshTokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    token?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["refreshToken"]>
-
-
-
-  export type RefreshTokenSelectScalar = {
-    id?: boolean
-    userId?: boolean
-    token?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type RefreshTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "token" | "createdAt" | "updatedAt", ExtArgs["result"]["refreshToken"]>
-
-  export type $RefreshTokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "RefreshToken"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: bigint
-      userId: bigint
-      token: string
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["refreshToken"]>
-    composites: {}
-  }
-
-  type RefreshTokenGetPayload<S extends boolean | null | undefined | RefreshTokenDefaultArgs> = $Result.GetResult<Prisma.$RefreshTokenPayload, S>
-
-  type RefreshTokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RefreshTokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RefreshTokenCountAggregateInputType | true
-    }
-
-  export interface RefreshTokenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RefreshToken'], meta: { name: 'RefreshToken' } }
-    /**
-     * Find zero or one RefreshToken that matches the filter.
-     * @param {RefreshTokenFindUniqueArgs} args - Arguments to find a RefreshToken
-     * @example
-     * // Get one RefreshToken
-     * const refreshToken = await prisma.refreshToken.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends RefreshTokenFindUniqueArgs>(args: SelectSubset<T, RefreshTokenFindUniqueArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one RefreshToken that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {RefreshTokenFindUniqueOrThrowArgs} args - Arguments to find a RefreshToken
-     * @example
-     * // Get one RefreshToken
-     * const refreshToken = await prisma.refreshToken.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends RefreshTokenFindUniqueOrThrowArgs>(args: SelectSubset<T, RefreshTokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first RefreshToken that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RefreshTokenFindFirstArgs} args - Arguments to find a RefreshToken
-     * @example
-     * // Get one RefreshToken
-     * const refreshToken = await prisma.refreshToken.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends RefreshTokenFindFirstArgs>(args?: SelectSubset<T, RefreshTokenFindFirstArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first RefreshToken that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RefreshTokenFindFirstOrThrowArgs} args - Arguments to find a RefreshToken
-     * @example
-     * // Get one RefreshToken
-     * const refreshToken = await prisma.refreshToken.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends RefreshTokenFindFirstOrThrowArgs>(args?: SelectSubset<T, RefreshTokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more RefreshTokens that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RefreshTokenFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all RefreshTokens
-     * const refreshTokens = await prisma.refreshToken.findMany()
-     * 
-     * // Get first 10 RefreshTokens
-     * const refreshTokens = await prisma.refreshToken.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const refreshTokenWithIdOnly = await prisma.refreshToken.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends RefreshTokenFindManyArgs>(args?: SelectSubset<T, RefreshTokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a RefreshToken.
-     * @param {RefreshTokenCreateArgs} args - Arguments to create a RefreshToken.
-     * @example
-     * // Create one RefreshToken
-     * const RefreshToken = await prisma.refreshToken.create({
-     *   data: {
-     *     // ... data to create a RefreshToken
-     *   }
-     * })
-     * 
-     */
-    create<T extends RefreshTokenCreateArgs>(args: SelectSubset<T, RefreshTokenCreateArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many RefreshTokens.
-     * @param {RefreshTokenCreateManyArgs} args - Arguments to create many RefreshTokens.
-     * @example
-     * // Create many RefreshTokens
-     * const refreshToken = await prisma.refreshToken.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends RefreshTokenCreateManyArgs>(args?: SelectSubset<T, RefreshTokenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a RefreshToken.
-     * @param {RefreshTokenDeleteArgs} args - Arguments to delete one RefreshToken.
-     * @example
-     * // Delete one RefreshToken
-     * const RefreshToken = await prisma.refreshToken.delete({
-     *   where: {
-     *     // ... filter to delete one RefreshToken
-     *   }
-     * })
-     * 
-     */
-    delete<T extends RefreshTokenDeleteArgs>(args: SelectSubset<T, RefreshTokenDeleteArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one RefreshToken.
-     * @param {RefreshTokenUpdateArgs} args - Arguments to update one RefreshToken.
-     * @example
-     * // Update one RefreshToken
-     * const refreshToken = await prisma.refreshToken.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends RefreshTokenUpdateArgs>(args: SelectSubset<T, RefreshTokenUpdateArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more RefreshTokens.
-     * @param {RefreshTokenDeleteManyArgs} args - Arguments to filter RefreshTokens to delete.
-     * @example
-     * // Delete a few RefreshTokens
-     * const { count } = await prisma.refreshToken.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends RefreshTokenDeleteManyArgs>(args?: SelectSubset<T, RefreshTokenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more RefreshTokens.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RefreshTokenUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many RefreshTokens
-     * const refreshToken = await prisma.refreshToken.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends RefreshTokenUpdateManyArgs>(args: SelectSubset<T, RefreshTokenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one RefreshToken.
-     * @param {RefreshTokenUpsertArgs} args - Arguments to update or create a RefreshToken.
-     * @example
-     * // Update or create a RefreshToken
-     * const refreshToken = await prisma.refreshToken.upsert({
-     *   create: {
-     *     // ... data to create a RefreshToken
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the RefreshToken we want to update
-     *   }
-     * })
-     */
-    upsert<T extends RefreshTokenUpsertArgs>(args: SelectSubset<T, RefreshTokenUpsertArgs<ExtArgs>>): Prisma__RefreshTokenClient<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of RefreshTokens.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RefreshTokenCountArgs} args - Arguments to filter RefreshTokens to count.
-     * @example
-     * // Count the number of RefreshTokens
-     * const count = await prisma.refreshToken.count({
-     *   where: {
-     *     // ... the filter for the RefreshTokens we want to count
-     *   }
-     * })
-    **/
-    count<T extends RefreshTokenCountArgs>(
-      args?: Subset<T, RefreshTokenCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], RefreshTokenCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a RefreshToken.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RefreshTokenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends RefreshTokenAggregateArgs>(args: Subset<T, RefreshTokenAggregateArgs>): Prisma.PrismaPromise<GetRefreshTokenAggregateType<T>>
-
-    /**
-     * Group by RefreshToken.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RefreshTokenGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends RefreshTokenGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RefreshTokenGroupByArgs['orderBy'] }
-        : { orderBy?: RefreshTokenGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, RefreshTokenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRefreshTokenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the RefreshToken model
-   */
-  readonly fields: RefreshTokenFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for RefreshToken.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__RefreshTokenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the RefreshToken model
-   */
-  interface RefreshTokenFieldRefs {
-    readonly id: FieldRef<"RefreshToken", 'BigInt'>
-    readonly userId: FieldRef<"RefreshToken", 'BigInt'>
-    readonly token: FieldRef<"RefreshToken", 'String'>
-    readonly createdAt: FieldRef<"RefreshToken", 'DateTime'>
-    readonly updatedAt: FieldRef<"RefreshToken", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * RefreshToken findUnique
-   */
-  export type RefreshTokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-    /**
-     * Filter, which RefreshToken to fetch.
-     */
-    where: RefreshTokenWhereUniqueInput
-  }
-
-  /**
-   * RefreshToken findUniqueOrThrow
-   */
-  export type RefreshTokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-    /**
-     * Filter, which RefreshToken to fetch.
-     */
-    where: RefreshTokenWhereUniqueInput
-  }
-
-  /**
-   * RefreshToken findFirst
-   */
-  export type RefreshTokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-    /**
-     * Filter, which RefreshToken to fetch.
-     */
-    where?: RefreshTokenWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RefreshTokens to fetch.
-     */
-    orderBy?: RefreshTokenOrderByWithRelationInput | RefreshTokenOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RefreshTokens.
-     */
-    cursor?: RefreshTokenWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RefreshTokens from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RefreshTokens.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RefreshTokens.
-     */
-    distinct?: RefreshTokenScalarFieldEnum | RefreshTokenScalarFieldEnum[]
-  }
-
-  /**
-   * RefreshToken findFirstOrThrow
-   */
-  export type RefreshTokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-    /**
-     * Filter, which RefreshToken to fetch.
-     */
-    where?: RefreshTokenWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RefreshTokens to fetch.
-     */
-    orderBy?: RefreshTokenOrderByWithRelationInput | RefreshTokenOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RefreshTokens.
-     */
-    cursor?: RefreshTokenWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RefreshTokens from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RefreshTokens.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RefreshTokens.
-     */
-    distinct?: RefreshTokenScalarFieldEnum | RefreshTokenScalarFieldEnum[]
-  }
-
-  /**
-   * RefreshToken findMany
-   */
-  export type RefreshTokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-    /**
-     * Filter, which RefreshTokens to fetch.
-     */
-    where?: RefreshTokenWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RefreshTokens to fetch.
-     */
-    orderBy?: RefreshTokenOrderByWithRelationInput | RefreshTokenOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing RefreshTokens.
-     */
-    cursor?: RefreshTokenWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RefreshTokens from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RefreshTokens.
-     */
-    skip?: number
-    distinct?: RefreshTokenScalarFieldEnum | RefreshTokenScalarFieldEnum[]
-  }
-
-  /**
-   * RefreshToken create
-   */
-  export type RefreshTokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-    /**
-     * The data needed to create a RefreshToken.
-     */
-    data: XOR<RefreshTokenCreateInput, RefreshTokenUncheckedCreateInput>
-  }
-
-  /**
-   * RefreshToken createMany
-   */
-  export type RefreshTokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many RefreshTokens.
-     */
-    data: RefreshTokenCreateManyInput | RefreshTokenCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * RefreshToken update
-   */
-  export type RefreshTokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-    /**
-     * The data needed to update a RefreshToken.
-     */
-    data: XOR<RefreshTokenUpdateInput, RefreshTokenUncheckedUpdateInput>
-    /**
-     * Choose, which RefreshToken to update.
-     */
-    where: RefreshTokenWhereUniqueInput
-  }
-
-  /**
-   * RefreshToken updateMany
-   */
-  export type RefreshTokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update RefreshTokens.
-     */
-    data: XOR<RefreshTokenUpdateManyMutationInput, RefreshTokenUncheckedUpdateManyInput>
-    /**
-     * Filter which RefreshTokens to update
-     */
-    where?: RefreshTokenWhereInput
-    /**
-     * Limit how many RefreshTokens to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * RefreshToken upsert
-   */
-  export type RefreshTokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-    /**
-     * The filter to search for the RefreshToken to update in case it exists.
-     */
-    where: RefreshTokenWhereUniqueInput
-    /**
-     * In case the RefreshToken found by the `where` argument doesn't exist, create a new RefreshToken with this data.
-     */
-    create: XOR<RefreshTokenCreateInput, RefreshTokenUncheckedCreateInput>
-    /**
-     * In case the RefreshToken was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<RefreshTokenUpdateInput, RefreshTokenUncheckedUpdateInput>
-  }
-
-  /**
-   * RefreshToken delete
-   */
-  export type RefreshTokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-    /**
-     * Filter which RefreshToken to delete.
-     */
-    where: RefreshTokenWhereUniqueInput
-  }
-
-  /**
-   * RefreshToken deleteMany
-   */
-  export type RefreshTokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which RefreshTokens to delete
-     */
-    where?: RefreshTokenWhereInput
-    /**
-     * Limit how many RefreshTokens to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * RefreshToken without action
-   */
-  export type RefreshTokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RefreshToken
-     */
-    select?: RefreshTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RefreshToken
-     */
-    omit?: RefreshTokenOmit<ExtArgs> | null
-  }
-
-
-  /**
    * Model S3UploadedFiles
    */
 
@@ -11970,46 +8560,6 @@ export namespace Prisma {
   export type TeamJoinCodeScalarFieldEnum = (typeof TeamJoinCodeScalarFieldEnum)[keyof typeof TeamJoinCodeScalarFieldEnum]
 
 
-  export const RidingRecordScalarFieldEnum: {
-    id: 'id',
-    type: 'type',
-    distance: 'distance',
-    duration: 'duration',
-    departure: 'departure',
-    stopover1: 'stopover1',
-    stopover2: 'stopover2',
-    stopover3: 'stopover3',
-    arrival: 'arrival',
-    teamId: 'teamId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type RidingRecordScalarFieldEnum = (typeof RidingRecordScalarFieldEnum)[keyof typeof RidingRecordScalarFieldEnum]
-
-
-  export const RidingMemberScalarFieldEnum: {
-    ridingRecordId: 'ridingRecordId',
-    userId: 'userId',
-    teamId: 'teamId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type RidingMemberScalarFieldEnum = (typeof RidingMemberScalarFieldEnum)[keyof typeof RidingMemberScalarFieldEnum]
-
-
-  export const RefreshTokenScalarFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    token: 'token',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
-
-
   export const S3UploadedFilesScalarFieldEnum: {
     id: 'id',
     domain: 'domain',
@@ -12075,24 +8625,6 @@ export namespace Prisma {
   export type TeamJoinCodeOrderByRelevanceFieldEnum = (typeof TeamJoinCodeOrderByRelevanceFieldEnum)[keyof typeof TeamJoinCodeOrderByRelevanceFieldEnum]
 
 
-  export const RidingRecordOrderByRelevanceFieldEnum: {
-    departure: 'departure',
-    stopover1: 'stopover1',
-    stopover2: 'stopover2',
-    stopover3: 'stopover3',
-    arrival: 'arrival'
-  };
-
-  export type RidingRecordOrderByRelevanceFieldEnum = (typeof RidingRecordOrderByRelevanceFieldEnum)[keyof typeof RidingRecordOrderByRelevanceFieldEnum]
-
-
-  export const RefreshTokenOrderByRelevanceFieldEnum: {
-    token: 'token'
-  };
-
-  export type RefreshTokenOrderByRelevanceFieldEnum = (typeof RefreshTokenOrderByRelevanceFieldEnum)[keyof typeof RefreshTokenOrderByRelevanceFieldEnum]
-
-
   export const S3UploadedFilesOrderByRelevanceFieldEnum: {
     domain: 'domain',
     kind: 'kind',
@@ -12138,9 +8670,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'RidingType'
+   * Reference to a field of type 'Int'
    */
-  export type EnumRidingTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RidingType'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
@@ -12148,13 +8680,6 @@ export namespace Prisma {
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
   /**
    * Deep Input Types
@@ -12175,7 +8700,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     oAuthUser?: OAuthUserListRelationFilter
     teamMember?: TeamMemberListRelationFilter
-    ridingMember?: RidingMemberListRelationFilter
     sentFriendRequests?: FriendListRelationFilter
     receivedFriendRequests?: FriendListRelationFilter
   }
@@ -12191,7 +8715,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
     oAuthUser?: OAuthUserOrderByRelationAggregateInput
     teamMember?: TeamMemberOrderByRelationAggregateInput
-    ridingMember?: RidingMemberOrderByRelationAggregateInput
     sentFriendRequests?: FriendOrderByRelationAggregateInput
     receivedFriendRequests?: FriendOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
@@ -12211,7 +8734,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     oAuthUser?: OAuthUserListRelationFilter
     teamMember?: TeamMemberListRelationFilter
-    ridingMember?: RidingMemberListRelationFilter
     sentFriendRequests?: FriendListRelationFilter
     receivedFriendRequests?: FriendListRelationFilter
   }, "id" | "ribuddyId">
@@ -12379,8 +8901,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Team"> | Date | string
     members?: TeamMemberListRelationFilter
     joinCode?: TeamJoinCodeListRelationFilter
-    ridingMembers?: RidingMemberListRelationFilter
-    ridingRecord?: RidingRecordListRelationFilter
   }
 
   export type TeamOrderByWithRelationInput = {
@@ -12393,8 +8913,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
     members?: TeamMemberOrderByRelationAggregateInput
     joinCode?: TeamJoinCodeOrderByRelationAggregateInput
-    ridingMembers?: RidingMemberOrderByRelationAggregateInput
-    ridingRecord?: RidingRecordOrderByRelationAggregateInput
     _relevance?: TeamOrderByRelevanceInput
   }
 
@@ -12411,8 +8929,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Team"> | Date | string
     members?: TeamMemberListRelationFilter
     joinCode?: TeamJoinCodeListRelationFilter
-    ridingMembers?: RidingMemberListRelationFilter
-    ridingRecord?: RidingRecordListRelationFilter
   }, "id">
 
   export type TeamOrderByWithAggregationInput = {
@@ -12568,221 +9084,6 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"TeamJoinCode"> | Date | string
   }
 
-  export type RidingRecordWhereInput = {
-    AND?: RidingRecordWhereInput | RidingRecordWhereInput[]
-    OR?: RidingRecordWhereInput[]
-    NOT?: RidingRecordWhereInput | RidingRecordWhereInput[]
-    id?: BigIntFilter<"RidingRecord"> | bigint | number
-    type?: EnumRidingTypeFilter<"RidingRecord"> | $Enums.RidingType
-    distance?: FloatFilter<"RidingRecord"> | number
-    duration?: IntFilter<"RidingRecord"> | number
-    departure?: StringFilter<"RidingRecord"> | string
-    stopover1?: StringNullableFilter<"RidingRecord"> | string | null
-    stopover2?: StringNullableFilter<"RidingRecord"> | string | null
-    stopover3?: StringNullableFilter<"RidingRecord"> | string | null
-    arrival?: StringFilter<"RidingRecord"> | string
-    teamId?: BigIntNullableFilter<"RidingRecord"> | bigint | number | null
-    createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
-    updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
-    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
-    ridingMember?: RidingMemberListRelationFilter
-  }
-
-  export type RidingRecordOrderByWithRelationInput = {
-    id?: SortOrder
-    type?: SortOrder
-    distance?: SortOrder
-    duration?: SortOrder
-    departure?: SortOrder
-    stopover1?: SortOrderInput | SortOrder
-    stopover2?: SortOrderInput | SortOrder
-    stopover3?: SortOrderInput | SortOrder
-    arrival?: SortOrder
-    teamId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    team?: TeamOrderByWithRelationInput
-    ridingMember?: RidingMemberOrderByRelationAggregateInput
-    _relevance?: RidingRecordOrderByRelevanceInput
-  }
-
-  export type RidingRecordWhereUniqueInput = Prisma.AtLeast<{
-    id?: bigint | number
-    AND?: RidingRecordWhereInput | RidingRecordWhereInput[]
-    OR?: RidingRecordWhereInput[]
-    NOT?: RidingRecordWhereInput | RidingRecordWhereInput[]
-    type?: EnumRidingTypeFilter<"RidingRecord"> | $Enums.RidingType
-    distance?: FloatFilter<"RidingRecord"> | number
-    duration?: IntFilter<"RidingRecord"> | number
-    departure?: StringFilter<"RidingRecord"> | string
-    stopover1?: StringNullableFilter<"RidingRecord"> | string | null
-    stopover2?: StringNullableFilter<"RidingRecord"> | string | null
-    stopover3?: StringNullableFilter<"RidingRecord"> | string | null
-    arrival?: StringFilter<"RidingRecord"> | string
-    teamId?: BigIntNullableFilter<"RidingRecord"> | bigint | number | null
-    createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
-    updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
-    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
-    ridingMember?: RidingMemberListRelationFilter
-  }, "id">
-
-  export type RidingRecordOrderByWithAggregationInput = {
-    id?: SortOrder
-    type?: SortOrder
-    distance?: SortOrder
-    duration?: SortOrder
-    departure?: SortOrder
-    stopover1?: SortOrderInput | SortOrder
-    stopover2?: SortOrderInput | SortOrder
-    stopover3?: SortOrderInput | SortOrder
-    arrival?: SortOrder
-    teamId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: RidingRecordCountOrderByAggregateInput
-    _avg?: RidingRecordAvgOrderByAggregateInput
-    _max?: RidingRecordMaxOrderByAggregateInput
-    _min?: RidingRecordMinOrderByAggregateInput
-    _sum?: RidingRecordSumOrderByAggregateInput
-  }
-
-  export type RidingRecordScalarWhereWithAggregatesInput = {
-    AND?: RidingRecordScalarWhereWithAggregatesInput | RidingRecordScalarWhereWithAggregatesInput[]
-    OR?: RidingRecordScalarWhereWithAggregatesInput[]
-    NOT?: RidingRecordScalarWhereWithAggregatesInput | RidingRecordScalarWhereWithAggregatesInput[]
-    id?: BigIntWithAggregatesFilter<"RidingRecord"> | bigint | number
-    type?: EnumRidingTypeWithAggregatesFilter<"RidingRecord"> | $Enums.RidingType
-    distance?: FloatWithAggregatesFilter<"RidingRecord"> | number
-    duration?: IntWithAggregatesFilter<"RidingRecord"> | number
-    departure?: StringWithAggregatesFilter<"RidingRecord"> | string
-    stopover1?: StringNullableWithAggregatesFilter<"RidingRecord"> | string | null
-    stopover2?: StringNullableWithAggregatesFilter<"RidingRecord"> | string | null
-    stopover3?: StringNullableWithAggregatesFilter<"RidingRecord"> | string | null
-    arrival?: StringWithAggregatesFilter<"RidingRecord"> | string
-    teamId?: BigIntNullableWithAggregatesFilter<"RidingRecord"> | bigint | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"RidingRecord"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"RidingRecord"> | Date | string
-  }
-
-  export type RidingMemberWhereInput = {
-    AND?: RidingMemberWhereInput | RidingMemberWhereInput[]
-    OR?: RidingMemberWhereInput[]
-    NOT?: RidingMemberWhereInput | RidingMemberWhereInput[]
-    ridingRecordId?: BigIntFilter<"RidingMember"> | bigint | number
-    userId?: BigIntFilter<"RidingMember"> | bigint | number
-    teamId?: BigIntNullableFilter<"RidingMember"> | bigint | number | null
-    createdAt?: DateTimeFilter<"RidingMember"> | Date | string
-    updatedAt?: DateTimeFilter<"RidingMember"> | Date | string
-    ridingRecord?: XOR<RidingRecordScalarRelationFilter, RidingRecordWhereInput>
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
-  }
-
-  export type RidingMemberOrderByWithRelationInput = {
-    ridingRecordId?: SortOrder
-    userId?: SortOrder
-    teamId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    ridingRecord?: RidingRecordOrderByWithRelationInput
-    user?: UserOrderByWithRelationInput
-    team?: TeamOrderByWithRelationInput
-  }
-
-  export type RidingMemberWhereUniqueInput = Prisma.AtLeast<{
-    ridingRecordId_userId?: RidingMemberRidingRecordIdUserIdCompoundUniqueInput
-    AND?: RidingMemberWhereInput | RidingMemberWhereInput[]
-    OR?: RidingMemberWhereInput[]
-    NOT?: RidingMemberWhereInput | RidingMemberWhereInput[]
-    ridingRecordId?: BigIntFilter<"RidingMember"> | bigint | number
-    userId?: BigIntFilter<"RidingMember"> | bigint | number
-    teamId?: BigIntNullableFilter<"RidingMember"> | bigint | number | null
-    createdAt?: DateTimeFilter<"RidingMember"> | Date | string
-    updatedAt?: DateTimeFilter<"RidingMember"> | Date | string
-    ridingRecord?: XOR<RidingRecordScalarRelationFilter, RidingRecordWhereInput>
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    team?: XOR<TeamNullableScalarRelationFilter, TeamWhereInput> | null
-  }, "ridingRecordId_userId">
-
-  export type RidingMemberOrderByWithAggregationInput = {
-    ridingRecordId?: SortOrder
-    userId?: SortOrder
-    teamId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: RidingMemberCountOrderByAggregateInput
-    _avg?: RidingMemberAvgOrderByAggregateInput
-    _max?: RidingMemberMaxOrderByAggregateInput
-    _min?: RidingMemberMinOrderByAggregateInput
-    _sum?: RidingMemberSumOrderByAggregateInput
-  }
-
-  export type RidingMemberScalarWhereWithAggregatesInput = {
-    AND?: RidingMemberScalarWhereWithAggregatesInput | RidingMemberScalarWhereWithAggregatesInput[]
-    OR?: RidingMemberScalarWhereWithAggregatesInput[]
-    NOT?: RidingMemberScalarWhereWithAggregatesInput | RidingMemberScalarWhereWithAggregatesInput[]
-    ridingRecordId?: BigIntWithAggregatesFilter<"RidingMember"> | bigint | number
-    userId?: BigIntWithAggregatesFilter<"RidingMember"> | bigint | number
-    teamId?: BigIntNullableWithAggregatesFilter<"RidingMember"> | bigint | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"RidingMember"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"RidingMember"> | Date | string
-  }
-
-  export type RefreshTokenWhereInput = {
-    AND?: RefreshTokenWhereInput | RefreshTokenWhereInput[]
-    OR?: RefreshTokenWhereInput[]
-    NOT?: RefreshTokenWhereInput | RefreshTokenWhereInput[]
-    id?: BigIntFilter<"RefreshToken"> | bigint | number
-    userId?: BigIntFilter<"RefreshToken"> | bigint | number
-    token?: StringFilter<"RefreshToken"> | string
-    createdAt?: DateTimeFilter<"RefreshToken"> | Date | string
-    updatedAt?: DateTimeFilter<"RefreshToken"> | Date | string
-  }
-
-  export type RefreshTokenOrderByWithRelationInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    token?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _relevance?: RefreshTokenOrderByRelevanceInput
-  }
-
-  export type RefreshTokenWhereUniqueInput = Prisma.AtLeast<{
-    id?: bigint | number
-    userId?: bigint | number
-    AND?: RefreshTokenWhereInput | RefreshTokenWhereInput[]
-    OR?: RefreshTokenWhereInput[]
-    NOT?: RefreshTokenWhereInput | RefreshTokenWhereInput[]
-    token?: StringFilter<"RefreshToken"> | string
-    createdAt?: DateTimeFilter<"RefreshToken"> | Date | string
-    updatedAt?: DateTimeFilter<"RefreshToken"> | Date | string
-  }, "id" | "userId">
-
-  export type RefreshTokenOrderByWithAggregationInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    token?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: RefreshTokenCountOrderByAggregateInput
-    _avg?: RefreshTokenAvgOrderByAggregateInput
-    _max?: RefreshTokenMaxOrderByAggregateInput
-    _min?: RefreshTokenMinOrderByAggregateInput
-    _sum?: RefreshTokenSumOrderByAggregateInput
-  }
-
-  export type RefreshTokenScalarWhereWithAggregatesInput = {
-    AND?: RefreshTokenScalarWhereWithAggregatesInput | RefreshTokenScalarWhereWithAggregatesInput[]
-    OR?: RefreshTokenScalarWhereWithAggregatesInput[]
-    NOT?: RefreshTokenScalarWhereWithAggregatesInput | RefreshTokenScalarWhereWithAggregatesInput[]
-    id?: BigIntWithAggregatesFilter<"RefreshToken"> | bigint | number
-    userId?: BigIntWithAggregatesFilter<"RefreshToken"> | bigint | number
-    token?: StringWithAggregatesFilter<"RefreshToken"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
-  }
-
   export type S3UploadedFilesWhereInput = {
     AND?: S3UploadedFilesWhereInput | S3UploadedFilesWhereInput[]
     OR?: S3UploadedFilesWhereInput[]
@@ -12869,7 +9170,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
     teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
-    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
@@ -12885,7 +9185,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
     teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
-    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
@@ -12901,7 +9200,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
     teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
-    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
@@ -12917,7 +9215,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
     teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
-    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
@@ -13074,8 +9371,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: TeamMemberCreateNestedManyWithoutTeamInput
     joinCode?: TeamJoinCodeCreateNestedManyWithoutTeamInput
-    ridingMembers?: RidingMemberCreateNestedManyWithoutTeamInput
-    ridingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateInput = {
@@ -13088,8 +9383,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput
     joinCode?: TeamJoinCodeUncheckedCreateNestedManyWithoutTeamInput
-    ridingMembers?: RidingMemberUncheckedCreateNestedManyWithoutTeamInput
-    ridingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUpdateInput = {
@@ -13102,8 +9395,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: TeamMemberUpdateManyWithoutTeamNestedInput
     joinCode?: TeamJoinCodeUpdateManyWithoutTeamNestedInput
-    ridingMembers?: RidingMemberUpdateManyWithoutTeamNestedInput
-    ridingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateInput = {
@@ -13116,8 +9407,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
     joinCode?: TeamJoinCodeUncheckedUpdateManyWithoutTeamNestedInput
-    ridingMembers?: RidingMemberUncheckedUpdateManyWithoutTeamNestedInput
-    ridingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamCreateManyInput = {
@@ -13262,223 +9551,6 @@ export namespace Prisma {
     teamId?: BigIntFieldUpdateOperationsInput | bigint | number
     code?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingRecordCreateInput = {
-    id?: bigint | number
-    type: $Enums.RidingType
-    distance: number
-    duration: number
-    departure: string
-    stopover1?: string | null
-    stopover2?: string | null
-    stopover3?: string | null
-    arrival: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    team?: TeamCreateNestedOneWithoutRidingRecordInput
-    ridingMember?: RidingMemberCreateNestedManyWithoutRidingRecordInput
-  }
-
-  export type RidingRecordUncheckedCreateInput = {
-    id?: bigint | number
-    type: $Enums.RidingType
-    distance: number
-    duration: number
-    departure: string
-    stopover1?: string | null
-    stopover2?: string | null
-    stopover3?: string | null
-    arrival: string
-    teamId?: bigint | number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutRidingRecordInput
-  }
-
-  export type RidingRecordUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
-    distance?: FloatFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    departure?: StringFieldUpdateOperationsInput | string
-    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
-    arrival?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    team?: TeamUpdateOneWithoutRidingRecordNestedInput
-    ridingMember?: RidingMemberUpdateManyWithoutRidingRecordNestedInput
-  }
-
-  export type RidingRecordUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
-    distance?: FloatFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    departure?: StringFieldUpdateOperationsInput | string
-    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
-    arrival?: StringFieldUpdateOperationsInput | string
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ridingMember?: RidingMemberUncheckedUpdateManyWithoutRidingRecordNestedInput
-  }
-
-  export type RidingRecordCreateManyInput = {
-    id?: bigint | number
-    type: $Enums.RidingType
-    distance: number
-    duration: number
-    departure: string
-    stopover1?: string | null
-    stopover2?: string | null
-    stopover3?: string | null
-    arrival: string
-    teamId?: bigint | number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingRecordUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
-    distance?: FloatFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    departure?: StringFieldUpdateOperationsInput | string
-    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
-    arrival?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingRecordUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
-    distance?: FloatFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    departure?: StringFieldUpdateOperationsInput | string
-    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
-    arrival?: StringFieldUpdateOperationsInput | string
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingMemberCreateInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    ridingRecord: RidingRecordCreateNestedOneWithoutRidingMemberInput
-    user: UserCreateNestedOneWithoutRidingMemberInput
-    team?: TeamCreateNestedOneWithoutRidingMembersInput
-  }
-
-  export type RidingMemberUncheckedCreateInput = {
-    ridingRecordId: bigint | number
-    userId: bigint | number
-    teamId?: bigint | number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingMemberUpdateInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ridingRecord?: RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput
-    user?: UserUpdateOneRequiredWithoutRidingMemberNestedInput
-    team?: TeamUpdateOneWithoutRidingMembersNestedInput
-  }
-
-  export type RidingMemberUncheckedUpdateInput = {
-    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingMemberCreateManyInput = {
-    ridingRecordId: bigint | number
-    userId: bigint | number
-    teamId?: bigint | number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingMemberUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingMemberUncheckedUpdateManyInput = {
-    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RefreshTokenCreateInput = {
-    id?: bigint | number
-    userId: bigint | number
-    token: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RefreshTokenUncheckedCreateInput = {
-    id?: bigint | number
-    userId: bigint | number
-    token: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RefreshTokenUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    token?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RefreshTokenUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    token?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RefreshTokenCreateManyInput = {
-    id?: bigint | number
-    userId: bigint | number
-    token: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RefreshTokenUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    token?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RefreshTokenUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    token?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13631,12 +9703,6 @@ export namespace Prisma {
     none?: TeamMemberWhereInput
   }
 
-  export type RidingMemberListRelationFilter = {
-    every?: RidingMemberWhereInput
-    some?: RidingMemberWhereInput
-    none?: RidingMemberWhereInput
-  }
-
   export type FriendListRelationFilter = {
     every?: FriendWhereInput
     some?: FriendWhereInput
@@ -13653,10 +9719,6 @@ export namespace Prisma {
   }
 
   export type TeamMemberOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type RidingMemberOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13883,17 +9945,7 @@ export namespace Prisma {
     none?: TeamJoinCodeWhereInput
   }
 
-  export type RidingRecordListRelationFilter = {
-    every?: RidingRecordWhereInput
-    some?: RidingRecordWhereInput
-    none?: RidingRecordWhereInput
-  }
-
   export type TeamJoinCodeOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type RidingRecordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14031,260 +10083,6 @@ export namespace Prisma {
     teamId?: SortOrder
   }
 
-  export type EnumRidingTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.RidingType | EnumRidingTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.RidingType[]
-    notIn?: $Enums.RidingType[]
-    not?: NestedEnumRidingTypeFilter<$PrismaModel> | $Enums.RidingType
-  }
-
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type BigIntNullableFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | null
-    notIn?: bigint[] | number[] | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
-  }
-
-  export type TeamNullableScalarRelationFilter = {
-    is?: TeamWhereInput | null
-    isNot?: TeamWhereInput | null
-  }
-
-  export type RidingRecordOrderByRelevanceInput = {
-    fields: RidingRecordOrderByRelevanceFieldEnum | RidingRecordOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
-  export type RidingRecordCountOrderByAggregateInput = {
-    id?: SortOrder
-    type?: SortOrder
-    distance?: SortOrder
-    duration?: SortOrder
-    departure?: SortOrder
-    stopover1?: SortOrder
-    stopover2?: SortOrder
-    stopover3?: SortOrder
-    arrival?: SortOrder
-    teamId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type RidingRecordAvgOrderByAggregateInput = {
-    id?: SortOrder
-    distance?: SortOrder
-    duration?: SortOrder
-    teamId?: SortOrder
-  }
-
-  export type RidingRecordMaxOrderByAggregateInput = {
-    id?: SortOrder
-    type?: SortOrder
-    distance?: SortOrder
-    duration?: SortOrder
-    departure?: SortOrder
-    stopover1?: SortOrder
-    stopover2?: SortOrder
-    stopover3?: SortOrder
-    arrival?: SortOrder
-    teamId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type RidingRecordMinOrderByAggregateInput = {
-    id?: SortOrder
-    type?: SortOrder
-    distance?: SortOrder
-    duration?: SortOrder
-    departure?: SortOrder
-    stopover1?: SortOrder
-    stopover2?: SortOrder
-    stopover3?: SortOrder
-    arrival?: SortOrder
-    teamId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type RidingRecordSumOrderByAggregateInput = {
-    id?: SortOrder
-    distance?: SortOrder
-    duration?: SortOrder
-    teamId?: SortOrder
-  }
-
-  export type EnumRidingTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.RidingType | EnumRidingTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.RidingType[]
-    notIn?: $Enums.RidingType[]
-    not?: NestedEnumRidingTypeWithAggregatesFilter<$PrismaModel> | $Enums.RidingType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRidingTypeFilter<$PrismaModel>
-    _max?: NestedEnumRidingTypeFilter<$PrismaModel>
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | null
-    notIn?: bigint[] | number[] | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedBigIntNullableFilter<$PrismaModel>
-    _min?: NestedBigIntNullableFilter<$PrismaModel>
-    _max?: NestedBigIntNullableFilter<$PrismaModel>
-  }
-
-  export type RidingRecordScalarRelationFilter = {
-    is?: RidingRecordWhereInput
-    isNot?: RidingRecordWhereInput
-  }
-
-  export type RidingMemberRidingRecordIdUserIdCompoundUniqueInput = {
-    ridingRecordId: bigint | number
-    userId: bigint | number
-  }
-
-  export type RidingMemberCountOrderByAggregateInput = {
-    ridingRecordId?: SortOrder
-    userId?: SortOrder
-    teamId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type RidingMemberAvgOrderByAggregateInput = {
-    ridingRecordId?: SortOrder
-    userId?: SortOrder
-    teamId?: SortOrder
-  }
-
-  export type RidingMemberMaxOrderByAggregateInput = {
-    ridingRecordId?: SortOrder
-    userId?: SortOrder
-    teamId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type RidingMemberMinOrderByAggregateInput = {
-    ridingRecordId?: SortOrder
-    userId?: SortOrder
-    teamId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type RidingMemberSumOrderByAggregateInput = {
-    ridingRecordId?: SortOrder
-    userId?: SortOrder
-    teamId?: SortOrder
-  }
-
-  export type RefreshTokenOrderByRelevanceInput = {
-    fields: RefreshTokenOrderByRelevanceFieldEnum | RefreshTokenOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
-  export type RefreshTokenCountOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    token?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type RefreshTokenAvgOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type RefreshTokenMaxOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    token?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type RefreshTokenMinOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    token?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type RefreshTokenSumOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-  }
-
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -14378,13 +10176,6 @@ export namespace Prisma {
     connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[]
   }
 
-  export type RidingMemberCreateNestedManyWithoutUserInput = {
-    create?: XOR<RidingMemberCreateWithoutUserInput, RidingMemberUncheckedCreateWithoutUserInput> | RidingMemberCreateWithoutUserInput[] | RidingMemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutUserInput | RidingMemberCreateOrConnectWithoutUserInput[]
-    createMany?: RidingMemberCreateManyUserInputEnvelope
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-  }
-
   export type FriendCreateNestedManyWithoutFromUserInput = {
     create?: XOR<FriendCreateWithoutFromUserInput, FriendUncheckedCreateWithoutFromUserInput> | FriendCreateWithoutFromUserInput[] | FriendUncheckedCreateWithoutFromUserInput[]
     connectOrCreate?: FriendCreateOrConnectWithoutFromUserInput | FriendCreateOrConnectWithoutFromUserInput[]
@@ -14411,13 +10202,6 @@ export namespace Prisma {
     connectOrCreate?: TeamMemberCreateOrConnectWithoutMemberInput | TeamMemberCreateOrConnectWithoutMemberInput[]
     createMany?: TeamMemberCreateManyMemberInputEnvelope
     connect?: TeamMemberWhereUniqueInput | TeamMemberWhereUniqueInput[]
-  }
-
-  export type RidingMemberUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<RidingMemberCreateWithoutUserInput, RidingMemberUncheckedCreateWithoutUserInput> | RidingMemberCreateWithoutUserInput[] | RidingMemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutUserInput | RidingMemberCreateOrConnectWithoutUserInput[]
-    createMany?: RidingMemberCreateManyUserInputEnvelope
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
   }
 
   export type FriendUncheckedCreateNestedManyWithoutFromUserInput = {
@@ -14482,20 +10266,6 @@ export namespace Prisma {
     deleteMany?: TeamMemberScalarWhereInput | TeamMemberScalarWhereInput[]
   }
 
-  export type RidingMemberUpdateManyWithoutUserNestedInput = {
-    create?: XOR<RidingMemberCreateWithoutUserInput, RidingMemberUncheckedCreateWithoutUserInput> | RidingMemberCreateWithoutUserInput[] | RidingMemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutUserInput | RidingMemberCreateOrConnectWithoutUserInput[]
-    upsert?: RidingMemberUpsertWithWhereUniqueWithoutUserInput | RidingMemberUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: RidingMemberCreateManyUserInputEnvelope
-    set?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    disconnect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    delete?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    update?: RidingMemberUpdateWithWhereUniqueWithoutUserInput | RidingMemberUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: RidingMemberUpdateManyWithWhereWithoutUserInput | RidingMemberUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: RidingMemberScalarWhereInput | RidingMemberScalarWhereInput[]
-  }
-
   export type FriendUpdateManyWithoutFromUserNestedInput = {
     create?: XOR<FriendCreateWithoutFromUserInput, FriendUncheckedCreateWithoutFromUserInput> | FriendCreateWithoutFromUserInput[] | FriendUncheckedCreateWithoutFromUserInput[]
     connectOrCreate?: FriendCreateOrConnectWithoutFromUserInput | FriendCreateOrConnectWithoutFromUserInput[]
@@ -14550,20 +10320,6 @@ export namespace Prisma {
     update?: TeamMemberUpdateWithWhereUniqueWithoutMemberInput | TeamMemberUpdateWithWhereUniqueWithoutMemberInput[]
     updateMany?: TeamMemberUpdateManyWithWhereWithoutMemberInput | TeamMemberUpdateManyWithWhereWithoutMemberInput[]
     deleteMany?: TeamMemberScalarWhereInput | TeamMemberScalarWhereInput[]
-  }
-
-  export type RidingMemberUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<RidingMemberCreateWithoutUserInput, RidingMemberUncheckedCreateWithoutUserInput> | RidingMemberCreateWithoutUserInput[] | RidingMemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutUserInput | RidingMemberCreateOrConnectWithoutUserInput[]
-    upsert?: RidingMemberUpsertWithWhereUniqueWithoutUserInput | RidingMemberUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: RidingMemberCreateManyUserInputEnvelope
-    set?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    disconnect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    delete?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    update?: RidingMemberUpdateWithWhereUniqueWithoutUserInput | RidingMemberUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: RidingMemberUpdateManyWithWhereWithoutUserInput | RidingMemberUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: RidingMemberScalarWhereInput | RidingMemberScalarWhereInput[]
   }
 
   export type FriendUncheckedUpdateManyWithoutFromUserNestedInput = {
@@ -14654,20 +10410,6 @@ export namespace Prisma {
     connect?: TeamJoinCodeWhereUniqueInput | TeamJoinCodeWhereUniqueInput[]
   }
 
-  export type RidingMemberCreateNestedManyWithoutTeamInput = {
-    create?: XOR<RidingMemberCreateWithoutTeamInput, RidingMemberUncheckedCreateWithoutTeamInput> | RidingMemberCreateWithoutTeamInput[] | RidingMemberUncheckedCreateWithoutTeamInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutTeamInput | RidingMemberCreateOrConnectWithoutTeamInput[]
-    createMany?: RidingMemberCreateManyTeamInputEnvelope
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-  }
-
-  export type RidingRecordCreateNestedManyWithoutTeamInput = {
-    create?: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput> | RidingRecordCreateWithoutTeamInput[] | RidingRecordUncheckedCreateWithoutTeamInput[]
-    connectOrCreate?: RidingRecordCreateOrConnectWithoutTeamInput | RidingRecordCreateOrConnectWithoutTeamInput[]
-    createMany?: RidingRecordCreateManyTeamInputEnvelope
-    connect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
-  }
-
   export type TeamMemberUncheckedCreateNestedManyWithoutTeamInput = {
     create?: XOR<TeamMemberCreateWithoutTeamInput, TeamMemberUncheckedCreateWithoutTeamInput> | TeamMemberCreateWithoutTeamInput[] | TeamMemberUncheckedCreateWithoutTeamInput[]
     connectOrCreate?: TeamMemberCreateOrConnectWithoutTeamInput | TeamMemberCreateOrConnectWithoutTeamInput[]
@@ -14680,20 +10422,6 @@ export namespace Prisma {
     connectOrCreate?: TeamJoinCodeCreateOrConnectWithoutTeamInput | TeamJoinCodeCreateOrConnectWithoutTeamInput[]
     createMany?: TeamJoinCodeCreateManyTeamInputEnvelope
     connect?: TeamJoinCodeWhereUniqueInput | TeamJoinCodeWhereUniqueInput[]
-  }
-
-  export type RidingMemberUncheckedCreateNestedManyWithoutTeamInput = {
-    create?: XOR<RidingMemberCreateWithoutTeamInput, RidingMemberUncheckedCreateWithoutTeamInput> | RidingMemberCreateWithoutTeamInput[] | RidingMemberUncheckedCreateWithoutTeamInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutTeamInput | RidingMemberCreateOrConnectWithoutTeamInput[]
-    createMany?: RidingMemberCreateManyTeamInputEnvelope
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-  }
-
-  export type RidingRecordUncheckedCreateNestedManyWithoutTeamInput = {
-    create?: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput> | RidingRecordCreateWithoutTeamInput[] | RidingRecordUncheckedCreateWithoutTeamInput[]
-    connectOrCreate?: RidingRecordCreateOrConnectWithoutTeamInput | RidingRecordCreateOrConnectWithoutTeamInput[]
-    createMany?: RidingRecordCreateManyTeamInputEnvelope
-    connect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
   }
 
   export type TeamMemberUpdateManyWithoutTeamNestedInput = {
@@ -14724,34 +10452,6 @@ export namespace Prisma {
     deleteMany?: TeamJoinCodeScalarWhereInput | TeamJoinCodeScalarWhereInput[]
   }
 
-  export type RidingMemberUpdateManyWithoutTeamNestedInput = {
-    create?: XOR<RidingMemberCreateWithoutTeamInput, RidingMemberUncheckedCreateWithoutTeamInput> | RidingMemberCreateWithoutTeamInput[] | RidingMemberUncheckedCreateWithoutTeamInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutTeamInput | RidingMemberCreateOrConnectWithoutTeamInput[]
-    upsert?: RidingMemberUpsertWithWhereUniqueWithoutTeamInput | RidingMemberUpsertWithWhereUniqueWithoutTeamInput[]
-    createMany?: RidingMemberCreateManyTeamInputEnvelope
-    set?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    disconnect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    delete?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    update?: RidingMemberUpdateWithWhereUniqueWithoutTeamInput | RidingMemberUpdateWithWhereUniqueWithoutTeamInput[]
-    updateMany?: RidingMemberUpdateManyWithWhereWithoutTeamInput | RidingMemberUpdateManyWithWhereWithoutTeamInput[]
-    deleteMany?: RidingMemberScalarWhereInput | RidingMemberScalarWhereInput[]
-  }
-
-  export type RidingRecordUpdateManyWithoutTeamNestedInput = {
-    create?: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput> | RidingRecordCreateWithoutTeamInput[] | RidingRecordUncheckedCreateWithoutTeamInput[]
-    connectOrCreate?: RidingRecordCreateOrConnectWithoutTeamInput | RidingRecordCreateOrConnectWithoutTeamInput[]
-    upsert?: RidingRecordUpsertWithWhereUniqueWithoutTeamInput | RidingRecordUpsertWithWhereUniqueWithoutTeamInput[]
-    createMany?: RidingRecordCreateManyTeamInputEnvelope
-    set?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
-    disconnect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
-    delete?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
-    connect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
-    update?: RidingRecordUpdateWithWhereUniqueWithoutTeamInput | RidingRecordUpdateWithWhereUniqueWithoutTeamInput[]
-    updateMany?: RidingRecordUpdateManyWithWhereWithoutTeamInput | RidingRecordUpdateManyWithWhereWithoutTeamInput[]
-    deleteMany?: RidingRecordScalarWhereInput | RidingRecordScalarWhereInput[]
-  }
-
   export type TeamMemberUncheckedUpdateManyWithoutTeamNestedInput = {
     create?: XOR<TeamMemberCreateWithoutTeamInput, TeamMemberUncheckedCreateWithoutTeamInput> | TeamMemberCreateWithoutTeamInput[] | TeamMemberUncheckedCreateWithoutTeamInput[]
     connectOrCreate?: TeamMemberCreateOrConnectWithoutTeamInput | TeamMemberCreateOrConnectWithoutTeamInput[]
@@ -14778,34 +10478,6 @@ export namespace Prisma {
     update?: TeamJoinCodeUpdateWithWhereUniqueWithoutTeamInput | TeamJoinCodeUpdateWithWhereUniqueWithoutTeamInput[]
     updateMany?: TeamJoinCodeUpdateManyWithWhereWithoutTeamInput | TeamJoinCodeUpdateManyWithWhereWithoutTeamInput[]
     deleteMany?: TeamJoinCodeScalarWhereInput | TeamJoinCodeScalarWhereInput[]
-  }
-
-  export type RidingMemberUncheckedUpdateManyWithoutTeamNestedInput = {
-    create?: XOR<RidingMemberCreateWithoutTeamInput, RidingMemberUncheckedCreateWithoutTeamInput> | RidingMemberCreateWithoutTeamInput[] | RidingMemberUncheckedCreateWithoutTeamInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutTeamInput | RidingMemberCreateOrConnectWithoutTeamInput[]
-    upsert?: RidingMemberUpsertWithWhereUniqueWithoutTeamInput | RidingMemberUpsertWithWhereUniqueWithoutTeamInput[]
-    createMany?: RidingMemberCreateManyTeamInputEnvelope
-    set?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    disconnect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    delete?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    update?: RidingMemberUpdateWithWhereUniqueWithoutTeamInput | RidingMemberUpdateWithWhereUniqueWithoutTeamInput[]
-    updateMany?: RidingMemberUpdateManyWithWhereWithoutTeamInput | RidingMemberUpdateManyWithWhereWithoutTeamInput[]
-    deleteMany?: RidingMemberScalarWhereInput | RidingMemberScalarWhereInput[]
-  }
-
-  export type RidingRecordUncheckedUpdateManyWithoutTeamNestedInput = {
-    create?: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput> | RidingRecordCreateWithoutTeamInput[] | RidingRecordUncheckedCreateWithoutTeamInput[]
-    connectOrCreate?: RidingRecordCreateOrConnectWithoutTeamInput | RidingRecordCreateOrConnectWithoutTeamInput[]
-    upsert?: RidingRecordUpsertWithWhereUniqueWithoutTeamInput | RidingRecordUpsertWithWhereUniqueWithoutTeamInput[]
-    createMany?: RidingRecordCreateManyTeamInputEnvelope
-    set?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
-    disconnect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
-    delete?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
-    connect?: RidingRecordWhereUniqueInput | RidingRecordWhereUniqueInput[]
-    update?: RidingRecordUpdateWithWhereUniqueWithoutTeamInput | RidingRecordUpdateWithWhereUniqueWithoutTeamInput[]
-    updateMany?: RidingRecordUpdateManyWithWhereWithoutTeamInput | RidingRecordUpdateManyWithWhereWithoutTeamInput[]
-    deleteMany?: RidingRecordScalarWhereInput | RidingRecordScalarWhereInput[]
   }
 
   export type TeamCreateNestedOneWithoutMembersInput = {
@@ -14848,136 +10520,6 @@ export namespace Prisma {
     upsert?: TeamUpsertWithoutJoinCodeInput
     connect?: TeamWhereUniqueInput
     update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutJoinCodeInput, TeamUpdateWithoutJoinCodeInput>, TeamUncheckedUpdateWithoutJoinCodeInput>
-  }
-
-  export type TeamCreateNestedOneWithoutRidingRecordInput = {
-    create?: XOR<TeamCreateWithoutRidingRecordInput, TeamUncheckedCreateWithoutRidingRecordInput>
-    connectOrCreate?: TeamCreateOrConnectWithoutRidingRecordInput
-    connect?: TeamWhereUniqueInput
-  }
-
-  export type RidingMemberCreateNestedManyWithoutRidingRecordInput = {
-    create?: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput> | RidingMemberCreateWithoutRidingRecordInput[] | RidingMemberUncheckedCreateWithoutRidingRecordInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutRidingRecordInput | RidingMemberCreateOrConnectWithoutRidingRecordInput[]
-    createMany?: RidingMemberCreateManyRidingRecordInputEnvelope
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-  }
-
-  export type RidingMemberUncheckedCreateNestedManyWithoutRidingRecordInput = {
-    create?: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput> | RidingMemberCreateWithoutRidingRecordInput[] | RidingMemberUncheckedCreateWithoutRidingRecordInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutRidingRecordInput | RidingMemberCreateOrConnectWithoutRidingRecordInput[]
-    createMany?: RidingMemberCreateManyRidingRecordInputEnvelope
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-  }
-
-  export type EnumRidingTypeFieldUpdateOperationsInput = {
-    set?: $Enums.RidingType
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type TeamUpdateOneWithoutRidingRecordNestedInput = {
-    create?: XOR<TeamCreateWithoutRidingRecordInput, TeamUncheckedCreateWithoutRidingRecordInput>
-    connectOrCreate?: TeamCreateOrConnectWithoutRidingRecordInput
-    upsert?: TeamUpsertWithoutRidingRecordInput
-    disconnect?: TeamWhereInput | boolean
-    delete?: TeamWhereInput | boolean
-    connect?: TeamWhereUniqueInput
-    update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutRidingRecordInput, TeamUpdateWithoutRidingRecordInput>, TeamUncheckedUpdateWithoutRidingRecordInput>
-  }
-
-  export type RidingMemberUpdateManyWithoutRidingRecordNestedInput = {
-    create?: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput> | RidingMemberCreateWithoutRidingRecordInput[] | RidingMemberUncheckedCreateWithoutRidingRecordInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutRidingRecordInput | RidingMemberCreateOrConnectWithoutRidingRecordInput[]
-    upsert?: RidingMemberUpsertWithWhereUniqueWithoutRidingRecordInput | RidingMemberUpsertWithWhereUniqueWithoutRidingRecordInput[]
-    createMany?: RidingMemberCreateManyRidingRecordInputEnvelope
-    set?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    disconnect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    delete?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    update?: RidingMemberUpdateWithWhereUniqueWithoutRidingRecordInput | RidingMemberUpdateWithWhereUniqueWithoutRidingRecordInput[]
-    updateMany?: RidingMemberUpdateManyWithWhereWithoutRidingRecordInput | RidingMemberUpdateManyWithWhereWithoutRidingRecordInput[]
-    deleteMany?: RidingMemberScalarWhereInput | RidingMemberScalarWhereInput[]
-  }
-
-  export type NullableBigIntFieldUpdateOperationsInput = {
-    set?: bigint | number | null
-    increment?: bigint | number
-    decrement?: bigint | number
-    multiply?: bigint | number
-    divide?: bigint | number
-  }
-
-  export type RidingMemberUncheckedUpdateManyWithoutRidingRecordNestedInput = {
-    create?: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput> | RidingMemberCreateWithoutRidingRecordInput[] | RidingMemberUncheckedCreateWithoutRidingRecordInput[]
-    connectOrCreate?: RidingMemberCreateOrConnectWithoutRidingRecordInput | RidingMemberCreateOrConnectWithoutRidingRecordInput[]
-    upsert?: RidingMemberUpsertWithWhereUniqueWithoutRidingRecordInput | RidingMemberUpsertWithWhereUniqueWithoutRidingRecordInput[]
-    createMany?: RidingMemberCreateManyRidingRecordInputEnvelope
-    set?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    disconnect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    delete?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    connect?: RidingMemberWhereUniqueInput | RidingMemberWhereUniqueInput[]
-    update?: RidingMemberUpdateWithWhereUniqueWithoutRidingRecordInput | RidingMemberUpdateWithWhereUniqueWithoutRidingRecordInput[]
-    updateMany?: RidingMemberUpdateManyWithWhereWithoutRidingRecordInput | RidingMemberUpdateManyWithWhereWithoutRidingRecordInput[]
-    deleteMany?: RidingMemberScalarWhereInput | RidingMemberScalarWhereInput[]
-  }
-
-  export type RidingRecordCreateNestedOneWithoutRidingMemberInput = {
-    create?: XOR<RidingRecordCreateWithoutRidingMemberInput, RidingRecordUncheckedCreateWithoutRidingMemberInput>
-    connectOrCreate?: RidingRecordCreateOrConnectWithoutRidingMemberInput
-    connect?: RidingRecordWhereUniqueInput
-  }
-
-  export type UserCreateNestedOneWithoutRidingMemberInput = {
-    create?: XOR<UserCreateWithoutRidingMemberInput, UserUncheckedCreateWithoutRidingMemberInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRidingMemberInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type TeamCreateNestedOneWithoutRidingMembersInput = {
-    create?: XOR<TeamCreateWithoutRidingMembersInput, TeamUncheckedCreateWithoutRidingMembersInput>
-    connectOrCreate?: TeamCreateOrConnectWithoutRidingMembersInput
-    connect?: TeamWhereUniqueInput
-  }
-
-  export type RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput = {
-    create?: XOR<RidingRecordCreateWithoutRidingMemberInput, RidingRecordUncheckedCreateWithoutRidingMemberInput>
-    connectOrCreate?: RidingRecordCreateOrConnectWithoutRidingMemberInput
-    upsert?: RidingRecordUpsertWithoutRidingMemberInput
-    connect?: RidingRecordWhereUniqueInput
-    update?: XOR<XOR<RidingRecordUpdateToOneWithWhereWithoutRidingMemberInput, RidingRecordUpdateWithoutRidingMemberInput>, RidingRecordUncheckedUpdateWithoutRidingMemberInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutRidingMemberNestedInput = {
-    create?: XOR<UserCreateWithoutRidingMemberInput, UserUncheckedCreateWithoutRidingMemberInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRidingMemberInput
-    upsert?: UserUpsertWithoutRidingMemberInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRidingMemberInput, UserUpdateWithoutRidingMemberInput>, UserUncheckedUpdateWithoutRidingMemberInput>
-  }
-
-  export type TeamUpdateOneWithoutRidingMembersNestedInput = {
-    create?: XOR<TeamCreateWithoutRidingMembersInput, TeamUncheckedCreateWithoutRidingMembersInput>
-    connectOrCreate?: TeamCreateOrConnectWithoutRidingMembersInput
-    upsert?: TeamUpsertWithoutRidingMembersInput
-    disconnect?: TeamWhereInput | boolean
-    delete?: TeamWhereInput | boolean
-    connect?: TeamWhereUniqueInput
-    update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutRidingMembersInput, TeamUpdateWithoutRidingMembersInput>, TeamUncheckedUpdateWithoutRidingMembersInput>
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -15152,93 +10694,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedEnumRidingTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.RidingType | EnumRidingTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.RidingType[]
-    notIn?: $Enums.RidingType[]
-    not?: NestedEnumRidingTypeFilter<$PrismaModel> | $Enums.RidingType
-  }
-
-  export type NestedBigIntNullableFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | null
-    notIn?: bigint[] | number[] | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
-  }
-
-  export type NestedEnumRidingTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.RidingType | EnumRidingTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.RidingType[]
-    notIn?: $Enums.RidingType[]
-    not?: NestedEnumRidingTypeWithAggregatesFilter<$PrismaModel> | $Enums.RidingType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRidingTypeFilter<$PrismaModel>
-    _max?: NestedEnumRidingTypeFilter<$PrismaModel>
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | null
-    notIn?: bigint[] | number[] | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedBigIntNullableFilter<$PrismaModel>
-    _min?: NestedBigIntNullableFilter<$PrismaModel>
-    _max?: NestedBigIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -15253,6 +10708,17 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type OAuthUserCreateWithoutUserInput = {
@@ -15302,30 +10768,6 @@ export namespace Prisma {
 
   export type TeamMemberCreateManyMemberInputEnvelope = {
     data: TeamMemberCreateManyMemberInput | TeamMemberCreateManyMemberInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RidingMemberCreateWithoutUserInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    ridingRecord: RidingRecordCreateNestedOneWithoutRidingMemberInput
-    team?: TeamCreateNestedOneWithoutRidingMembersInput
-  }
-
-  export type RidingMemberUncheckedCreateWithoutUserInput = {
-    ridingRecordId: bigint | number
-    teamId?: bigint | number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingMemberCreateOrConnectWithoutUserInput = {
-    where: RidingMemberWhereUniqueInput
-    create: XOR<RidingMemberCreateWithoutUserInput, RidingMemberUncheckedCreateWithoutUserInput>
-  }
-
-  export type RidingMemberCreateManyUserInputEnvelope = {
-    data: RidingMemberCreateManyUserInput | RidingMemberCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -15432,33 +10874,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
   }
 
-  export type RidingMemberUpsertWithWhereUniqueWithoutUserInput = {
-    where: RidingMemberWhereUniqueInput
-    update: XOR<RidingMemberUpdateWithoutUserInput, RidingMemberUncheckedUpdateWithoutUserInput>
-    create: XOR<RidingMemberCreateWithoutUserInput, RidingMemberUncheckedCreateWithoutUserInput>
-  }
-
-  export type RidingMemberUpdateWithWhereUniqueWithoutUserInput = {
-    where: RidingMemberWhereUniqueInput
-    data: XOR<RidingMemberUpdateWithoutUserInput, RidingMemberUncheckedUpdateWithoutUserInput>
-  }
-
-  export type RidingMemberUpdateManyWithWhereWithoutUserInput = {
-    where: RidingMemberScalarWhereInput
-    data: XOR<RidingMemberUpdateManyMutationInput, RidingMemberUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type RidingMemberScalarWhereInput = {
-    AND?: RidingMemberScalarWhereInput | RidingMemberScalarWhereInput[]
-    OR?: RidingMemberScalarWhereInput[]
-    NOT?: RidingMemberScalarWhereInput | RidingMemberScalarWhereInput[]
-    ridingRecordId?: BigIntFilter<"RidingMember"> | bigint | number
-    userId?: BigIntFilter<"RidingMember"> | bigint | number
-    teamId?: BigIntNullableFilter<"RidingMember"> | bigint | number | null
-    createdAt?: DateTimeFilter<"RidingMember"> | Date | string
-    updatedAt?: DateTimeFilter<"RidingMember"> | Date | string
-  }
-
   export type FriendUpsertWithWhereUniqueWithoutFromUserInput = {
     where: FriendWhereUniqueInput
     update: XOR<FriendUpdateWithoutFromUserInput, FriendUncheckedUpdateWithoutFromUserInput>
@@ -15513,7 +10928,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
     teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
-    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
 
@@ -15528,7 +10942,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
     teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
-    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
 
@@ -15548,7 +10961,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
     teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
-    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
   }
 
@@ -15563,7 +10975,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
     teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
-    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
   }
 
@@ -15594,7 +11005,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
     teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
-    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
 
@@ -15609,7 +11019,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
     teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
-    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
 
@@ -15635,7 +11044,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
     teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
-    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
   }
 
@@ -15650,7 +11058,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
     teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
-    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
   }
 
@@ -15664,7 +11071,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
-    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
@@ -15679,7 +11085,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
-    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
@@ -15710,7 +11115,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
-    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
@@ -15725,7 +11129,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
-    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
@@ -15780,70 +11183,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type RidingMemberCreateWithoutTeamInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    ridingRecord: RidingRecordCreateNestedOneWithoutRidingMemberInput
-    user: UserCreateNestedOneWithoutRidingMemberInput
-  }
-
-  export type RidingMemberUncheckedCreateWithoutTeamInput = {
-    ridingRecordId: bigint | number
-    userId: bigint | number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingMemberCreateOrConnectWithoutTeamInput = {
-    where: RidingMemberWhereUniqueInput
-    create: XOR<RidingMemberCreateWithoutTeamInput, RidingMemberUncheckedCreateWithoutTeamInput>
-  }
-
-  export type RidingMemberCreateManyTeamInputEnvelope = {
-    data: RidingMemberCreateManyTeamInput | RidingMemberCreateManyTeamInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RidingRecordCreateWithoutTeamInput = {
-    id?: bigint | number
-    type: $Enums.RidingType
-    distance: number
-    duration: number
-    departure: string
-    stopover1?: string | null
-    stopover2?: string | null
-    stopover3?: string | null
-    arrival: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    ridingMember?: RidingMemberCreateNestedManyWithoutRidingRecordInput
-  }
-
-  export type RidingRecordUncheckedCreateWithoutTeamInput = {
-    id?: bigint | number
-    type: $Enums.RidingType
-    distance: number
-    duration: number
-    departure: string
-    stopover1?: string | null
-    stopover2?: string | null
-    stopover3?: string | null
-    arrival: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutRidingRecordInput
-  }
-
-  export type RidingRecordCreateOrConnectWithoutTeamInput = {
-    where: RidingRecordWhereUniqueInput
-    create: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput>
-  }
-
-  export type RidingRecordCreateManyTeamInputEnvelope = {
-    data: RidingRecordCreateManyTeamInput | RidingRecordCreateManyTeamInput[]
-    skipDuplicates?: boolean
-  }
-
   export type TeamMemberUpsertWithWhereUniqueWithoutTeamInput = {
     where: TeamMemberWhereUniqueInput
     update: XOR<TeamMemberUpdateWithoutTeamInput, TeamMemberUncheckedUpdateWithoutTeamInput>
@@ -15887,56 +11226,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TeamJoinCode"> | Date | string
   }
 
-  export type RidingMemberUpsertWithWhereUniqueWithoutTeamInput = {
-    where: RidingMemberWhereUniqueInput
-    update: XOR<RidingMemberUpdateWithoutTeamInput, RidingMemberUncheckedUpdateWithoutTeamInput>
-    create: XOR<RidingMemberCreateWithoutTeamInput, RidingMemberUncheckedCreateWithoutTeamInput>
-  }
-
-  export type RidingMemberUpdateWithWhereUniqueWithoutTeamInput = {
-    where: RidingMemberWhereUniqueInput
-    data: XOR<RidingMemberUpdateWithoutTeamInput, RidingMemberUncheckedUpdateWithoutTeamInput>
-  }
-
-  export type RidingMemberUpdateManyWithWhereWithoutTeamInput = {
-    where: RidingMemberScalarWhereInput
-    data: XOR<RidingMemberUpdateManyMutationInput, RidingMemberUncheckedUpdateManyWithoutTeamInput>
-  }
-
-  export type RidingRecordUpsertWithWhereUniqueWithoutTeamInput = {
-    where: RidingRecordWhereUniqueInput
-    update: XOR<RidingRecordUpdateWithoutTeamInput, RidingRecordUncheckedUpdateWithoutTeamInput>
-    create: XOR<RidingRecordCreateWithoutTeamInput, RidingRecordUncheckedCreateWithoutTeamInput>
-  }
-
-  export type RidingRecordUpdateWithWhereUniqueWithoutTeamInput = {
-    where: RidingRecordWhereUniqueInput
-    data: XOR<RidingRecordUpdateWithoutTeamInput, RidingRecordUncheckedUpdateWithoutTeamInput>
-  }
-
-  export type RidingRecordUpdateManyWithWhereWithoutTeamInput = {
-    where: RidingRecordScalarWhereInput
-    data: XOR<RidingRecordUpdateManyMutationInput, RidingRecordUncheckedUpdateManyWithoutTeamInput>
-  }
-
-  export type RidingRecordScalarWhereInput = {
-    AND?: RidingRecordScalarWhereInput | RidingRecordScalarWhereInput[]
-    OR?: RidingRecordScalarWhereInput[]
-    NOT?: RidingRecordScalarWhereInput | RidingRecordScalarWhereInput[]
-    id?: BigIntFilter<"RidingRecord"> | bigint | number
-    type?: EnumRidingTypeFilter<"RidingRecord"> | $Enums.RidingType
-    distance?: FloatFilter<"RidingRecord"> | number
-    duration?: IntFilter<"RidingRecord"> | number
-    departure?: StringFilter<"RidingRecord"> | string
-    stopover1?: StringNullableFilter<"RidingRecord"> | string | null
-    stopover2?: StringNullableFilter<"RidingRecord"> | string | null
-    stopover3?: StringNullableFilter<"RidingRecord"> | string | null
-    arrival?: StringFilter<"RidingRecord"> | string
-    teamId?: BigIntNullableFilter<"RidingRecord"> | bigint | number | null
-    createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
-    updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
-  }
-
   export type TeamCreateWithoutMembersInput = {
     id?: bigint | number
     name: string
@@ -15946,8 +11235,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     joinCode?: TeamJoinCodeCreateNestedManyWithoutTeamInput
-    ridingMembers?: RidingMemberCreateNestedManyWithoutTeamInput
-    ridingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutMembersInput = {
@@ -15959,8 +11246,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     joinCode?: TeamJoinCodeUncheckedCreateNestedManyWithoutTeamInput
-    ridingMembers?: RidingMemberUncheckedCreateNestedManyWithoutTeamInput
-    ridingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutMembersInput = {
@@ -15978,7 +11263,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
-    ridingMember?: RidingMemberCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
   }
@@ -15993,7 +11277,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
-    ridingMember?: RidingMemberUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
     receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
   }
@@ -16023,8 +11306,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     joinCode?: TeamJoinCodeUpdateManyWithoutTeamNestedInput
-    ridingMembers?: RidingMemberUpdateManyWithoutTeamNestedInput
-    ridingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutMembersInput = {
@@ -16036,8 +11317,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     joinCode?: TeamJoinCodeUncheckedUpdateManyWithoutTeamNestedInput
-    ridingMembers?: RidingMemberUncheckedUpdateManyWithoutTeamNestedInput
-    ridingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type UserUpsertWithoutTeamMemberInput = {
@@ -16061,7 +11340,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
-    ridingMember?: RidingMemberUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
   }
@@ -16076,7 +11354,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
-    ridingMember?: RidingMemberUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
     receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
   }
@@ -16090,8 +11367,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: TeamMemberCreateNestedManyWithoutTeamInput
-    ridingMembers?: RidingMemberCreateNestedManyWithoutTeamInput
-    ridingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutJoinCodeInput = {
@@ -16103,8 +11378,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput
-    ridingMembers?: RidingMemberUncheckedCreateNestedManyWithoutTeamInput
-    ridingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutJoinCodeInput = {
@@ -16132,8 +11405,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: TeamMemberUpdateManyWithoutTeamNestedInput
-    ridingMembers?: RidingMemberUpdateManyWithoutTeamNestedInput
-    ridingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutJoinCodeInput = {
@@ -16145,336 +11416,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
-    ridingMembers?: RidingMemberUncheckedUpdateManyWithoutTeamNestedInput
-    ridingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
-  }
-
-  export type TeamCreateWithoutRidingRecordInput = {
-    id?: bigint | number
-    name: string
-    description?: string | null
-    isCrew?: boolean
-    isDeleted?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    members?: TeamMemberCreateNestedManyWithoutTeamInput
-    joinCode?: TeamJoinCodeCreateNestedManyWithoutTeamInput
-    ridingMembers?: RidingMemberCreateNestedManyWithoutTeamInput
-  }
-
-  export type TeamUncheckedCreateWithoutRidingRecordInput = {
-    id?: bigint | number
-    name: string
-    description?: string | null
-    isCrew?: boolean
-    isDeleted?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput
-    joinCode?: TeamJoinCodeUncheckedCreateNestedManyWithoutTeamInput
-    ridingMembers?: RidingMemberUncheckedCreateNestedManyWithoutTeamInput
-  }
-
-  export type TeamCreateOrConnectWithoutRidingRecordInput = {
-    where: TeamWhereUniqueInput
-    create: XOR<TeamCreateWithoutRidingRecordInput, TeamUncheckedCreateWithoutRidingRecordInput>
-  }
-
-  export type RidingMemberCreateWithoutRidingRecordInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutRidingMemberInput
-    team?: TeamCreateNestedOneWithoutRidingMembersInput
-  }
-
-  export type RidingMemberUncheckedCreateWithoutRidingRecordInput = {
-    userId: bigint | number
-    teamId?: bigint | number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingMemberCreateOrConnectWithoutRidingRecordInput = {
-    where: RidingMemberWhereUniqueInput
-    create: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput>
-  }
-
-  export type RidingMemberCreateManyRidingRecordInputEnvelope = {
-    data: RidingMemberCreateManyRidingRecordInput | RidingMemberCreateManyRidingRecordInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type TeamUpsertWithoutRidingRecordInput = {
-    update: XOR<TeamUpdateWithoutRidingRecordInput, TeamUncheckedUpdateWithoutRidingRecordInput>
-    create: XOR<TeamCreateWithoutRidingRecordInput, TeamUncheckedCreateWithoutRidingRecordInput>
-    where?: TeamWhereInput
-  }
-
-  export type TeamUpdateToOneWithWhereWithoutRidingRecordInput = {
-    where?: TeamWhereInput
-    data: XOR<TeamUpdateWithoutRidingRecordInput, TeamUncheckedUpdateWithoutRidingRecordInput>
-  }
-
-  export type TeamUpdateWithoutRidingRecordInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    isCrew?: BoolFieldUpdateOperationsInput | boolean
-    isDeleted?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: TeamMemberUpdateManyWithoutTeamNestedInput
-    joinCode?: TeamJoinCodeUpdateManyWithoutTeamNestedInput
-    ridingMembers?: RidingMemberUpdateManyWithoutTeamNestedInput
-  }
-
-  export type TeamUncheckedUpdateWithoutRidingRecordInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    isCrew?: BoolFieldUpdateOperationsInput | boolean
-    isDeleted?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
-    joinCode?: TeamJoinCodeUncheckedUpdateManyWithoutTeamNestedInput
-    ridingMembers?: RidingMemberUncheckedUpdateManyWithoutTeamNestedInput
-  }
-
-  export type RidingMemberUpsertWithWhereUniqueWithoutRidingRecordInput = {
-    where: RidingMemberWhereUniqueInput
-    update: XOR<RidingMemberUpdateWithoutRidingRecordInput, RidingMemberUncheckedUpdateWithoutRidingRecordInput>
-    create: XOR<RidingMemberCreateWithoutRidingRecordInput, RidingMemberUncheckedCreateWithoutRidingRecordInput>
-  }
-
-  export type RidingMemberUpdateWithWhereUniqueWithoutRidingRecordInput = {
-    where: RidingMemberWhereUniqueInput
-    data: XOR<RidingMemberUpdateWithoutRidingRecordInput, RidingMemberUncheckedUpdateWithoutRidingRecordInput>
-  }
-
-  export type RidingMemberUpdateManyWithWhereWithoutRidingRecordInput = {
-    where: RidingMemberScalarWhereInput
-    data: XOR<RidingMemberUpdateManyMutationInput, RidingMemberUncheckedUpdateManyWithoutRidingRecordInput>
-  }
-
-  export type RidingRecordCreateWithoutRidingMemberInput = {
-    id?: bigint | number
-    type: $Enums.RidingType
-    distance: number
-    duration: number
-    departure: string
-    stopover1?: string | null
-    stopover2?: string | null
-    stopover3?: string | null
-    arrival: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    team?: TeamCreateNestedOneWithoutRidingRecordInput
-  }
-
-  export type RidingRecordUncheckedCreateWithoutRidingMemberInput = {
-    id?: bigint | number
-    type: $Enums.RidingType
-    distance: number
-    duration: number
-    departure: string
-    stopover1?: string | null
-    stopover2?: string | null
-    stopover3?: string | null
-    arrival: string
-    teamId?: bigint | number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingRecordCreateOrConnectWithoutRidingMemberInput = {
-    where: RidingRecordWhereUniqueInput
-    create: XOR<RidingRecordCreateWithoutRidingMemberInput, RidingRecordUncheckedCreateWithoutRidingMemberInput>
-  }
-
-  export type UserCreateWithoutRidingMemberInput = {
-    id?: bigint | number
-    name: string
-    nickname: string
-    oneLineIntroduction?: string | null
-    ribuddyId: string
-    profileImage?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    oAuthUser?: OAuthUserCreateNestedManyWithoutUserInput
-    teamMember?: TeamMemberCreateNestedManyWithoutMemberInput
-    sentFriendRequests?: FriendCreateNestedManyWithoutFromUserInput
-    receivedFriendRequests?: FriendCreateNestedManyWithoutToUserInput
-  }
-
-  export type UserUncheckedCreateWithoutRidingMemberInput = {
-    id?: bigint | number
-    name: string
-    nickname: string
-    oneLineIntroduction?: string | null
-    ribuddyId: string
-    profileImage?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    oAuthUser?: OAuthUserUncheckedCreateNestedManyWithoutUserInput
-    teamMember?: TeamMemberUncheckedCreateNestedManyWithoutMemberInput
-    sentFriendRequests?: FriendUncheckedCreateNestedManyWithoutFromUserInput
-    receivedFriendRequests?: FriendUncheckedCreateNestedManyWithoutToUserInput
-  }
-
-  export type UserCreateOrConnectWithoutRidingMemberInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutRidingMemberInput, UserUncheckedCreateWithoutRidingMemberInput>
-  }
-
-  export type TeamCreateWithoutRidingMembersInput = {
-    id?: bigint | number
-    name: string
-    description?: string | null
-    isCrew?: boolean
-    isDeleted?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    members?: TeamMemberCreateNestedManyWithoutTeamInput
-    joinCode?: TeamJoinCodeCreateNestedManyWithoutTeamInput
-    ridingRecord?: RidingRecordCreateNestedManyWithoutTeamInput
-  }
-
-  export type TeamUncheckedCreateWithoutRidingMembersInput = {
-    id?: bigint | number
-    name: string
-    description?: string | null
-    isCrew?: boolean
-    isDeleted?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    members?: TeamMemberUncheckedCreateNestedManyWithoutTeamInput
-    joinCode?: TeamJoinCodeUncheckedCreateNestedManyWithoutTeamInput
-    ridingRecord?: RidingRecordUncheckedCreateNestedManyWithoutTeamInput
-  }
-
-  export type TeamCreateOrConnectWithoutRidingMembersInput = {
-    where: TeamWhereUniqueInput
-    create: XOR<TeamCreateWithoutRidingMembersInput, TeamUncheckedCreateWithoutRidingMembersInput>
-  }
-
-  export type RidingRecordUpsertWithoutRidingMemberInput = {
-    update: XOR<RidingRecordUpdateWithoutRidingMemberInput, RidingRecordUncheckedUpdateWithoutRidingMemberInput>
-    create: XOR<RidingRecordCreateWithoutRidingMemberInput, RidingRecordUncheckedCreateWithoutRidingMemberInput>
-    where?: RidingRecordWhereInput
-  }
-
-  export type RidingRecordUpdateToOneWithWhereWithoutRidingMemberInput = {
-    where?: RidingRecordWhereInput
-    data: XOR<RidingRecordUpdateWithoutRidingMemberInput, RidingRecordUncheckedUpdateWithoutRidingMemberInput>
-  }
-
-  export type RidingRecordUpdateWithoutRidingMemberInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
-    distance?: FloatFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    departure?: StringFieldUpdateOperationsInput | string
-    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
-    arrival?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    team?: TeamUpdateOneWithoutRidingRecordNestedInput
-  }
-
-  export type RidingRecordUncheckedUpdateWithoutRidingMemberInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
-    distance?: FloatFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    departure?: StringFieldUpdateOperationsInput | string
-    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
-    arrival?: StringFieldUpdateOperationsInput | string
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUpsertWithoutRidingMemberInput = {
-    update: XOR<UserUpdateWithoutRidingMemberInput, UserUncheckedUpdateWithoutRidingMemberInput>
-    create: XOR<UserCreateWithoutRidingMemberInput, UserUncheckedCreateWithoutRidingMemberInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutRidingMemberInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutRidingMemberInput, UserUncheckedUpdateWithoutRidingMemberInput>
-  }
-
-  export type UserUpdateWithoutRidingMemberInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: StringFieldUpdateOperationsInput | string
-    nickname?: StringFieldUpdateOperationsInput | string
-    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
-    ribuddyId?: StringFieldUpdateOperationsInput | string
-    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    oAuthUser?: OAuthUserUpdateManyWithoutUserNestedInput
-    teamMember?: TeamMemberUpdateManyWithoutMemberNestedInput
-    sentFriendRequests?: FriendUpdateManyWithoutFromUserNestedInput
-    receivedFriendRequests?: FriendUpdateManyWithoutToUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutRidingMemberInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: StringFieldUpdateOperationsInput | string
-    nickname?: StringFieldUpdateOperationsInput | string
-    oneLineIntroduction?: NullableStringFieldUpdateOperationsInput | string | null
-    ribuddyId?: StringFieldUpdateOperationsInput | string
-    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    oAuthUser?: OAuthUserUncheckedUpdateManyWithoutUserNestedInput
-    teamMember?: TeamMemberUncheckedUpdateManyWithoutMemberNestedInput
-    sentFriendRequests?: FriendUncheckedUpdateManyWithoutFromUserNestedInput
-    receivedFriendRequests?: FriendUncheckedUpdateManyWithoutToUserNestedInput
-  }
-
-  export type TeamUpsertWithoutRidingMembersInput = {
-    update: XOR<TeamUpdateWithoutRidingMembersInput, TeamUncheckedUpdateWithoutRidingMembersInput>
-    create: XOR<TeamCreateWithoutRidingMembersInput, TeamUncheckedCreateWithoutRidingMembersInput>
-    where?: TeamWhereInput
-  }
-
-  export type TeamUpdateToOneWithWhereWithoutRidingMembersInput = {
-    where?: TeamWhereInput
-    data: XOR<TeamUpdateWithoutRidingMembersInput, TeamUncheckedUpdateWithoutRidingMembersInput>
-  }
-
-  export type TeamUpdateWithoutRidingMembersInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    isCrew?: BoolFieldUpdateOperationsInput | boolean
-    isDeleted?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: TeamMemberUpdateManyWithoutTeamNestedInput
-    joinCode?: TeamJoinCodeUpdateManyWithoutTeamNestedInput
-    ridingRecord?: RidingRecordUpdateManyWithoutTeamNestedInput
-  }
-
-  export type TeamUncheckedUpdateWithoutRidingMembersInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    isCrew?: BoolFieldUpdateOperationsInput | boolean
-    isDeleted?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
-    joinCode?: TeamJoinCodeUncheckedUpdateManyWithoutTeamNestedInput
-    ridingRecord?: RidingRecordUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type OAuthUserCreateManyUserInput = {
@@ -16488,13 +11429,6 @@ export namespace Prisma {
     teamId: bigint | number
     isAdmin?: boolean
     isCurrentMember?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingMemberCreateManyUserInput = {
-    ridingRecordId: bigint | number
-    teamId?: bigint | number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16558,27 +11492,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RidingMemberUpdateWithoutUserInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ridingRecord?: RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput
-    team?: TeamUpdateOneWithoutRidingMembersNestedInput
-  }
-
-  export type RidingMemberUncheckedUpdateWithoutUserInput = {
-    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingMemberUncheckedUpdateManyWithoutUserInput = {
-    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type FriendUpdateWithoutFromUserInput = {
     isFavorite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16636,27 +11549,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type RidingMemberCreateManyTeamInput = {
-    ridingRecordId: bigint | number
-    userId: bigint | number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingRecordCreateManyTeamInput = {
-    id?: bigint | number
-    type: $Enums.RidingType
-    distance: number
-    duration: number
-    departure: string
-    stopover1?: string | null
-    stopover2?: string | null
-    stopover3?: string | null
-    arrival: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type TeamMemberUpdateWithoutTeamInput = {
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
     isCurrentMember?: BoolFieldUpdateOperationsInput | boolean
@@ -16698,99 +11590,6 @@ export namespace Prisma {
   export type TeamJoinCodeUncheckedUpdateManyWithoutTeamInput = {
     code?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingMemberUpdateWithoutTeamInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ridingRecord?: RidingRecordUpdateOneRequiredWithoutRidingMemberNestedInput
-    user?: UserUpdateOneRequiredWithoutRidingMemberNestedInput
-  }
-
-  export type RidingMemberUncheckedUpdateWithoutTeamInput = {
-    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingMemberUncheckedUpdateManyWithoutTeamInput = {
-    ridingRecordId?: BigIntFieldUpdateOperationsInput | bigint | number
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingRecordUpdateWithoutTeamInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
-    distance?: FloatFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    departure?: StringFieldUpdateOperationsInput | string
-    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
-    arrival?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ridingMember?: RidingMemberUpdateManyWithoutRidingRecordNestedInput
-  }
-
-  export type RidingRecordUncheckedUpdateWithoutTeamInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
-    distance?: FloatFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    departure?: StringFieldUpdateOperationsInput | string
-    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
-    arrival?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ridingMember?: RidingMemberUncheckedUpdateManyWithoutRidingRecordNestedInput
-  }
-
-  export type RidingRecordUncheckedUpdateManyWithoutTeamInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    type?: EnumRidingTypeFieldUpdateOperationsInput | $Enums.RidingType
-    distance?: FloatFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    departure?: StringFieldUpdateOperationsInput | string
-    stopover1?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover2?: NullableStringFieldUpdateOperationsInput | string | null
-    stopover3?: NullableStringFieldUpdateOperationsInput | string | null
-    arrival?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingMemberCreateManyRidingRecordInput = {
-    userId: bigint | number
-    teamId?: bigint | number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type RidingMemberUpdateWithoutRidingRecordInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutRidingMemberNestedInput
-    team?: TeamUpdateOneWithoutRidingMembersNestedInput
-  }
-
-  export type RidingMemberUncheckedUpdateWithoutRidingRecordInput = {
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RidingMemberUncheckedUpdateManyWithoutRidingRecordInput = {
-    userId?: BigIntFieldUpdateOperationsInput | bigint | number
-    teamId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
