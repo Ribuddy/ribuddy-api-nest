@@ -1,8 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
+import { UserErrorCode } from '@common/codes/error/user.error.code';
 import { API_TAGS } from '@common/constants/api-tags.constants';
 
 import { RequestContextService } from '@modules/als/services/request-context.service';
@@ -31,7 +41,10 @@ export class UsersV1Controller {
     private readonly requestContextService: RequestContextService,
   ) {}
 
-  @ApiOperation({ summary: '내 정보 조회' })
+  @ApiOperation({
+    summary: '내 정보 조회',
+    description: '현재 로그인 된 사용자의 정보를 반환합니다.',
+  })
   @ApiOkResponse({
     description: 'AccessToken을 기반으로, 로그인된 사용자의 정보룰 조회합니다.',
     type: UserProfileResponseDto,
@@ -52,12 +65,21 @@ export class UsersV1Controller {
     type: UserProfileResponseDto,
   })
   @Get('profile/:id')
-  getUserInfo(@Param() param: UserIdRequestDto) {
-    return this.usersService.getUserInfo(param.id);
+  async getUserInfo(@Param() param: UserIdRequestDto) {
+    const userId = this.requestContextService.getOrThrowUserId();
+
+    if (userId === BigInt(param.id)) {
+      throw new CustomException(UserErrorCode.BAD_PROFILE_REQUEST);
+    }
+
+    const opponentUserInfo = await this.usersService.getUserInfo(param.id);
+    const opponentRidingCount = await this.usersService.getRidingCountWithFriend(userId, param.id);
+
+    return { ...opponentUserInfo, ridingCountWithMe: opponentRidingCount };
   }
 
   @ApiOperation({
-    summary: '사용자를 삭제합니다. (탈퇴)',
+    summary: '사용자 탈퇴',
     description: 'Soft Delete가 아닌, Hard Delete로 복구가 불가능하니 사용에 유의하세요.',
   })
   @Delete()
@@ -84,7 +106,7 @@ export class UsersV1Controller {
 
   @Post('friend')
   @ApiOperation({
-    summary: '친구 추가',
+    summary: '라이버디 ID로 친구 추가',
     description: '라이버디 ID를 받아, 친구를 추가합니다.',
   })
   async addFriendByRibuddyId(@Body() data: AddFriendByRibuddyIdRequestDto) {
@@ -98,7 +120,7 @@ export class UsersV1Controller {
   }
 
   @ApiOperation({
-    summary: '친구 삭제',
+    summary: '상대방 userId로 친구 삭제',
     description: '상대방의 userId를 이용해 친구를 삭제합니다. (라이버디 ID가 아님에 주의)',
   })
   @Delete('friend')
@@ -112,7 +134,7 @@ export class UsersV1Controller {
 
   @Patch('friend')
   @ApiOperation({
-    summary: '친구 즐겨찾기 설정/해제',
+    summary: '상대방 userId로 친구 즐겨찾기 설정/해제',
     description: '',
   })
   async editFriendProperty(@Body() data: EditFriendStatusDto) {
@@ -124,8 +146,9 @@ export class UsersV1Controller {
   }
 
   @ApiOperation({
-    summary: '친구 목록 조회',
-    description: '내가 추가한 친구들의 목록을 조회합니다.',
+    summary: '내 친구 목록 조회 (친구 수 조회)',
+    description:
+      '로그인 한 사용자의 친구 목록을 반환합니다. 친구 목록에 포함되어 있는 정보는 Schema를 참고하세요.',
   })
   @Get('friend/list')
   async getFriendList() {

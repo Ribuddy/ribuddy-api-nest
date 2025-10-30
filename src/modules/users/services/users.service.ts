@@ -4,7 +4,7 @@ import { CustomException } from '@common/codes/custom.exception';
 import { UserErrorCode } from '@common/codes/error/user.error.code';
 
 import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.service';
-import { EditUserProfileRequestDto } from '@modules/users/dto/user.dto';
+import { EditUserProfileRequestDto, GetUserInfoResponseDto } from '@modules/users/dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -13,18 +13,49 @@ export class UsersService {
   /**
    * 내 정보 조회
    */
-  async getUserInfo(userId: bigint) {
+  async getUserInfo(userId: bigint): Promise<GetUserInfoResponseDto> {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
+      include: {
+        ridingMember: true,
+        teamMember: true,
+      },
     });
 
     if (!user) {
       throw new CustomException(UserErrorCode.NO_USER);
     }
 
-    return { ...user, id: user.id.toString() };
+    return {
+      id: user.id.toString(),
+      name: user.name,
+      nickname: user.nickname,
+      introduction: user.oneLineIntroduction,
+      createdAt: user.createdAt,
+      teams: user.teamMember.map((tm) => tm.teamId.toString()),
+      ridingRecords: user.ridingMember.map((rm) => rm.ridingRecordId.toString()),
+    };
   }
 
+  // userId 1이 userId 2와 함께 달린 횟수 조회
+  async getRidingCountWithFriend(userId1: bigint, userId2: bigint): Promise<number> {
+    const count = await this.prisma.ridingMember.count({
+      where: {
+        ridingRecord: {
+          ridingMember: {
+            some: {
+              userId: userId2,
+            },
+          },
+        },
+        userId: userId1,
+      },
+    });
+
+    return count;
+  }
+
+  // userId로 사용자 삭제
   async deleteUser(userId: bigint) {
     const deletedUser = await this.prisma.user.delete({
       where: { id: userId },
@@ -33,6 +64,7 @@ export class UsersService {
     return { ...deletedUser, id: deletedUser.id.toString() };
   }
 
+  // 사용자 정보 수정
   async editUser(userId: bigint, partialUser: EditUserProfileRequestDto) {
     // remove undefined fields (cus of partial in DTO)
     const filteredData = Object.fromEntries(
@@ -52,6 +84,7 @@ export class UsersService {
     }
   }
 
+  // userId 두 개를 받아서 친구 추가
   async addFriend(fromUserId: bigint, toUserId: bigint) {
     if (fromUserId === toUserId) {
       throw new CustomException(UserErrorCode.CANNOT_ADD_SELF_AS_FRIEND);
@@ -82,6 +115,7 @@ export class UsersService {
     return;
   }
 
+  // 친구 삭제
   async deleteFriend(fromUserId: bigint, toUserId: bigint) {
     // 그냥 delete 쓰면 prisma error 발생하므로 deleteMany 사용
     const deleted = await this.prisma.friend.deleteMany({
@@ -98,6 +132,7 @@ export class UsersService {
     return;
   }
 
+  // 친구 즐겨찾기 상태 변경
   async changeFavoriteFriendStatus(fromUserId: bigint, toUserId: bigint, isFavorite: boolean) {
     try {
       await this.prisma.friend.update({
@@ -117,6 +152,7 @@ export class UsersService {
     }
   }
 
+  // ribuddyId로 userId 조회
   async getUserIdByRiBuddyId(ribuddyId: string) {
     const user = await this.prisma.user.findUnique({
       where: { ribuddyId },
@@ -129,6 +165,7 @@ export class UsersService {
     return user.id;
   }
 
+  // 친구 목록 조회
   async getFriendList(userId: bigint) {
     const friends = await this.prisma.friend.findMany({
       where: { fromUserId: userId },
@@ -145,4 +182,6 @@ export class UsersService {
       isFavorite: friend.isFavorite,
     }));
   }
+
+  //
 }

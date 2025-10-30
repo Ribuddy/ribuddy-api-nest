@@ -1,12 +1,16 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { $Enums } from '@generated/prisma/mysql';
+
 import { API_TAGS } from '@common/constants/api-tags.constants';
 import { ParseBigIntPipe } from '@common/pipes/parse-bigint.pipe';
 
 import { RequestContextService } from '@modules/als/services/request-context.service';
 import { DriveLocationService } from '@modules/driving/services/drive-location.service';
 import { TeamUsersService } from '@modules/users/services/team.users.service';
+
+import RidingType = $Enums.RidingType;
 
 @ApiTags(API_TAGS.DRIVING_TEAM)
 @ApiBearerAuth()
@@ -58,5 +62,15 @@ export class DrivingTeamV1Controller {
   @Get('test/single-user/:userId')
   testSingleUser(@Param('userId', ParseBigIntPipe) userId: bigint) {
     return this.locationService.getUserLocation(userId);
+  }
+
+  @ApiTags(API_TAGS.TEST)
+  @ApiOperation({
+    summary: '[테스트용] 라이딩 기록 생성',
+    description: 'Body를 받지 않습니다, 라이딩 기록을 임의로 생성합니다..',
+  })
+  @Post('test/riding-record')
+  createRidingRecord() {
+    return this.locationService.createRidingRecord(RidingType.SOLO, 1, 1, 'depart', 'arrive');
   }
 }

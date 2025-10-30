@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
 
+import { $Enums } from '@generated/prisma/mysql';
 import { RedisService } from '@liaoliaots/nestjs-redis';
 import Redis from 'ioredis';
 
 import { REDIS } from '@common/constants/redis.constants';
 
 import { UserLocation } from '@modules/driving/types/drive-location.types';
+import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.service';
 import { TeamUsersService } from '@modules/users/services/team.users.service';
+
+import RidingType = $Enums.RidingType;
 
 @Injectable()
 export class DriveLocationService {
@@ -15,6 +19,7 @@ export class DriveLocationService {
   constructor(
     private readonly redisService: RedisService,
     private readonly teamUserService: TeamUsersService,
+    private readonly mysql: MySQLPrismaService,
   ) {
     this.redis = this.redisService.getOrThrow();
   }
@@ -50,6 +55,8 @@ export class DriveLocationService {
   async endTeamRiding(teamId: bigint) {
     const key = REDIS.CURRENT_RIDING_TEAM.KEY(teamId);
     await this.redis.del(key);
+
+    // TODO: riding record를 생성할 필요가 있음.
 
     return;
   }
@@ -97,5 +104,31 @@ export class DriveLocationService {
     }
 
     return locations;
+  }
+
+  async createRidingRecord(
+    ridingType: RidingType,
+    distance: number,
+    duration: number,
+    departure: string,
+    arrival: string,
+    stopovers?: string[],
+  ) {
+    const data = await this.mysql.ridingRecord.create({
+      data: {
+        type: ridingType,
+        distance,
+        duration,
+        departure,
+        arrival,
+        ridingMember: {
+          create: {
+            userId: 1n,
+          },
+        },
+      },
+    });
+
+    return { ...data, id: data.id.toString() };
   }
 }
