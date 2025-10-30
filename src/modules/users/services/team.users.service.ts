@@ -11,6 +11,29 @@ import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.servic
 export class TeamUsersService {
   constructor(private readonly prisma: MySQLPrismaService) {}
 
+  // teamId를 받아서 팀 정보 반환
+  async getTeamInfo(teamId: bigint) {
+    const team = await this.prisma.team.findUnique({
+      where: { id: teamId },
+      include: { members: true },
+    });
+
+    if (!team) {
+      throw new CustomException(UserErrorCode.BAD_TEAM_REQUEST);
+    }
+
+    // bigint는 service 단에서 제거
+    return {
+      ...team,
+      id: team.id.toString(),
+      members: team.members.map((member) => ({
+        ...member,
+        userId: member.userId.toString(),
+        teamId: member.teamId.toString(),
+      })),
+    };
+  }
+
   // userId를 받아서 해당 사용자가 가입되어 있는 모든 팀 정보 반환
   async getTeamList(userId: bigint) {
     // 모든 팀 조회
@@ -23,6 +46,11 @@ export class TeamUsersService {
     return teams.map((team) => ({
       ...team,
       id: team.id.toString(),
+      members: team.members.map((member) => ({
+        ...member,
+        userId: member.userId.toString(),
+        teamId: member.teamId.toString(),
+      })),
     }));
   }
 
@@ -52,6 +80,22 @@ export class TeamUsersService {
     });
 
     return newTeam.id.toString();
+  }
+
+  // teamId를 받아서 속한 멤버의 userId 리스트 반환
+  async getTeamMembers(teamId: bigint) {
+    const team = await this.prisma.team.findUnique({
+      where: { id: teamId },
+      include: { members: true },
+    });
+
+    if (!team) {
+      throw new CustomException(UserErrorCode.BAD_TEAM_REQUEST);
+    }
+
+    return team.members
+      .filter((member) => member.isCurrentMember)
+      .map((member) => member.userId.toString());
   }
 
   // 팀 참여

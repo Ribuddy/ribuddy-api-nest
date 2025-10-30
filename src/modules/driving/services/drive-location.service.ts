@@ -1,16 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
-import { $Enums } from '@generated/prisma/mysql';
+import { faker } from '@faker-js/faker';
 import { RedisService } from '@liaoliaots/nestjs-redis';
 import Redis from 'ioredis';
 
 import { REDIS } from '@common/constants/redis.constants';
 
+import { LatLonEleDto } from '@modules/driving/dto/common.driving.dto';
 import { UserLocation } from '@modules/driving/types/drive-location.types';
+import { MongoDBPrismaService } from '@modules/prisma/services/mongodb.prisma.service';
 import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.service';
 import { TeamUsersService } from '@modules/users/services/team.users.service';
-
-import RidingType = $Enums.RidingType;
 
 @Injectable()
 export class DriveLocationService {
@@ -20,11 +20,56 @@ export class DriveLocationService {
     private readonly redisService: RedisService,
     private readonly teamUserService: TeamUsersService,
     private readonly mysql: MySQLPrismaService,
+    private readonly mongo: MongoDBPrismaService,
   ) {
     this.redis = this.redisService.getOrThrow();
   }
 
-  async setUserLocation(userId: bigint, lat: number, lon: number) {
+  async getRidingRecordInfo(ridingRecordId: string) {
+    const ridingRecord = await this.mongo.ridingRecord.findUnique({
+      where: { id: ridingRecordId },
+    });
+
+    if (!ridingRecord) {
+      throw new NotFoundException('RidingRecord ID 값에 해당하는 기록이 존재하지 않습니다.');
+    }
+
+    return ridingRecord;
+  }
+
+  // riding record id의 주인과 제공된 userId가 일치하는지 확인하는 서비스
+  async isRidingRecordOwner(ridingRecordId: string, userId: bigint) {
+    const ridingRecord = await this.mongo.ridingRecord.findUnique({
+      where: { id: ridingRecordId },
+    });
+
+    // TODO: custom error로 변환
+    // ridingRecord가 없거나, 소유자가 아닌 경우 throw error
+    if (!ridingRecord || ridingRecord.recordOwnerId !== userId.toString()) {
+      throw new UnauthorizedException('본인의 라이딩 기록이 아닙니다.');
+    }
+
+    return;
+  }
+
+  // riding record id를 받아서, DB에 푸시하고 redis에도 사용자 위치 정보를 저장함
+  async saveUserLocationToRidingRecord(ridingRecordId: string, loc: LatLonEleDto) {
+    const updatedRidingRecord = await this.mongo.ridingRecord.update({
+      where: { id: ridingRecordId },
+      data: {
+        route: {
+          push: this.mongo.createGeoPoint(loc.lat, loc.lon, new Date(), loc.ele),
+        },
+      },
+    });
+
+    await this.setUserLocationToRedis(BigInt(updatedRidingRecord.recordOwnerId), loc.lat, loc.lon);
+
+    return;
+  }
+
+  async setUserLocationToRedis(userId: bigint, lat: number, lon: number) {
+    // redis는 ele를 지원하지 않음
     const member = REDIS.USER_LOCATION.MEMBER_KEY(userId);
     await this.redis.geoadd(REDIS.USER_LOCATION.COLLECTION_KEY, lon, lat, member);
 
@@ -45,14 +90,76 @@ export class DriveLocationService {
   }
 
   // teamId를 받아서, redis에 해당 팀이 라이딩을 시작한 것을 기록함
-  async startTeamRiding(teamId: bigint) {
+  // 생성된 riding record id를 반환함, 추후 요청 시에 사용
+  async startTeamRiding(teamId: bigint, userId: bigint, loc: LatLonEleDto, departureName: string) {
     await this.redis.set(REDIS.CURRENT_RIDING_TEAM.KEY(teamId), 1);
+
+    const teamMember = await this.teamUserService.getTeamMembers(teamId);
+
+    const newRidingRecord = await this.mongo.ridingRecord.create({
+      data: {
+        recordOwnerId: userId.toString(),
+        participants: teamMember,
+        teamId: teamId.toString(),
+        route: [this.mongo.createGeoPoint(loc.lat, loc.lon, new Date(), loc.ele)],
+        departToArrival: [departureName],
+      },
+    });
+
+    return newRidingRecord.id;
+  }
+
+  // 위치 정보를 제공받아서 RidingRecord에 지속적으로 추가하는 서비스
+  // 이름을 함께 제공할 경우 경유지로 취급함, departToArrival 배열에 이름을 추가하도록 함
+  async updateRidingRecordLocation(
+    ridingRecordId: string,
+    loc: LatLonEleDto,
+    locationName?: string,
+  ) {
+    const updateData: any = {
+      route: {
+        push: this.mongo.createGeoPoint(loc.lat, loc.lon, new Date(), loc.ele),
+      },
+    };
+
+    if (locationName) {
+      updateData.departToArrival = {
+        push: locationName,
+      };
+    }
+
+    await this.mongo.ridingRecord.update({
+      where: { id: ridingRecordId },
+      data: updateData,
+    });
+
+    return;
+  }
+
+  // riding record id를 받아서, teamId를 추출해 redis의 현재 라이딩 중인 팀에서 제거합니다.
+  // 또한, 라이딩 레코드를 마무리합니다.
+  async endTeamRiding(ridingRecordId: string, loc: LatLonEleDto, locationName: string) {
+    const ridingRecord = await this.mongo.ridingRecord.findUnique({
+      where: { id: ridingRecordId },
+    });
+
+    // TODO: 커스텀 에러로 변환
+    if (!ridingRecord) {
+      throw new NotFoundException('RidingRecord ID 값에 해당하는 기록이 존재하지 않습니다.');
+    }
+
+    // 팀 라이딩인 경우 해당 팀을 라이딩 중인 상태에서 제거
+    if (ridingRecord.teamId)
+      await this.removeTeamFromRedisCurrentRidingTeam(BigInt(ridingRecord.teamId));
+
+    // 라이딩 레코드 마무리 (예: 종료 시간 기록)
+    await this.updateRidingRecordLocation(ridingRecordId, loc, locationName);
 
     return;
   }
 
   // teamId를 받아서, '라이딩 중인 팀'에서 제거함
-  async endTeamRiding(teamId: bigint) {
+  async removeTeamFromRedisCurrentRidingTeam(teamId: bigint) {
     const key = REDIS.CURRENT_RIDING_TEAM.KEY(teamId);
     await this.redis.del(key);
 
@@ -90,6 +197,30 @@ export class DriveLocationService {
     return Array.from(ridingMember);
   }
 
+  // TODO: userId가 아니라 ridingRecordId로 부터 participant 가져와서 해당 사용자들 redis에서 위치 꺼내오는게 맞음
+
+  // ridingRecordId 받아서, 해당 riding record의 participant들을 추출,
+  // 해당 사용자들의 위치 반환, 위치가 없는 사용자는 제외함.
+  async getLocationsFromRidingRecordId(ridingRecordId: string) {
+    const ridingRecord = await this.mongo.ridingRecord.findUnique({
+      where: { id: ridingRecordId },
+    });
+
+    if (!ridingRecord) {
+      throw new NotFoundException('RidingRecord ID 값에 해당하는 기록이 존재하지 않습니다.');
+    }
+
+    const locations: UserLocation[] = [];
+    for (const participantId of ridingRecord.participants) {
+      const location = await this.getUserLocation(BigInt(participantId));
+      if (location) {
+        locations.push(location);
+      }
+    }
+
+    return locations;
+  }
+
   // userId 받아서, 해당 사용자가 속한 current riding team에서 member를 추출,
   // 해당 사용자들의 위치 반환, 위치가 없는 사용자는 제외함.
   async getLocationsFromUserIds(userId: bigint) {
@@ -106,29 +237,12 @@ export class DriveLocationService {
     return locations;
   }
 
-  async createRidingRecord(
-    ridingType: RidingType,
-    distance: number,
-    duration: number,
-    departure: string,
-    arrival: string,
-    stopovers?: string[],
-  ) {
-    const data = await this.mysql.ridingRecord.create({
-      data: {
-        type: ridingType,
-        distance,
-        duration,
-        departure,
-        arrival,
-        ridingMember: {
-          create: {
-            userId: 1n,
-          },
-        },
-      },
-    });
+  // ================== TEST ============================
 
-    return { ...data, id: data.id.toString() };
+  generateFakeLocation(): LatLonEleDto {
+    return {
+      lat: faker.location.latitude(), // 위도
+      lon: faker.location.longitude(), // 경도
+    };
   }
 }

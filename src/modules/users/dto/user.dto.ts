@@ -157,5 +157,5 @@ export class GetUserInfoResponseDto {
   introduction!: string | null;
   createdAt!: Date;
   teams!: string[];
-  ridingRecords!: string[];
+  ridingRecords!: number;
 }

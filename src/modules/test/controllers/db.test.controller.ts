@@ -29,19 +29,7 @@ export class DBTestController {
   }
 
   @Post('mongo/create-test')
-  async mongoCreateTest() {
-    const result = await this.mongo.trackPoint.create({
-      data: {
-        userId: BigInt(1),
-        ridingRecordId: BigInt(1),
-        lat: 37.7749,
-        lon: -122.4194,
-        timestamp: new Date(),
-      },
-    });
-
-    return result;
-  }
+  async mongoCreateTest() {}
 
   @Post('redis/set-test')
   redisSetTest() {

@@ -63,6 +63,7 @@ const validate = (config: Record<string, unknown>) => {
     }),
     WinstonModule.forRoot(winstonLoggerOptions),
     SentryModule.forRoot(),
+    // TODO: RedisModule 초기화 순서가 Nest 시작하고 난 후인데 상관 없는지 알아보기
     RedisModule.forRoot({
       config: {
         host: process.env.REDIS_URL as string,

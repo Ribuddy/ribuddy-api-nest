@@ -81,4 +81,10 @@ export class UserErrorCode {
     message:
       '자기 자신의 정보는 프로필 조회 API로 조회할 수 없습니다. 내 정보 조회하기를 이용해 주세요.',
   };
+
+  public static readonly BAD_TEAM_REQUEST: CustomErrorCode = {
+    code: 'USER0013',
+    status: HttpStatus.NOT_FOUND,
+    message: '팀이 존재하지 않습니다.',
+  };
 }

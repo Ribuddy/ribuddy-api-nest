@@ -3,12 +3,16 @@ import { Injectable } from '@nestjs/common';
 import { CustomException } from '@common/codes/custom.exception';
 import { UserErrorCode } from '@common/codes/error/user.error.code';
 
+import { MongoDBPrismaService } from '@modules/prisma/services/mongodb.prisma.service';
 import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.service';
 import { EditUserProfileRequestDto, GetUserInfoResponseDto } from '@modules/users/dto/user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: MySQLPrismaService) {}
+  constructor(
+    private readonly prisma: MySQLPrismaService,
+    private readonly mongo: MongoDBPrismaService,
+  ) {}
 
   /**
    * 내 정보 조회
@@ -17,8 +21,13 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
       include: {
-        ridingMember: true,
         teamMember: true,
+      },
+    });
+
+    const ridingRecordCount = await this.mongo.ridingRecord.count({
+      where: {
+        recordOwnerId: userId.toString(),
       },
     });
 
@@ -33,22 +42,19 @@ export class UsersService {
       introduction: user.oneLineIntroduction,
       createdAt: user.createdAt,
       teams: user.teamMember.map((tm) => tm.teamId.toString()),
-      ridingRecords: user.ridingMember.map((rm) => rm.ridingRecordId.toString()),
+      ridingRecords: ridingRecordCount, // TODO: 조정해야함
     };
   }
 
   // userId 1이 userId 2와 함께 달린 횟수 조회
   async getRidingCountWithFriend(userId1: bigint, userId2: bigint): Promise<number> {
-    const count = await this.prisma.ridingMember.count({
+    // ridingRecord 중에서 recordOwnerId가 userId1이고, participants에 userId2가 포함된 것의 개수
+    const count = await this.mongo.ridingRecord.count({
       where: {
-        ridingRecord: {
-          ridingMember: {
-            some: {
-              userId: userId2,
-            },
-          },
+        recordOwnerId: userId1.toString(),
+        participants: {
+          has: userId2.toString(),
         },
-        userId: userId1,
       },
     });
 
