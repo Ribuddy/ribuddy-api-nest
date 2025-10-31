@@ -89,6 +89,4 @@ export class TeamV1Controller {
 
     return this.teamService.createTeamJoinCode(teamId);
   }
-
-  ㅁ;
 }

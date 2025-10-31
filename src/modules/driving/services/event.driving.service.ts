@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { $Enums } from '@generated/prisma/mongodb';
+import { RidingEventType } from '@generated/prisma/mongodb';
 
 import { DriveLocationService } from '@modules/driving/services/drive-location.service';
 import { MongoDBPrismaService } from '@modules/prisma/services/mongodb.prisma.service';
-
-import RidingEventType = $Enums.RidingEventType;
 
 @Injectable()
 export class DrivingEventService {

@@ -81,7 +81,7 @@ export class DrivingTeamV1Controller {
     // DB에 위치 저장 및 redis에 위치 캐싱 (타 팀원 공유용)
     await this.locationService.saveUserLocationToRidingRecord(ridingRecordId, body);
 
-    // redis에 떄린 팀원 위치 조회
+    // redis에서 가져온 팀원 위치 조회
     return this.locationService.getLocationsFromRidingRecordId(ridingRecordId);
   }
 
@@ -167,7 +167,7 @@ export class DrivingTeamV1Controller {
     // DB에 위치 저장 및 redis에 위치 캐싱 (타 팀원 공유용)
     await this.locationService.saveUserLocationToRidingRecord(ridingRecordId, fakeLoc);
 
-    // redis에 떄린 팀원 위치 조회
+    // redis에서 가져온 팀원 위치 조회
     return this.locationService.getLocationsFromRidingRecordId(ridingRecordId);
   }
 

@@ -114,7 +114,7 @@ export class TeamUsersService {
       throw new CustomException(UserErrorCode.ALREADY_IN_TEAM);
     }
 
-    // 사용자 추가, 기존에 팀이였다가 탈퇴한 사용자는 update
+    // 사용자 추가, 기존에 팀이었다가 탈퇴한 사용자는 update
     await this.prisma.teamMember.upsert({
       where: {
         teamId_userId: {
