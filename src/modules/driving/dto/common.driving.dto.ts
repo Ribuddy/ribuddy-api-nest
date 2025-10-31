@@ -11,7 +11,7 @@ gpx-builder를 사용해서 object 등을 생성하겠지만, 기본 DTO는 직�
 import { ApiProperty, PickType } from '@nestjs/swagger';
 
 import { Transform, Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class GpxTrackPoint {
   @ApiProperty({ description: '위도', example: 37.123456 })
@@ -65,3 +65,20 @@ export class GpxTrack {
 }
 
 export class LatLonEleDto extends PickType(GpxTrackPoint, ['lat', 'lon', 'ele'] as const) {}
+
+export class StartOrEndTeamRidingRequestDto extends LatLonEleDto {
+  @IsOptional()
+  @IsString()
+  name?: string; // 출발,도착지 명칭
+}
+
+export class ReportAccidentRequestDto extends LatLonEleDto {
+  @IsNotEmpty()
+  @IsString()
+  ridingRecordId!: string;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  timestamp?: Date;
+}

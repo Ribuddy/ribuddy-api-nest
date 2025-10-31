@@ -86,14 +86,23 @@ Prisma.NullTypes = {
 /**
  * Enums
  */
-exports.Prisma.TrackPointScalarFieldEnum = {
+exports.Prisma.RidingRecordScalarFieldEnum = {
   id: 'id',
+  recordOwnerId: 'recordOwnerId',
+  participants: 'participants',
+  teamId: 'teamId',
+  departToArrival: 'departToArrival',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RidingEventScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  timestamp: 'timestamp',
   userId: 'userId',
   ridingRecordId: 'ridingRecordId',
-  lat: 'lat',
-  lon: 'lon',
-  ele: 'ele',
-  timestamp: 'timestamp',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -107,10 +116,20 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.RidingRecordStatus = exports.$Enums.RidingRecordStatus = {
+  ONGOING: 'ONGOING',
+  COMPLETED: 'COMPLETED'
+};
 
+exports.RidingEventType = exports.$Enums.RidingEventType = {
+  SUDDEN_ACCELERATION: 'SUDDEN_ACCELERATION',
+  SUDDEN_STOP: 'SUDDEN_STOP',
+  ACCIDENT: 'ACCIDENT'
+};
 
 exports.Prisma.ModelName = {
-  TrackPoint: 'TrackPoint'
+  RidingRecord: 'RidingRecord',
+  RidingEvent: 'RidingEvent'
 };
 /**
  * Create the Client
@@ -184,8 +203,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// prisma generate --schema=prisma/mongodb/schema.prisma\n// prisma db push --schema=prisma/mongodb/schema.prisma\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../../src/generated/prisma/mongodb\"\n  binaryTargets = [\"native\", \"darwin\", \"darwin-arm64\", \"linux-arm64-openssl-3.0.x\", \"linux-musl-openssl-3.0.x\", \"windows\", \"debian-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL_MONGODB\")\n}\n\nmodel TrackPoint {\n  id             String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  userId         BigInt   @map(\"user_id\")\n  ridingRecordId BigInt   @map(\"riding_record_id\")\n  lat            Float\n  lon            Float\n  ele            Float?\n  timestamp      DateTime @db.Timestamp()\n  createdAt      DateTime @default(now()) @map(\"created_at\") @db.Timestamp()\n  updatedAt      DateTime @default(now()) @map(\"updated_at\") @db.Timestamp()\n\n  @@map(\"track_point\")\n}\n",
-  "inlineSchemaHash": "00513b9b8bd2e8b143a3d9ae01552de0852027595d97e2fc4b84731520ef0afa",
+  "inlineSchema": "// prisma generate --schema=prisma/mongodb/schema.prisma\n// prisma db push --schema=prisma/mongodb/schema.prisma\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../../src/generated/prisma/mongodb\"\n  binaryTargets = [\"native\", \"darwin\", \"darwin-arm64\", \"linux-arm64-openssl-3.0.x\", \"linux-musl-openssl-3.0.x\", \"windows\", \"debian-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL_MONGODB\")\n}\n\ntype GeoPoint {\n  type        String // Point로 고정\n  coordinates Float[] // [lon, lat, ele?]\n  timestamp   DateTime?\n  name        String? // 위치 이름 (예: \"서울역\")\n}\n\nmodel RidingRecord {\n  id              String             @id @default(auto()) @map(\"_id\") @db.ObjectId\n  route           GeoPoint[] // 사용자한테 위치 받을 때 마다 여기에 집어넣어야 함\n  recordOwnerId   String             @map(\"record_owner_id\")\n  participants    String[] // 참여자 ID 목록\n  teamId          String?            @map(\"team_id\") // 팀 라이딩을 했을 경우 팀 라이딩에 대한 기록을 담음\n  // 출발지, 경유지, 도착지 \"이름\" 만을 저장하는 배열\n  departToArrival String[]           @map(\"depart_to_arrival\")\n  status          RidingRecordStatus @default(ONGOING)\n\n  // distance, duration 등 부가 정보는 서버에서 계산하도록 함\n\n  // 기본 정보\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @default(now()) @map(\"updated_at\")\n\n  @@map(\"riding_record\")\n}\n\nenum RidingRecordStatus {\n  ONGOING\n  COMPLETED\n}\n\nenum RidingEventType {\n  SUDDEN_ACCELERATION\n  SUDDEN_STOP\n  ACCIDENT\n}\n\nmodel RidingEvent {\n  id             String          @id @default(auto()) @map(\"_id\") @db.ObjectId\n  type           RidingEventType\n  timestamp      DateTime\n  location       GeoPoint?\n  userId         String          @map(\"user_id\")\n  ridingRecordId String?         @map(\"riding_record_id\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @default(now()) @map(\"updated_at\")\n}\n",
+  "inlineSchemaHash": "bf8220d5603c94e2f47cc3d2b60ff9beccd9cc72aa94489e73780fb87d5ecad4",
   "copyEngine": true
 }
 
@@ -206,7 +225,7 @@ if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   config.isBundled = true
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"TrackPoint\":{\"dbName\":\"track_point\",\"schema\":null,\"fields\":[{\"name\":\"id\",\"dbName\":\"_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":[\"ObjectId\",[]],\"default\":{\"name\":\"auto\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"userId\",\"dbName\":\"user_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"BigInt\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"ridingRecordId\",\"dbName\":\"riding_record_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"BigInt\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"lat\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Float\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"lon\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Float\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"ele\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Float\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":[\"Timestamp\",[]],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"dbName\":\"created_at\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":[\"Timestamp\",[]],\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"dbName\":\"updated_at\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":[\"Timestamp\",[]],\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"RidingRecord\":{\"dbName\":\"riding_record\",\"schema\":null,\"fields\":[{\"name\":\"id\",\"dbName\":\"_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":[\"ObjectId\",[]],\"default\":{\"name\":\"auto\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"route\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"GeoPoint\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"recordOwnerId\",\"dbName\":\"record_owner_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"participants\",\"kind\":\"scalar\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"teamId\",\"dbName\":\"team_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"departToArrival\",\"dbName\":\"depart_to_arrival\",\"kind\":\"scalar\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"status\",\"kind\":\"enum\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"RidingRecordStatus\",\"nativeType\":null,\"default\":\"ONGOING\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"dbName\":\"created_at\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"dbName\":\"updated_at\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"RidingEvent\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"dbName\":\"_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":[\"ObjectId\",[]],\"default\":{\"name\":\"auto\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"type\",\"kind\":\"enum\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"RidingEventType\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"location\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"GeoPoint\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"userId\",\"dbName\":\"user_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"ridingRecordId\",\"dbName\":\"riding_record_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"dbName\":\"created_at\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"dbName\":\"updated_at\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{\"RidingRecordStatus\":{\"values\":[{\"name\":\"ONGOING\",\"dbName\":null},{\"name\":\"COMPLETED\",\"dbName\":null}],\"dbName\":null},\"RidingEventType\":{\"values\":[{\"name\":\"SUDDEN_ACCELERATION\",\"dbName\":null},{\"name\":\"SUDDEN_STOP\",\"dbName\":null},{\"name\":\"ACCIDENT\",\"dbName\":null}],\"dbName\":null}},\"types\":{\"GeoPoint\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"type\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null},{\"name\":\"coordinates\",\"kind\":\"scalar\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Float\",\"nativeType\":null},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null},{\"name\":\"name\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[]}}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = undefined
 config.compilerWasm = undefined

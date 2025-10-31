@@ -11,8 +11,8 @@ import { JwtErrorCode } from '@common/codes/error/jwt.error.code';
 import { inspectObject } from '@common/utils/inspect-object.util';
 
 import { RequestContextService } from '@modules/als/services/request-context.service';
+import { JWT_STRATEGY } from '@modules/auth/constants/strategy.constants';
 import { IS_PUBLIC_KEY } from '@modules/auth/decorators/public.decorator';
-import { JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
 import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
 
 @Injectable()

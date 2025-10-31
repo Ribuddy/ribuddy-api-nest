@@ -174,32 +174,6 @@ exports.Prisma.TeamJoinCodeScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.RidingRecordScalarFieldEnum = {
-  id: 'id',
-  type: 'type',
-  distance: 'distance',
-  duration: 'duration',
-  TeamId: 'TeamId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.RidingMemberScalarFieldEnum = {
-  ridingRecordId: 'ridingRecordId',
-  userId: 'userId',
-  teamId: 'teamId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.RefreshTokenScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  token: 'token',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.S3UploadedFilesScalarFieldEnum = {
   id: 'id',
   domain: 'domain',
@@ -244,10 +218,6 @@ exports.Prisma.TeamJoinCodeOrderByRelevanceFieldEnum = {
   code: 'code'
 };
 
-exports.Prisma.RefreshTokenOrderByRelevanceFieldEnum = {
-  token: 'token'
-};
-
 exports.Prisma.S3UploadedFilesOrderByRelevanceFieldEnum = {
   domain: 'domain',
   kind: 'kind',
@@ -255,10 +225,7 @@ exports.Prisma.S3UploadedFilesOrderByRelevanceFieldEnum = {
   url: 'url',
   mimeType: 'mimeType'
 };
-exports.RidingType = exports.$Enums.RidingType = {
-  SOLO: 'SOLO',
-  TEAM: 'TEAM'
-};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -267,9 +234,6 @@ exports.Prisma.ModelName = {
   Team: 'Team',
   TeamMember: 'TeamMember',
   TeamJoinCode: 'TeamJoinCode',
-  RidingRecord: 'RidingRecord',
-  RidingMember: 'RidingMember',
-  RefreshToken: 'RefreshToken',
   S3UploadedFiles: 'S3UploadedFiles'
 };
 

@@ -12,16 +12,51 @@ datasource db {
   url      = env("DATABASE_URL_MONGODB")
 }
 
-model TrackPoint {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId         BigInt   @map("user_id")
-  ridingRecordId BigInt   @map("riding_record_id")
-  lat            Float
-  lon            Float
-  ele            Float?
-  timestamp      DateTime @db.Timestamp()
-  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamp()
-  updatedAt      DateTime @default(now()) @map("updated_at") @db.Timestamp()
+type GeoPoint {
+  type        String // Point로 고정
+  coordinates Float[] // [lon, lat, ele?]
+  timestamp   DateTime?
+  name        String? // 위치 이름 (예: "서울역")
+}
 
-  @@map("track_point")
+model RidingRecord {
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
+  route           GeoPoint[] // 사용자한테 위치 받을 때 마다 여기에 집어넣어야 함
+  recordOwnerId   String             @map("record_owner_id")
+  participants    String[] // 참여자 ID 목록
+  teamId          String?            @map("team_id") // 팀 라이딩을 했을 경우 팀 라이딩에 대한 기록을 담음
+  // 출발지, 경유지, 도착지 "이름" 만을 저장하는 배열
+  departToArrival String[]           @map("depart_to_arrival")
+  status          RidingRecordStatus @default(ONGOING)
+
+  // distance, duration 등 부가 정보는 서버에서 계산하도록 함
+
+  // 기본 정보
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  @@map("riding_record")
+}
+
+enum RidingRecordStatus {
+  ONGOING
+  COMPLETED
+}
+
+enum RidingEventType {
+  SUDDEN_ACCELERATION
+  SUDDEN_STOP
+  ACCIDENT
+}
+
+model RidingEvent {
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  type           RidingEventType
+  timestamp      DateTime
+  location       GeoPoint?
+  userId         String          @map("user_id")
+  ridingRecordId String?         @map("riding_record_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
 }

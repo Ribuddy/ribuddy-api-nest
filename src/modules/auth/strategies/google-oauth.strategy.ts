@@ -5,7 +5,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 
 import { GoogleOAuthConfig } from '@modules/auth/config/google-oauth-config';
-import { GOOGLE_OAUTH_STRATEGY } from '@modules/auth/strategies/strategy.constants';
+import { GOOGLE_OAUTH_STRATEGY } from '@modules/auth/constants/strategy.constants';
 import { GoogleOAuthUserData, OAuthProvider } from '@modules/users/types/oauth.users.types';
 
 @Injectable()

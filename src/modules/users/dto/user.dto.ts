@@ -149,3 +149,13 @@ export class FriendDto {
 }
 
 export class EditFriendStatusDto extends PickType(FriendDto, ['toUserId', 'isFavorite'] as const) {}
+
+export class GetUserInfoResponseDto {
+  id!: string;
+  name!: string;
+  nickname!: string;
+  introduction!: string | null;
+  createdAt!: Date;
+  teams!: string[];
+  ridingRecords!: number;
+}

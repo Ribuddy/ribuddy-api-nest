@@ -11,10 +11,6 @@ import { UsersService } from '@modules/users/services/users.service';
 export class TokenAuthService {
   constructor(
     private readonly jwtService: JwtService,
-    @Inject(RefreshJwtConfig.KEY)
-    private refreshJwtConfig: ConfigType<typeof RefreshJwtConfig>,
-    @Inject(RegisterJwtConfig.KEY)
-    private registerJwtConfig: ConfigType<typeof RegisterJwtConfig>,
     private readonly configService: ConfigService,
     private readonly userService: UsersService,
   ) {}
@@ -34,10 +30,6 @@ export class TokenAuthService {
       accessToken,
       refreshToken,
     };
-  }
-
-  async generateRegisterToken(payload: RegisterJwtPayload) {
-    return await this.jwtService.signAsync(payload, this.registerJwtConfig);
   }
 
   /**

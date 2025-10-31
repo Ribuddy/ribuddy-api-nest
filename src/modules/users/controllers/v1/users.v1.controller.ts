@@ -1,8 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { CommonErrorCode } from '@common/codes/error/common.error.code';
+import { UserErrorCode } from '@common/codes/error/user.error.code';
 import { API_TAGS } from '@common/constants/api-tags.constants';
 
 import { RequestContextService } from '@modules/als/services/request-context.service';
@@ -31,7 +41,10 @@ export class UsersV1Controller {
     private readonly requestContextService: RequestContextService,
   ) {}
 
-  @ApiOperation({ summary: '내 정보 조회' })
+  @ApiOperation({
+    summary: '내 정보 조회',
+    description: '현재 로그인 된 사용자의 정보를 반환합니다. 친구 목록은 API가 분리되어 있습니다.',
+  })
   @ApiOkResponse({
     description: 'AccessToken을 기반으로, 로그인된 사용자의 정보룰 조회합니다.',
     type: UserProfileResponseDto,
@@ -43,18 +56,30 @@ export class UsersV1Controller {
     return this.usersService.getUserInfo(userId);
   }
 
-  @ApiOperation({ summary: '다른 사용자 정보 조회' })
+  @ApiOperation({
+    summary: '다른 사용자 정보 조회',
+    description: '현재 로그인한 사용자가 아닌, 다른 사용자에 대한 정보를 조회하는 API 입니다.',
+  })
   @ApiOkResponse({
     description: '내 정보 조회 성공',
     type: UserProfileResponseDto,
   })
   @Get('profile/:id')
-  getUserInfo(@Param() param: UserIdRequestDto) {
-    return this.usersService.getUserInfo(param.id);
+  async getUserInfo(@Param() param: UserIdRequestDto) {
+    const userId = this.requestContextService.getOrThrowUserId();
+
+    if (userId === BigInt(param.id)) {
+      throw new CustomException(UserErrorCode.BAD_PROFILE_REQUEST);
+    }
+
+    const opponentUserInfo = await this.usersService.getUserInfo(param.id);
+    const opponentRidingCount = await this.usersService.getRidingCountWithFriend(userId, param.id);
+
+    return { ...opponentUserInfo, ridingCountWithMe: opponentRidingCount };
   }
 
   @ApiOperation({
-    summary: '사용자를 삭제합니다. (탈퇴)',
+    summary: '사용자 탈퇴',
     description: 'Soft Delete가 아닌, Hard Delete로 복구가 불가능하니 사용에 유의하세요.',
   })
   @Delete()
@@ -69,8 +94,8 @@ export class UsersV1Controller {
   }
 
   @ApiOperation({
-    summary: '사용자 정보를 수정합니다. 수정 가능한 필드는 Schema를 참고하세요.',
-    description: 'AccessToken으로 사용자를 식별합니다.',
+    summary: '사용자 정보 수정',
+    description: '로그인된 사용자의 정보를 수정합니다. 수정 가능한 필드는 Schema를 참고하세요.',
   })
   @Post('edit')
   async editUser(@Body() data: EditUserProfileRequestDto) {
@@ -81,7 +106,7 @@ export class UsersV1Controller {
 
   @Post('friend')
   @ApiOperation({
-    summary: '친구 추가',
+    summary: '라이버디 ID로 친구 추가',
     description: '라이버디 ID를 받아, 친구를 추가합니다.',
   })
   async addFriendByRibuddyId(@Body() data: AddFriendByRibuddyIdRequestDto) {
@@ -95,8 +120,10 @@ export class UsersV1Controller {
   }
 
   @ApiOperation({
-    summary: '친구 삭제',
-    description: '상대방의 userId를 이용해 친구를 삭제합니다. (라이버디 ID가 아님에 주의)',
+    summary: 'userId로 친구 삭제',
+    description:
+      '상대방의 userId를 이용해 친구를 삭제합니다. **라이버디 ID가 아님**에 주의하세요.\n' +
+      '친구 목록을 제공할 때는 userId를 제공하므로, 해당 건에서 조회된 userId를 사용해주세요.',
   })
   @Delete('friend')
   async deleteFriendById(@Body() data: DeleteFriendByUserIdRequestDto) {
@@ -109,8 +136,10 @@ export class UsersV1Controller {
 
   @Patch('friend')
   @ApiOperation({
-    summary: '친구 즐겨찾기 설정/해제',
-    description: '',
+    summary: '상대방 userId로 친구 즐겨찾기 설정/해제',
+    description:
+      '수신된 값으로 무조건 변경 처리합니다. 이전 상태와 무관합니다.\n' +
+      '다만, 원래 없는 값은 수정할 수 없으니까 당연히 오류 !',
   })
   async editFriendProperty(@Body() data: EditFriendStatusDto) {
     const fromUserId = this.requestContextService.getOrThrowUserId();
@@ -121,8 +150,9 @@ export class UsersV1Controller {
   }
 
   @ApiOperation({
-    summary: '친구 목록 조회',
-    description: '내가 추가한 친구들의 목록을 조회합니다.',
+    summary: '내 친구 목록 조회 (친구 수 조회)',
+    description:
+      '로그인 한 사용자의 친구 목록을 반환합니다. 친구 목록에 포함되어 있는 정보는 Schema를 참고하세요.',
   })
   @Get('friend/list')
   async getFriendList() {

@@ -1,0 +1,73 @@
+### 팀 T1 생성 (A가 요청)
+POST {{BASE_URL}}/v1/users/team
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "name": "T1",
+  "isCrew": false
+}
+
+### 3. B가 팀 T1 참여
+
+POST {{BASE_URL}}/v1/users/team/join
+Authorization: Bearer {{B_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "id": "{{T1_ID}}"
+}
+
+### B 사용자가 가입되어 있는 팀 목록 조회
+GET {{BASE_URL}}/v1/users/team/list
+Authorization: Bearer {{B_ACCESS_TOKEN}}
+Content-Type: application/json
+
+### T1 팀 정보 조회
+GET {{BASE_URL}}/v1/users/team/info/{{T1_ID}}
+Authorization: Bearer {{B_ACCESS_TOKEN}}
+Content-Type: application/json
+
+### 4. 라이딩 시작 (A, B 각각), 테스트 API로
+POST {{BASE_URL}}/v1/driving/team/test/start/{{T1_ID}}
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+
+### 4. 라이딩 시작 (A, B 각각), 테스트 API로
+POST {{BASE_URL}}/v1/driving/team/test/start/{{T1_ID}}
+Authorization: Bearer {{B_ACCESS_TOKEN}}
+
+### 각자 위치 보고 TEST API - A 위치 보고
+POST {{BASE_URL}}/v1/driving/team/test/location/{{A_RIDING_RECORD_ID}}
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+
+### 각자 위치 보고 TEST API - B 위치 보고
+POST {{BASE_URL}}/v1/driving/team/test/location/{{B_RIDING_RECORD_ID}}
+Authorization: Bearer {{B_ACCESS_TOKEN}}
+
+### A의 라이딩 종료
+POST {{BASE_URL}}/v1/driving/team/end/{{A_RIDING_RECORD_ID}}
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "lat": 37.654321,
+  "lon": 127.654321
+}
+
+### B_RIDING_RECORD 종결 처리
+POST {{BASE_URL}}/v1/driving/team/end/{{B_RIDING_RECORD_ID}}
+Authorization: Bearer {{B_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "lat": 37.654321,
+  "lon": 127.654321
+}
+
+
+### 사용자 위치 조회
+POST {{BASE_URL}}/v1/driving/team/test/single-user/3
+
+### A Riding Record 정보 조회
+GET {{BASE_URL}}/v1/driving/team/test/riding-record/{{A_RIDING_RECORD_ID}}
+

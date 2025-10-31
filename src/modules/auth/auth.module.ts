@@ -8,12 +8,10 @@ import { OAuthV2Controller } from '@modules/auth/controllers/v2/oauth.v2.control
 import { AuthTestController } from '@modules/auth/controllers/version-neutral/test.auth.controller';
 import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';
 import { GoogleOAuthService } from '@modules/auth/services/google-oauth.auth.service';
-import { KakaoAuthService } from '@modules/auth/services/kakao-oauth.auth.service';
 import { OAuthAuthService } from '@modules/auth/services/oauth.auth.service';
 import { TokenAuthService } from '@modules/auth/services/token.auth.service';
 import { GoogleOAuthStrategy } from '@modules/auth/strategies/google-oauth.strategy';
 import { JwtStrategy } from '@modules/auth/strategies/jwt.strategy';
-import { RegisterJwtStrategy } from '@modules/auth/strategies/register.jwt.strategy';
 import { UsersModule } from '@modules/users/users.module';
 
 @Module({
@@ -22,13 +20,11 @@ import { UsersModule } from '@modules/users/users.module';
   providers: [
     // Services
     TokenAuthService,
-    KakaoAuthService,
     OAuthAuthService,
     GoogleOAuthService,
     // Strategies
     JwtStrategy,
     GoogleOAuthStrategy,
-    RegisterJwtStrategy,
     // Guards
     JwtAuthGuard,
   ],
