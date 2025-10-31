@@ -43,7 +43,7 @@ export class UsersV1Controller {
 
   @ApiOperation({
     summary: '내 정보 조회',
-    description: '현재 로그인 된 사용자의 정보를 반환합니다.',
+    description: '현재 로그인 된 사용자의 정보를 반환합니다. 친구 목록은 API가 분리되어 있습니다.',
   })
   @ApiOkResponse({
     description: 'AccessToken을 기반으로, 로그인된 사용자의 정보룰 조회합니다.',
@@ -94,8 +94,8 @@ export class UsersV1Controller {
   }
 
   @ApiOperation({
-    summary: '사용자 정보를 수정합니다. 수정 가능한 필드는 Schema를 참고하세요.',
-    description: 'AccessToken으로 사용자를 식별합니다.',
+    summary: '사용자 정보 수정',
+    description: '로그인된 사용자의 정보를 수정합니다. 수정 가능한 필드는 Schema를 참고하세요.',
   })
   @Post('edit')
   async editUser(@Body() data: EditUserProfileRequestDto) {
@@ -120,8 +120,10 @@ export class UsersV1Controller {
   }
 
   @ApiOperation({
-    summary: '상대방 userId로 친구 삭제',
-    description: '상대방의 userId를 이용해 친구를 삭제합니다. (라이버디 ID가 아님에 주의)',
+    summary: 'userId로 친구 삭제',
+    description:
+      '상대방의 userId를 이용해 친구를 삭제합니다. **라이버디 ID가 아님**에 주의하세요.\n' +
+      '친구 목록을 제공할 때는 userId를 제공하므로, 해당 건에서 조회된 userId를 사용해주세요.',
   })
   @Delete('friend')
   async deleteFriendById(@Body() data: DeleteFriendByUserIdRequestDto) {
@@ -135,7 +137,9 @@ export class UsersV1Controller {
   @Patch('friend')
   @ApiOperation({
     summary: '상대방 userId로 친구 즐겨찾기 설정/해제',
-    description: '',
+    description:
+      '수신된 값으로 무조건 변경 처리합니다. 이전 상태와 무관합니다.\n' +
+      '다만, 원래 없는 값은 수정할 수 없으니까 당연히 오류 !',
   })
   async editFriendProperty(@Body() data: EditFriendStatusDto) {
     const fromUserId = this.requestContextService.getOrThrowUserId();

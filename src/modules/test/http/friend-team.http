@@ -1,0 +1,67 @@
+### 1. 시작 전 A의 friend list 조회
+GET {{BASE_URL}}/v1/users/friend/list
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+
+### 2. B를 친구로 등록함 (A가 요청)
+POST {{BASE_URL}}/v1/users/friend
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "ribuddyId": "{{B_RIBUDDY_ID}}"
+}
+
+### 3. B를 친구로 추가로 등록함 (conflict 예상)
+POST {{BASE_URL}}/v1/users/friend
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "ribuddyId": "{{B_RIBUDDY_ID}}"
+}
+
+### 4. B를 favorite 목록에 추가함 (즐겨찾기 설정)
+PATCH {{BASE_URL}}/v1/users/friend
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "toUserId": "{{B_ID}}",
+  "isFavorite": true
+}
+
+### 6. B를 favorite 목록에서 제거함 (즐겨찾기 해제)
+PATCH {{BASE_URL}}/v1/users/friend
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "toUserId": "{{B_ID}}",
+  "isFavorite": false
+}
+
+### 8. B의 프로필을 조회함 - 이름, 라이버디 ID, 같이 달린 횟수 표시 확인
+GET {{BASE_URL}}/v1/users/profile/{{B_ID}}
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+
+// 응답에 아래 필드들이 포함되어야 합니다:
+// - name
+// - ribuddyId
+// - ridingCountWithMe (같이 달린 횟수)
+
+### 9. B 친구 삭제 전 A friend list 조회
+GET {{BASE_URL}}/v1/users/friend/list
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+
+### 10. B를 친구 목록에서 제거함 (A가 요청)
+DELETE {{BASE_URL}}/v1/users/friend
+Authorization: Bearer {{A_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "friendUserId": "{{B_ID}}"
+}
+
+### 11. B 친구 삭제 후 A friend list 조회
+GET {{BASE_URL}}/v1/users/friend/list
+Authorization: Bearer {{A_ACCESS_TOKEN}}

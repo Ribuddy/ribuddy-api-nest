@@ -124,8 +124,8 @@ export class DrivingTeamV1Controller {
 
   @ApiTags(API_TAGS.TEST)
   @ApiOperation({
-    summary: '[테스트용] 라이딩 기록 조회',
-    description: 'Body를 받지 않습니다, 라이딩 기록을 임의로 생성합니다..',
+    summary: '[테스트용] RidingRecord 조회',
+    description: 'Params로 제공된 ridingRecordId에 해당하는 라이딩 기록을 반환합니다.',
   })
   @Public()
   @Get('test/riding-record/:ridingRecordId')
