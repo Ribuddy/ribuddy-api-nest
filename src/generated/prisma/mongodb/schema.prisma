@@ -42,3 +42,21 @@ enum RidingRecordStatus {
   ONGOING
   COMPLETED
 }
+
+enum RidingEventType {
+  SUDDEN_ACCELERATION
+  SUDDEN_STOP
+  ACCIDENT
+}
+
+model RidingEvent {
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  type           RidingEventType
+  timestamp      DateTime
+  location       GeoPoint?
+  userId         String          @map("user_id")
+  ridingRecordId String?         @map("riding_record_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+}

@@ -23,6 +23,11 @@ export type GeoPoint = $Result.DefaultSelection<Prisma.$GeoPointPayload>
  * 
  */
 export type RidingRecord = $Result.DefaultSelection<Prisma.$RidingRecordPayload>
+/**
+ * Model RidingEvent
+ * 
+ */
+export type RidingEvent = $Result.DefaultSelection<Prisma.$RidingEventPayload>
 
 /**
  * Enums
@@ -35,11 +40,24 @@ export namespace $Enums {
 
 export type RidingRecordStatus = (typeof RidingRecordStatus)[keyof typeof RidingRecordStatus]
 
+
+export const RidingEventType: {
+  SUDDEN_ACCELERATION: 'SUDDEN_ACCELERATION',
+  SUDDEN_STOP: 'SUDDEN_STOP',
+  ACCIDENT: 'ACCIDENT'
+};
+
+export type RidingEventType = (typeof RidingEventType)[keyof typeof RidingEventType]
+
 }
 
 export type RidingRecordStatus = $Enums.RidingRecordStatus
 
 export const RidingRecordStatus: typeof $Enums.RidingRecordStatus
+
+export type RidingEventType = $Enums.RidingEventType
+
+export const RidingEventType: typeof $Enums.RidingEventType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -142,6 +160,16 @@ export class PrismaClient<
     * ```
     */
   get ridingRecord(): Prisma.RidingRecordDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.ridingEvent`: Exposes CRUD operations for the **RidingEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RidingEvents
+    * const ridingEvents = await prisma.ridingEvent.findMany()
+    * ```
+    */
+  get ridingEvent(): Prisma.RidingEventDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -582,7 +610,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    RidingRecord: 'RidingRecord'
+    RidingRecord: 'RidingRecord',
+    RidingEvent: 'RidingEvent'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -601,7 +630,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "ridingRecord"
+      modelProps: "ridingRecord" | "ridingEvent"
       txIsolationLevel: never
     }
     model: {
@@ -676,6 +705,80 @@ export namespace Prisma {
           count: {
             args: Prisma.RidingRecordCountArgs<ExtArgs>
             result: $Utils.Optional<RidingRecordCountAggregateOutputType> | number
+          }
+        }
+      }
+      RidingEvent: {
+        payload: Prisma.$RidingEventPayload<ExtArgs>
+        fields: Prisma.RidingEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RidingEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RidingEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingEventPayload>
+          }
+          findFirst: {
+            args: Prisma.RidingEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RidingEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingEventPayload>
+          }
+          findMany: {
+            args: Prisma.RidingEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingEventPayload>[]
+          }
+          create: {
+            args: Prisma.RidingEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingEventPayload>
+          }
+          createMany: {
+            args: Prisma.RidingEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.RidingEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingEventPayload>
+          }
+          update: {
+            args: Prisma.RidingEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.RidingEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RidingEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.RidingEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RidingEventPayload>
+          }
+          aggregate: {
+            args: Prisma.RidingEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRidingEvent>
+          }
+          groupBy: {
+            args: Prisma.RidingEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RidingEventGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.RidingEventFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.RidingEventAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.RidingEventCountArgs<ExtArgs>
+            result: $Utils.Optional<RidingEventCountAggregateOutputType> | number
           }
         }
       }
@@ -759,6 +862,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     ridingRecord?: RidingRecordOmit
+    ridingEvent?: RidingEventOmit
   }
 
   /* Types for Logging */
@@ -1931,6 +2035,1004 @@ export namespace Prisma {
 
 
   /**
+   * Model RidingEvent
+   */
+
+  export type AggregateRidingEvent = {
+    _count: RidingEventCountAggregateOutputType | null
+    _min: RidingEventMinAggregateOutputType | null
+    _max: RidingEventMaxAggregateOutputType | null
+  }
+
+  export type RidingEventMinAggregateOutputType = {
+    id: string | null
+    type: $Enums.RidingEventType | null
+    timestamp: Date | null
+    userId: string | null
+    ridingRecordId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RidingEventMaxAggregateOutputType = {
+    id: string | null
+    type: $Enums.RidingEventType | null
+    timestamp: Date | null
+    userId: string | null
+    ridingRecordId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RidingEventCountAggregateOutputType = {
+    id: number
+    type: number
+    timestamp: number
+    userId: number
+    ridingRecordId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RidingEventMinAggregateInputType = {
+    id?: true
+    type?: true
+    timestamp?: true
+    userId?: true
+    ridingRecordId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RidingEventMaxAggregateInputType = {
+    id?: true
+    type?: true
+    timestamp?: true
+    userId?: true
+    ridingRecordId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RidingEventCountAggregateInputType = {
+    id?: true
+    type?: true
+    timestamp?: true
+    userId?: true
+    ridingRecordId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RidingEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RidingEvent to aggregate.
+     */
+    where?: RidingEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RidingEvents to fetch.
+     */
+    orderBy?: RidingEventOrderByWithRelationInput | RidingEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RidingEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RidingEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RidingEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RidingEvents
+    **/
+    _count?: true | RidingEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RidingEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RidingEventMaxAggregateInputType
+  }
+
+  export type GetRidingEventAggregateType<T extends RidingEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateRidingEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRidingEvent[P]>
+      : GetScalarType<T[P], AggregateRidingEvent[P]>
+  }
+
+
+
+
+  export type RidingEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RidingEventWhereInput
+    orderBy?: RidingEventOrderByWithAggregationInput | RidingEventOrderByWithAggregationInput[]
+    by: RidingEventScalarFieldEnum[] | RidingEventScalarFieldEnum
+    having?: RidingEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RidingEventCountAggregateInputType | true
+    _min?: RidingEventMinAggregateInputType
+    _max?: RidingEventMaxAggregateInputType
+  }
+
+  export type RidingEventGroupByOutputType = {
+    id: string
+    type: $Enums.RidingEventType
+    timestamp: Date
+    userId: string
+    ridingRecordId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: RidingEventCountAggregateOutputType | null
+    _min: RidingEventMinAggregateOutputType | null
+    _max: RidingEventMaxAggregateOutputType | null
+  }
+
+  type GetRidingEventGroupByPayload<T extends RidingEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RidingEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RidingEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RidingEventGroupByOutputType[P]>
+            : GetScalarType<T[P], RidingEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RidingEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    timestamp?: boolean
+    location?: boolean | GeoPointDefaultArgs<ExtArgs>
+    userId?: boolean
+    ridingRecordId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["ridingEvent"]>
+
+
+
+  export type RidingEventSelectScalar = {
+    id?: boolean
+    type?: boolean
+    timestamp?: boolean
+    userId?: boolean
+    ridingRecordId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RidingEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "timestamp" | "location" | "userId" | "ridingRecordId" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingEvent"]>
+  export type RidingEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $RidingEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RidingEvent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      type: $Enums.RidingEventType
+      timestamp: Date
+      userId: string
+      ridingRecordId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["ridingEvent"]>
+    composites: {
+      location: Prisma.$GeoPointPayload | null
+    }
+  }
+
+  type RidingEventGetPayload<S extends boolean | null | undefined | RidingEventDefaultArgs> = $Result.GetResult<Prisma.$RidingEventPayload, S>
+
+  type RidingEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RidingEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RidingEventCountAggregateInputType | true
+    }
+
+  export interface RidingEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RidingEvent'], meta: { name: 'RidingEvent' } }
+    /**
+     * Find zero or one RidingEvent that matches the filter.
+     * @param {RidingEventFindUniqueArgs} args - Arguments to find a RidingEvent
+     * @example
+     * // Get one RidingEvent
+     * const ridingEvent = await prisma.ridingEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RidingEventFindUniqueArgs>(args: SelectSubset<T, RidingEventFindUniqueArgs<ExtArgs>>): Prisma__RidingEventClient<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RidingEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RidingEventFindUniqueOrThrowArgs} args - Arguments to find a RidingEvent
+     * @example
+     * // Get one RidingEvent
+     * const ridingEvent = await prisma.ridingEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RidingEventFindUniqueOrThrowArgs>(args: SelectSubset<T, RidingEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RidingEventClient<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RidingEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RidingEventFindFirstArgs} args - Arguments to find a RidingEvent
+     * @example
+     * // Get one RidingEvent
+     * const ridingEvent = await prisma.ridingEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RidingEventFindFirstArgs>(args?: SelectSubset<T, RidingEventFindFirstArgs<ExtArgs>>): Prisma__RidingEventClient<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RidingEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RidingEventFindFirstOrThrowArgs} args - Arguments to find a RidingEvent
+     * @example
+     * // Get one RidingEvent
+     * const ridingEvent = await prisma.ridingEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RidingEventFindFirstOrThrowArgs>(args?: SelectSubset<T, RidingEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__RidingEventClient<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RidingEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RidingEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RidingEvents
+     * const ridingEvents = await prisma.ridingEvent.findMany()
+     * 
+     * // Get first 10 RidingEvents
+     * const ridingEvents = await prisma.ridingEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ridingEventWithIdOnly = await prisma.ridingEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RidingEventFindManyArgs>(args?: SelectSubset<T, RidingEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RidingEvent.
+     * @param {RidingEventCreateArgs} args - Arguments to create a RidingEvent.
+     * @example
+     * // Create one RidingEvent
+     * const RidingEvent = await prisma.ridingEvent.create({
+     *   data: {
+     *     // ... data to create a RidingEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends RidingEventCreateArgs>(args: SelectSubset<T, RidingEventCreateArgs<ExtArgs>>): Prisma__RidingEventClient<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RidingEvents.
+     * @param {RidingEventCreateManyArgs} args - Arguments to create many RidingEvents.
+     * @example
+     * // Create many RidingEvents
+     * const ridingEvent = await prisma.ridingEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RidingEventCreateManyArgs>(args?: SelectSubset<T, RidingEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a RidingEvent.
+     * @param {RidingEventDeleteArgs} args - Arguments to delete one RidingEvent.
+     * @example
+     * // Delete one RidingEvent
+     * const RidingEvent = await prisma.ridingEvent.delete({
+     *   where: {
+     *     // ... filter to delete one RidingEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RidingEventDeleteArgs>(args: SelectSubset<T, RidingEventDeleteArgs<ExtArgs>>): Prisma__RidingEventClient<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RidingEvent.
+     * @param {RidingEventUpdateArgs} args - Arguments to update one RidingEvent.
+     * @example
+     * // Update one RidingEvent
+     * const ridingEvent = await prisma.ridingEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RidingEventUpdateArgs>(args: SelectSubset<T, RidingEventUpdateArgs<ExtArgs>>): Prisma__RidingEventClient<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RidingEvents.
+     * @param {RidingEventDeleteManyArgs} args - Arguments to filter RidingEvents to delete.
+     * @example
+     * // Delete a few RidingEvents
+     * const { count } = await prisma.ridingEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RidingEventDeleteManyArgs>(args?: SelectSubset<T, RidingEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RidingEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RidingEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RidingEvents
+     * const ridingEvent = await prisma.ridingEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RidingEventUpdateManyArgs>(args: SelectSubset<T, RidingEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one RidingEvent.
+     * @param {RidingEventUpsertArgs} args - Arguments to update or create a RidingEvent.
+     * @example
+     * // Update or create a RidingEvent
+     * const ridingEvent = await prisma.ridingEvent.upsert({
+     *   create: {
+     *     // ... data to create a RidingEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RidingEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RidingEventUpsertArgs>(args: SelectSubset<T, RidingEventUpsertArgs<ExtArgs>>): Prisma__RidingEventClient<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RidingEvents that matches the filter.
+     * @param {RidingEventFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const ridingEvent = await prisma.ridingEvent.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: RidingEventFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a RidingEvent.
+     * @param {RidingEventAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const ridingEvent = await prisma.ridingEvent.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: RidingEventAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of RidingEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RidingEventCountArgs} args - Arguments to filter RidingEvents to count.
+     * @example
+     * // Count the number of RidingEvents
+     * const count = await prisma.ridingEvent.count({
+     *   where: {
+     *     // ... the filter for the RidingEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends RidingEventCountArgs>(
+      args?: Subset<T, RidingEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RidingEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RidingEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RidingEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RidingEventAggregateArgs>(args: Subset<T, RidingEventAggregateArgs>): Prisma.PrismaPromise<GetRidingEventAggregateType<T>>
+
+    /**
+     * Group by RidingEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RidingEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RidingEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RidingEventGroupByArgs['orderBy'] }
+        : { orderBy?: RidingEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RidingEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRidingEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RidingEvent model
+   */
+  readonly fields: RidingEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RidingEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RidingEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RidingEvent model
+   */
+  interface RidingEventFieldRefs {
+    readonly id: FieldRef<"RidingEvent", 'String'>
+    readonly type: FieldRef<"RidingEvent", 'RidingEventType'>
+    readonly timestamp: FieldRef<"RidingEvent", 'DateTime'>
+    readonly userId: FieldRef<"RidingEvent", 'String'>
+    readonly ridingRecordId: FieldRef<"RidingEvent", 'String'>
+    readonly createdAt: FieldRef<"RidingEvent", 'DateTime'>
+    readonly updatedAt: FieldRef<"RidingEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RidingEvent findUnique
+   */
+  export type RidingEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    /**
+     * Filter, which RidingEvent to fetch.
+     */
+    where: RidingEventWhereUniqueInput
+  }
+
+  /**
+   * RidingEvent findUniqueOrThrow
+   */
+  export type RidingEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    /**
+     * Filter, which RidingEvent to fetch.
+     */
+    where: RidingEventWhereUniqueInput
+  }
+
+  /**
+   * RidingEvent findFirst
+   */
+  export type RidingEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    /**
+     * Filter, which RidingEvent to fetch.
+     */
+    where?: RidingEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RidingEvents to fetch.
+     */
+    orderBy?: RidingEventOrderByWithRelationInput | RidingEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RidingEvents.
+     */
+    cursor?: RidingEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RidingEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RidingEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RidingEvents.
+     */
+    distinct?: RidingEventScalarFieldEnum | RidingEventScalarFieldEnum[]
+  }
+
+  /**
+   * RidingEvent findFirstOrThrow
+   */
+  export type RidingEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    /**
+     * Filter, which RidingEvent to fetch.
+     */
+    where?: RidingEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RidingEvents to fetch.
+     */
+    orderBy?: RidingEventOrderByWithRelationInput | RidingEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RidingEvents.
+     */
+    cursor?: RidingEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RidingEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RidingEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RidingEvents.
+     */
+    distinct?: RidingEventScalarFieldEnum | RidingEventScalarFieldEnum[]
+  }
+
+  /**
+   * RidingEvent findMany
+   */
+  export type RidingEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    /**
+     * Filter, which RidingEvents to fetch.
+     */
+    where?: RidingEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RidingEvents to fetch.
+     */
+    orderBy?: RidingEventOrderByWithRelationInput | RidingEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RidingEvents.
+     */
+    cursor?: RidingEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RidingEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RidingEvents.
+     */
+    skip?: number
+    distinct?: RidingEventScalarFieldEnum | RidingEventScalarFieldEnum[]
+  }
+
+  /**
+   * RidingEvent create
+   */
+  export type RidingEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RidingEvent.
+     */
+    data: XOR<RidingEventCreateInput, RidingEventUncheckedCreateInput>
+  }
+
+  /**
+   * RidingEvent createMany
+   */
+  export type RidingEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RidingEvents.
+     */
+    data: RidingEventCreateManyInput | RidingEventCreateManyInput[]
+  }
+
+  /**
+   * RidingEvent update
+   */
+  export type RidingEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a RidingEvent.
+     */
+    data: XOR<RidingEventUpdateInput, RidingEventUncheckedUpdateInput>
+    /**
+     * Choose, which RidingEvent to update.
+     */
+    where: RidingEventWhereUniqueInput
+  }
+
+  /**
+   * RidingEvent updateMany
+   */
+  export type RidingEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RidingEvents.
+     */
+    data: XOR<RidingEventUpdateManyMutationInput, RidingEventUncheckedUpdateManyInput>
+    /**
+     * Filter which RidingEvents to update
+     */
+    where?: RidingEventWhereInput
+    /**
+     * Limit how many RidingEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RidingEvent upsert
+   */
+  export type RidingEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RidingEvent to update in case it exists.
+     */
+    where: RidingEventWhereUniqueInput
+    /**
+     * In case the RidingEvent found by the `where` argument doesn't exist, create a new RidingEvent with this data.
+     */
+    create: XOR<RidingEventCreateInput, RidingEventUncheckedCreateInput>
+    /**
+     * In case the RidingEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RidingEventUpdateInput, RidingEventUncheckedUpdateInput>
+  }
+
+  /**
+   * RidingEvent delete
+   */
+  export type RidingEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    /**
+     * Filter which RidingEvent to delete.
+     */
+    where: RidingEventWhereUniqueInput
+  }
+
+  /**
+   * RidingEvent deleteMany
+   */
+  export type RidingEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RidingEvents to delete
+     */
+    where?: RidingEventWhereInput
+    /**
+     * Limit how many RidingEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RidingEvent findRaw
+   */
+  export type RidingEventFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * RidingEvent aggregateRaw
+   */
+  export type RidingEventAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * RidingEvent without action
+   */
+  export type RidingEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -1946,6 +3048,19 @@ export namespace Prisma {
   };
 
   export type RidingRecordScalarFieldEnum = (typeof RidingRecordScalarFieldEnum)[keyof typeof RidingRecordScalarFieldEnum]
+
+
+  export const RidingEventScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    timestamp: 'timestamp',
+    userId: 'userId',
+    ridingRecordId: 'ridingRecordId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RidingEventScalarFieldEnum = (typeof RidingEventScalarFieldEnum)[keyof typeof RidingEventScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -2008,6 +3123,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'RidingEventType'
+   */
+  export type EnumRidingEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RidingEventType'>
+    
+
+
+  /**
+   * Reference to a field of type 'RidingEventType[]'
+   */
+  export type ListEnumRidingEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RidingEventType[]'>
     
 
 
@@ -2112,6 +3241,71 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"RidingRecord"> | Date | string
   }
 
+  export type RidingEventWhereInput = {
+    AND?: RidingEventWhereInput | RidingEventWhereInput[]
+    OR?: RidingEventWhereInput[]
+    NOT?: RidingEventWhereInput | RidingEventWhereInput[]
+    id?: StringFilter<"RidingEvent"> | string
+    type?: EnumRidingEventTypeFilter<"RidingEvent"> | $Enums.RidingEventType
+    timestamp?: DateTimeFilter<"RidingEvent"> | Date | string
+    location?: XOR<GeoPointNullableCompositeFilter, GeoPointObjectEqualityInput> | null
+    userId?: StringFilter<"RidingEvent"> | string
+    ridingRecordId?: StringNullableFilter<"RidingEvent"> | string | null
+    createdAt?: DateTimeFilter<"RidingEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"RidingEvent"> | Date | string
+  }
+
+  export type RidingEventOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    timestamp?: SortOrder
+    location?: GeoPointOrderByInput
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RidingEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: RidingEventWhereInput | RidingEventWhereInput[]
+    OR?: RidingEventWhereInput[]
+    NOT?: RidingEventWhereInput | RidingEventWhereInput[]
+    type?: EnumRidingEventTypeFilter<"RidingEvent"> | $Enums.RidingEventType
+    timestamp?: DateTimeFilter<"RidingEvent"> | Date | string
+    location?: XOR<GeoPointNullableCompositeFilter, GeoPointObjectEqualityInput> | null
+    userId?: StringFilter<"RidingEvent"> | string
+    ridingRecordId?: StringNullableFilter<"RidingEvent"> | string | null
+    createdAt?: DateTimeFilter<"RidingEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"RidingEvent"> | Date | string
+  }, "id">
+
+  export type RidingEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    timestamp?: SortOrder
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RidingEventCountOrderByAggregateInput
+    _max?: RidingEventMaxOrderByAggregateInput
+    _min?: RidingEventMinOrderByAggregateInput
+  }
+
+  export type RidingEventScalarWhereWithAggregatesInput = {
+    AND?: RidingEventScalarWhereWithAggregatesInput | RidingEventScalarWhereWithAggregatesInput[]
+    OR?: RidingEventScalarWhereWithAggregatesInput[]
+    NOT?: RidingEventScalarWhereWithAggregatesInput | RidingEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"RidingEvent"> | string
+    type?: EnumRidingEventTypeWithAggregatesFilter<"RidingEvent"> | $Enums.RidingEventType
+    timestamp?: DateTimeWithAggregatesFilter<"RidingEvent"> | Date | string
+    userId?: StringWithAggregatesFilter<"RidingEvent"> | string
+    ridingRecordId?: StringNullableWithAggregatesFilter<"RidingEvent"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"RidingEvent"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"RidingEvent"> | Date | string
+  }
+
   export type RidingRecordCreateInput = {
     id?: string
     route?: XOR<GeoPointListCreateEnvelopeInput, GeoPointCreateInput> | GeoPointCreateInput[]
@@ -2188,6 +3382,79 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RidingEventCreateInput = {
+    id?: string
+    type: $Enums.RidingEventType
+    timestamp: Date | string
+    location?: XOR<GeoPointNullableCreateEnvelopeInput, GeoPointCreateInput> | null
+    userId: string
+    ridingRecordId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RidingEventUncheckedCreateInput = {
+    id?: string
+    type: $Enums.RidingEventType
+    timestamp: Date | string
+    location?: XOR<GeoPointNullableCreateEnvelopeInput, GeoPointCreateInput> | null
+    userId: string
+    ridingRecordId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RidingEventUpdateInput = {
+    type?: EnumRidingEventTypeFieldUpdateOperationsInput | $Enums.RidingEventType
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: XOR<GeoPointNullableUpdateEnvelopeInput, GeoPointCreateInput> | null
+    userId?: StringFieldUpdateOperationsInput | string
+    ridingRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RidingEventUncheckedUpdateInput = {
+    type?: EnumRidingEventTypeFieldUpdateOperationsInput | $Enums.RidingEventType
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: XOR<GeoPointNullableUpdateEnvelopeInput, GeoPointCreateInput> | null
+    userId?: StringFieldUpdateOperationsInput | string
+    ridingRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RidingEventCreateManyInput = {
+    id?: string
+    type: $Enums.RidingEventType
+    timestamp: Date | string
+    location?: XOR<GeoPointNullableCreateEnvelopeInput, GeoPointCreateInput> | null
+    userId: string
+    ridingRecordId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RidingEventUpdateManyMutationInput = {
+    type?: EnumRidingEventTypeFieldUpdateOperationsInput | $Enums.RidingEventType
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: XOR<GeoPointNullableUpdateEnvelopeInput, GeoPointCreateInput> | null
+    userId?: StringFieldUpdateOperationsInput | string
+    ridingRecordId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RidingEventUncheckedUpdateManyInput = {
+    type?: EnumRidingEventTypeFieldUpdateOperationsInput | $Enums.RidingEventType
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: XOR<GeoPointNullableUpdateEnvelopeInput, GeoPointCreateInput> | null
+    userId?: StringFieldUpdateOperationsInput | string
+    ridingRecordId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2359,6 +3626,67 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type EnumRidingEventTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.RidingEventType | EnumRidingEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.RidingEventType[] | ListEnumRidingEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RidingEventType[] | ListEnumRidingEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumRidingEventTypeFilter<$PrismaModel> | $Enums.RidingEventType
+  }
+
+  export type GeoPointNullableCompositeFilter = {
+    equals?: GeoPointObjectEqualityInput | null
+    is?: GeoPointWhereInput | null
+    isNot?: GeoPointWhereInput | null
+    isSet?: boolean
+  }
+
+  export type GeoPointOrderByInput = {
+    type?: SortOrder
+    coordinates?: SortOrder
+    timestamp?: SortOrder
+    name?: SortOrder
+  }
+
+  export type RidingEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    timestamp?: SortOrder
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RidingEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    timestamp?: SortOrder
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RidingEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    timestamp?: SortOrder
+    userId?: SortOrder
+    ridingRecordId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumRidingEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RidingEventType | EnumRidingEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.RidingEventType[] | ListEnumRidingEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RidingEventType[] | ListEnumRidingEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumRidingEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.RidingEventType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRidingEventTypeFilter<$PrismaModel>
+    _max?: NestedEnumRidingEventTypeFilter<$PrismaModel>
+  }
+
   export type GeoPointListCreateEnvelopeInput = {
     set?: GeoPointCreateInput | GeoPointCreateInput[]
   }
@@ -2410,6 +3738,20 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type GeoPointNullableCreateEnvelopeInput = {
+    set?: GeoPointCreateInput | null
+  }
+
+  export type EnumRidingEventTypeFieldUpdateOperationsInput = {
+    set?: $Enums.RidingEventType
+  }
+
+  export type GeoPointNullableUpdateEnvelopeInput = {
+    set?: GeoPointCreateInput | null
+    upsert?: GeoPointUpsertInput
+    unset?: boolean
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2551,6 +3893,23 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumRidingEventTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.RidingEventType | EnumRidingEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.RidingEventType[] | ListEnumRidingEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RidingEventType[] | ListEnumRidingEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumRidingEventTypeFilter<$PrismaModel> | $Enums.RidingEventType
+  }
+
+  export type NestedEnumRidingEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RidingEventType | EnumRidingEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.RidingEventType[] | ListEnumRidingEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RidingEventType[] | ListEnumRidingEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumRidingEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.RidingEventType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRidingEventTypeFilter<$PrismaModel>
+    _max?: NestedEnumRidingEventTypeFilter<$PrismaModel>
+  }
+
   export type GeoPointCreatecoordinatesInput = {
     set: number[]
   }
@@ -2562,6 +3921,11 @@ export namespace Prisma {
 
   export type GeoPointDeleteManyInput = {
     where: GeoPointWhereInput
+  }
+
+  export type GeoPointUpsertInput = {
+    set: GeoPointCreateInput | null
+    update: GeoPointUpdateInput
   }
 
   export type FloatNullableListFilter<$PrismaModel = never> = {

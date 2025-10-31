@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { $Enums } from '@generated/prisma/mysql';
@@ -131,6 +131,20 @@ export class DrivingTeamV1Controller {
   @Get('test/riding-record/:ridingRecordId')
   createRidingRecord(@Param('ridingRecordId') ridingRecordId: string) {
     return this.locationService.getRidingRecordInfo(ridingRecordId);
+  }
+
+  // ridingRecord 상위 5개를 반환하는 API
+  @ApiTags(API_TAGS.TEST)
+  @ApiOperation({
+    summary: '[테스트용] RidingRecord 상위 N개 조회',
+    description:
+      'Query의 take에서 가져온 number N에 대하여, 최근 생성된 riding record 상위 N개를 반환합니다.\n' +
+      'take가 제공되지 않을 경우 기본값 5개를 반환합니다.',
+  })
+  @Public()
+  @Get('test/riding-record')
+  getTop5RidingRecords(@Query('take') take: number) {
+    return this.locationService.getTop5RidingRecords(take);
   }
 
   // mock 위치를 박고, 팀 위치를 반환하도록 하는 test API

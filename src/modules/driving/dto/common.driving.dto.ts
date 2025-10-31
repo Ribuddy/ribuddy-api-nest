@@ -71,3 +71,14 @@ export class StartOrEndTeamRidingRequestDto extends LatLonEleDto {
   @IsString()
   name?: string; // 출발,도착지 명칭
 }
+
+export class ReportAccidentRequestDto extends LatLonEleDto {
+  @IsNotEmpty()
+  @IsString()
+  ridingRecordId!: string;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  timestamp?: Date;
+}

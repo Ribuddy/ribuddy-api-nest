@@ -275,4 +275,16 @@ export class DriveLocationService {
       lon: faker.location.longitude(), // 경도
     };
   }
+
+  // ridingRecord 상위 5개를 반환하는 API
+  async getTop5RidingRecords(take?: number) {
+    const ridingRecords = await this.mongo.ridingRecord.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: take ?? 5,
+    });
+
+    return ridingRecords;
+  }
 }

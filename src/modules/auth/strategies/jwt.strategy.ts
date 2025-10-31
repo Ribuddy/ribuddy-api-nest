@@ -5,8 +5,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { JWT_CONFIG, JwtConfig } from '@modules/auth/config/jwt.config';
+import { JWT_STRATEGY } from '@modules/auth/constants/strategy.constants';
 import { TokenAuthService } from '@modules/auth/services/token.auth.service';
-import { JWT_STRATEGY } from '@modules/auth/strategies/strategy.constants';
 import { AccessTokenJwtPayload } from '@modules/auth/types/jwt.types';
 
 /**

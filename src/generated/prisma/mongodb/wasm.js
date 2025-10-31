@@ -124,6 +124,16 @@ exports.Prisma.RidingRecordScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.RidingEventScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  timestamp: 'timestamp',
+  userId: 'userId',
+  ridingRecordId: 'ridingRecordId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -138,8 +148,15 @@ exports.RidingRecordStatus = exports.$Enums.RidingRecordStatus = {
   COMPLETED: 'COMPLETED'
 };
 
+exports.RidingEventType = exports.$Enums.RidingEventType = {
+  SUDDEN_ACCELERATION: 'SUDDEN_ACCELERATION',
+  SUDDEN_STOP: 'SUDDEN_STOP',
+  ACCIDENT: 'ACCIDENT'
+};
+
 exports.Prisma.ModelName = {
-  RidingRecord: 'RidingRecord'
+  RidingRecord: 'RidingRecord',
+  RidingEvent: 'RidingEvent'
 };
 
 /**
