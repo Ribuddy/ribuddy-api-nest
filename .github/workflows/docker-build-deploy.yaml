@@ -110,6 +110,8 @@ jobs:
 
             echo "✅ 새 컨테이너 실행 완료"
 
+            docker logs ${{secrets.SERVER_DOCKER_CONATINER_NAME}} --timestamps --tail 100
+
             echo "=============================="
             echo "🎉 전체 프로세스 완료"
             echo "=============================="
