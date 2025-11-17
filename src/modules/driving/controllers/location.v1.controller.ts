@@ -7,7 +7,7 @@ import { RequestContextService } from '@modules/als/services/request-context.ser
 import { DriveLocationService } from '@modules/driving/services/drive-location.service';
 
 @Controller({
-  path: '/location',
+  path: 'driving/location',
   version: '1',
 })
 @ApiTags(API_TAGS.DRIVING)

@@ -19,7 +19,13 @@ export class TeamUsersService {
   async getTeamInfo(teamId: bigint) {
     const team = await this.mysql.team.findUnique({
       where: { id: teamId },
-      include: { members: true },
+      include: {
+        members: {
+          include: {
+            member: true,
+          },
+        },
+      },
     });
 
     if (!team) {
@@ -34,6 +40,9 @@ export class TeamUsersService {
         ...member,
         userId: member.userId.toString(),
         teamId: member.teamId.toString(),
+        name: member.member.name,
+        nickname: member.member.nickname,
+        member: undefined,
       })),
     };
   }
@@ -86,7 +95,7 @@ export class TeamUsersService {
     });
 
     this.logger.log(
-      `사용자 ${newTeam.id.toString()} 가 팀을 생성합니다. 멤버 목록: ${teamMembers.join(', ')} 크루 여부: ${isCrew}`,
+      `[팀 생성] [사용자 ${newTeam.id.toString()}] [멤버 목록] ${teamMembers.join(', ')} [크루 여부] ${isCrew}`,
     );
 
     return newTeam.id.toString();
@@ -174,6 +183,8 @@ export class TeamUsersService {
       },
     });
 
+    this.logger.log(`[팀 탈퇴] [사용자 ${userId.toString()}] [팀 ${teamId.toString()}]`);
+
     return;
   }
 
@@ -195,9 +206,14 @@ export class TeamUsersService {
         where: { code: newCode },
       });
 
-      if (!existingCode) {
+      if (existingCode.length === 0) {
+        this.logger.log(`[팀 ${teamId.toString()}]에 대해 참여코드가 생성되었습니다. [${newCode}]`);
         break; // 중복이 없으면 루프 종료
       }
+
+      this.logger.warn(
+        `팀 참여 코드가 중복해서 생성되었습니다. [${newCode}] 새로운 코드 생성을 시도합니다.`,
+      );
 
       newCode = generateInviteCode(); // 중복이 있으면 새 코드 생성
     }

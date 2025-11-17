@@ -76,8 +76,14 @@ export class GoogleOAuthService {
 
     if (!user) {
       const newUserId = await this.oauthUserService.createOAuthUserWithGoogle(googleData);
+      this.logger.log(
+        `[Google OAuth] 기존 회원이 아닌 사용자가 로그인하여 회원가입 처리합니다. [생성된 사용자 ${newUserId.toString()}]`,
+      );
       return this.tokenAuthService.generateTokens(newUserId);
     } else {
+      this.logger.log(
+        `[Google OAuth] 기존 회원이 로그인합니다. [사용자 ${user.userId.toString()}]`,
+      );
       return this.tokenAuthService.generateTokens(user.userId);
     }
   }

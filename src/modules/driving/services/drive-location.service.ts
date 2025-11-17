@@ -1,9 +1,16 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  LoggerService,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 import { faker } from '@faker-js/faker';
 import { RidingRecordStatus } from '@generated/prisma/mongodb';
 import { RedisService } from '@liaoliaots/nestjs-redis';
 import Redis from 'ioredis';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 import { REDIS } from '@common/constants/redis.constants';
 
@@ -22,6 +29,7 @@ export class DriveLocationService {
     private readonly teamUserService: TeamUsersService,
     private readonly mysql: MySQLPrismaService,
     private readonly mongo: MongoDBPrismaService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
   ) {
     this.redis = this.redisService.getOrThrow();
   }
@@ -77,6 +85,11 @@ export class DriveLocationService {
 
     await this.setUserLocationToRedis(BigInt(updatedRidingRecord.recordOwnerId), loc.lat, loc.lon);
 
+    this.logger.log(
+      `[라이딩 기록 위치 저장] [라이딩 기록 ID: ${ridingRecordId}] [위경도: ${loc.lat}, ${loc.lon}]`,
+      'LOCATION_SERVICE',
+    );
+
     return;
   }
 
@@ -95,14 +108,26 @@ export class DriveLocationService {
 
     if (result && result[0]) {
       const [lon, lat] = result[0];
+
+      this.logger.log(
+        `[사용자 위치 조회] [사용자 ID: ${userId.toString()}] [위경도: ${lat}, ${lon}]`,
+        'LOCATION_SERVICE',
+      );
       return { userId: userId.toString(), lat: parseFloat(lat), lon: parseFloat(lon) };
     }
+
+    this.logger.log(
+      `[사용자 위치 조회 실패] [사용자 ID: ${userId.toString()}] [위치 정보 없음]`,
+      'LOCATION_SERVICE',
+    );
 
     return null; // 위치 정보가 없는 경우
   }
 
-  // teamId를 받아서, redis에 해당 팀이 라이딩을 시작한 것을 기록함
-  // 생성된 riding record id를 반환함, 추후 요청 시에 사용
+  /**
+   * teamId를 받아서, redis에 해당 팀이 라이딩을 시작한 것을 기록함
+   * 생성된 riding record id를 반환함, 추후 요청 시에 사용
+   */
   async startTeamRiding(teamId: bigint, userId: bigint, loc: LatLonEleDto, departureName: string) {
     await this.redis.set(REDIS.CURRENT_RIDING_TEAM.KEY(teamId), 1);
 
@@ -117,6 +142,11 @@ export class DriveLocationService {
         departToArrival: [departureName],
       },
     });
+
+    this.logger.log(
+      `[팀 라이딩 시작] [TEAM_ID: ${teamId.toString()}] [STARTED_USER: ${userId}] [RIDING_RECORD_ID: ${newRidingRecord.id}]`,
+      'LOCATION_SERVICE',
+    );
 
     return newRidingRecord.id;
   }
@@ -150,6 +180,11 @@ export class DriveLocationService {
       data: updateData,
     });
 
+    this.logger.log(
+      `[위치 업데이트] [RIDING_RECORD_ID: ${ridingRecordId}] [위경도: ${loc.lat}, ${loc.lon}]`,
+      'LOCATION_SERVICE',
+    );
+
     return;
   }
 
@@ -177,6 +212,7 @@ export class DriveLocationService {
       if (ongoingRecords.length > 1) {
         // 아직 완료되지 않은 라이딩 기록이 남아있는 경우, 바로 종료하지 않음
         await this.updateRidingRecordLocation(ridingRecordId, loc, locationName, true);
+
         return;
       } // else, 마지막 기록인 경우 redis 내 current riding team에서 제거
       else await this.removeTeamFromRedisCurrentRidingTeam(BigInt(ridingRecord.teamId));
@@ -184,6 +220,11 @@ export class DriveLocationService {
 
     // 라이딩 레코드 마무리 (예: 종료 시간 기록)
     await this.updateRidingRecordLocation(ridingRecordId, loc, locationName, true);
+
+    this.logger.log(
+      `[팀 라이딩 종료] [RIDING_RECORD_ID: ${ridingRecordId}] [위경도: ${loc.lat}, ${loc.lon}]`,
+      'LOCATION_SERVICE',
+    );
 
     return;
   }
@@ -247,6 +288,11 @@ export class DriveLocationService {
         locations.push(location);
       }
     }
+
+    this.logger.log(
+      `[팀원 위치 조회] [라이딩 기록 ID: ${ridingRecordId}] [조회된 위치: ${locations.map((loc) => `[사용자 ${loc.userId} 위경도 ${loc.lat}, ${loc.lon}]`).join(', ')}]`,
+      'LOCATION_SERVICE',
+    );
 
     return locations;
   }
