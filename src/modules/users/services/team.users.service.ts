@@ -38,7 +38,7 @@ export class TeamUsersService {
   async getTeamList(userId: bigint) {
     // 모든 팀 조회
     const teams = await this.mysql.team.findMany({
-      where: { members: { some: { userId } } },
+      where: { members: { some: { userId } }, isCrew: true },
       include: { members: true },
     });
 
