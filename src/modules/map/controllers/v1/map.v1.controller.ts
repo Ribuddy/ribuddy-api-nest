@@ -1,13 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { API_TAGS } from '@common/constants/api-tags.constants';
 
 import { Public } from '@modules/auth/decorators/public.decorator';
-import { PoiSearchRequestDto } from '@modules/tmap/dto/poi-search-request.dto';
-import { RouteRequestDto } from '@modules/tmap/dto/route-request.dto';
-import { TmapRouteService } from '@modules/tmap/services/tmap-route.service';
-import { TmapSearchService } from '@modules/tmap/services/tmap-search.service';
+import { PoiSearchRequestDto } from '@modules/map/dto/poi-search-request.dto';
+import { ReducedRouteRequestDto } from '@modules/map/dto/route-request.dto';
+import { TmapRouteService } from '@modules/map/services/tmap-route.service';
+import { TmapSearchService } from '@modules/map/services/tmap-search.service';
 
 @Controller({
   path: 'map',
@@ -22,13 +22,18 @@ export class MapV1Controller {
   ) {}
 
   @ApiOperation({
-    summary: '[WIP] Tmap 길찾기 API',
-    deprecated: true,
+    summary: 'TMAP 길찾기',
+    description: '시작점의 좌표와 도착점의 좌표를 받습니다.',
   })
   @Post('routes')
   @Public()
-  getRoute(@Body() routeRequestDto: RouteRequestDto) {
-    return this.tmapRouteService.findRoute(routeRequestDto);
+  getRoute(@Query() query: ReducedRouteRequestDto) {
+    return this.tmapRouteService.findRoute({
+      startX: query.startX,
+      startY: query.startY,
+      endX: query.endX,
+      endY: query.endY,
+    });
   }
 
   @ApiOperation({

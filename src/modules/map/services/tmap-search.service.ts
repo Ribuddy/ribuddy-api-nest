@@ -8,8 +8,8 @@ import { catchError, firstValueFrom } from 'rxjs';
 
 import { inspectObject } from '@common/utils/inspect-object.util';
 
-import { TMAP_CONFIG, TmapConfig } from '@modules/tmap/configs/tmap.config';
-import { PoiSearchRequestDto } from '@modules/tmap/dto/poi-search-request.dto';
+import { TMAP_CONFIG, TmapConfig } from '@modules/map/configs/tmap.config';
+import { PoiSearchRequestDto } from '@modules/map/dto/poi-search-request.dto';
 
 @Injectable()
 export class TmapSearchService {

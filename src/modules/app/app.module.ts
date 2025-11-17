@@ -29,19 +29,18 @@ import { configValidationSchema } from '@modules/auth/schemas/validation.schema'
 import { AwsModule } from '@modules/aws/aws.module';
 import { AwsConfig } from '@modules/aws/configs/aws.config';
 import { DrivingModule } from '@modules/driving/driving.module';
+import { TmapConfig } from '@modules/map/configs/tmap.config';
 import { MapModule } from '@modules/map/map.module';
 import { MessageModule } from '@modules/message/message.module';
 import { PrismaModule } from '@modules/prisma/prisma.module';
 import { TestModule } from '@modules/test/test.module';
-import { TmapConfig } from '@modules/tmap/configs/tmap.config';
-import { TmapModule } from '@modules/tmap/tmap.module';
 import { UsersModule } from '@modules/users/users.module';
 
-const validate = (config: Record<string, unknown>) => {
-  const parsedConfig = configValidationSchema.parse(config);
-  // console.log('Validated Config:', parsedConfig);
-  return parsedConfig;
-};
+// const validate = (config: Record<string, unknown>) => {
+//   const parsedConfig = configValidationSchema.parse(config);
+//   // console.log('Validated Config:', parsedConfig);
+//   return parsedConfig;
+// };
 
 @Module({
   imports: [
@@ -79,7 +78,6 @@ const validate = (config: Record<string, unknown>) => {
     UsersModule,
     PrismaModule,
     AwsModule,
-    TmapModule,
     MapModule,
     TestModule,
     DrivingModule,
