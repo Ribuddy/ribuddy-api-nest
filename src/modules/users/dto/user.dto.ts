@@ -155,6 +155,8 @@ export class GetUserInfoResponseDto {
   name!: string;
   nickname!: string;
   introduction!: string | null;
+  ribuddyId!: string;
+  profileImageUrl!: string | null;
   createdAt!: Date;
   teams!: string[];
   ridingRecords!: number;

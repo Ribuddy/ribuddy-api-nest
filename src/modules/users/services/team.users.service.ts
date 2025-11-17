@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, LoggerService } from '@nestjs/common';
 
 import { customAlphabet } from 'nanoid';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { UserErrorCode } from '@common/codes/error/user.error.code';
@@ -9,7 +10,10 @@ import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.servic
 
 @Injectable()
 export class TeamUsersService {
-  constructor(private readonly mysql: MySQLPrismaService) {}
+  constructor(
+    private readonly mysql: MySQLPrismaService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
+  ) {}
 
   // teamId를 받아서 팀 정보 반환
   async getTeamInfo(teamId: bigint) {
@@ -38,9 +42,11 @@ export class TeamUsersService {
   async getTeamList(userId: bigint) {
     // 모든 팀 조회
     const teams = await this.mysql.team.findMany({
-      where: { members: { some: { userId } }, isCrew: true },
+      where: { members: { some: { userId, isCurrentMember: true } } },
       include: { members: true },
     });
+
+    this.logger.log(`사용자 ${userId.toString()}가 속한 팀 목록 조회: ${teams.length}개 팀 발견.`);
 
     // bigint는 service 단에서 제거
     return teams.map((team) => ({
@@ -78,6 +84,10 @@ export class TeamUsersService {
       },
       include: { members: true },
     });
+
+    this.logger.log(
+      `사용자 ${newTeam.id.toString()} 가 팀을 생성합니다. 멤버 목록: ${teamMembers.join(', ')} 크루 여부: ${isCrew}`,
+    );
 
     return newTeam.id.toString();
   }

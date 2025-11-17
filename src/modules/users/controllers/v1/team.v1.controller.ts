@@ -1,5 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, LoggerService, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 import { API_TAGS } from '@common/constants/api-tags.constants';
 import { ParseBigIntPipe } from '@common/pipes/parse-bigint.pipe';
@@ -18,6 +20,7 @@ export class TeamV1Controller {
   constructor(
     private readonly teamService: TeamUsersService,
     private readonly requestContextService: RequestContextService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
   ) {}
 
   @Get('info/:id')
