@@ -70,3 +70,13 @@ export class MakeTeamRequestDto extends PickType(Team, [
   'members',
   'isCrew',
 ] as const) {}
+
+export class JoinTeamWithCodeRequestDto {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: '팀 참여 코드',
+    example: 'ABCDEF',
+  })
+  code!: string;
+}

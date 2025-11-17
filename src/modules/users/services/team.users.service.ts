@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, LoggerService } from '@nestjs/common';
 
 import { customAlphabet } from 'nanoid';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 import { CustomException } from '@common/codes/custom.exception';
 import { UserErrorCode } from '@common/codes/error/user.error.code';
@@ -9,13 +10,22 @@ import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.servic
 
 @Injectable()
 export class TeamUsersService {
-  constructor(private readonly prisma: MySQLPrismaService) {}
+  constructor(
+    private readonly mysql: MySQLPrismaService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
+  ) {}
 
   // teamId를 받아서 팀 정보 반환
   async getTeamInfo(teamId: bigint) {
-    const team = await this.prisma.team.findUnique({
+    const team = await this.mysql.team.findUnique({
       where: { id: teamId },
-      include: { members: true },
+      include: {
+        members: {
+          include: {
+            member: true,
+          },
+        },
+      },
     });
 
     if (!team) {
@@ -30,6 +40,9 @@ export class TeamUsersService {
         ...member,
         userId: member.userId.toString(),
         teamId: member.teamId.toString(),
+        name: member.member.name,
+        nickname: member.member.nickname,
+        member: undefined,
       })),
     };
   }
@@ -37,10 +50,12 @@ export class TeamUsersService {
   // userId를 받아서 해당 사용자가 가입되어 있는 모든 팀 정보 반환
   async getTeamList(userId: bigint) {
     // 모든 팀 조회
-    const teams = await this.prisma.team.findMany({
-      where: { members: { some: { userId } } },
+    const teams = await this.mysql.team.findMany({
+      where: { members: { some: { userId, isCurrentMember: true } } },
       include: { members: true },
     });
+
+    this.logger.log(`사용자 ${userId.toString()}가 속한 팀 목록 조회: ${teams.length}개 팀 발견.`);
 
     // bigint는 service 단에서 제거
     return teams.map((team) => ({
@@ -63,7 +78,7 @@ export class TeamUsersService {
     }
 
     // 팀 생성
-    const newTeam = await this.prisma.team.create({
+    const newTeam = await this.mysql.team.create({
       data: {
         name,
         description,
@@ -79,12 +94,16 @@ export class TeamUsersService {
       include: { members: true },
     });
 
+    this.logger.log(
+      `[팀 생성] [사용자 ${newTeam.id.toString()}] [멤버 목록] ${teamMembers.join(', ')} [크루 여부] ${isCrew}`,
+    );
+
     return newTeam.id.toString();
   }
 
   // teamId를 받아서 속한 멤버의 userId 리스트 반환
   async getTeamMembers(teamId: bigint) {
-    const team = await this.prisma.team.findUnique({
+    const team = await this.mysql.team.findUnique({
       where: { id: teamId },
       include: { members: true },
     });
@@ -101,7 +120,7 @@ export class TeamUsersService {
   // 팀 참여
   async joinTeam(userId: bigint, teamId: bigint) {
     // 이미 팀의 사용자는 아닌지 확인
-    const existingMembership = await this.prisma.teamMember.findFirst({
+    const existingMembership = await this.mysql.teamMember.findFirst({
       where: {
         teamId,
         userId,
@@ -115,7 +134,7 @@ export class TeamUsersService {
     }
 
     // 사용자 추가, 기존에 팀이었다가 탈퇴한 사용자는 update
-    await this.prisma.teamMember.upsert({
+    await this.mysql.teamMember.upsert({
       where: {
         teamId_userId: {
           teamId,
@@ -137,7 +156,7 @@ export class TeamUsersService {
 
   async leaveTeam(userId: bigint, teamId: bigint) {
     // 이미 팀의 사용자인지 봄
-    const membership = await this.prisma.teamMember.findUnique({
+    const membership = await this.mysql.teamMember.findUnique({
       where: {
         teamId_userId: {
           teamId,
@@ -152,7 +171,7 @@ export class TeamUsersService {
     }
 
     // 사용자를 팀에서 제거 (soft delete)
-    await this.prisma.teamMember.update({
+    await this.mysql.teamMember.update({
       where: {
         teamId_userId: {
           teamId,
@@ -163,6 +182,8 @@ export class TeamUsersService {
         isCurrentMember: false,
       },
     });
+
+    this.logger.log(`[팀 탈퇴] [사용자 ${userId.toString()}] [팀 ${teamId.toString()}]`);
 
     return;
   }
@@ -181,13 +202,18 @@ export class TeamUsersService {
 
     while (true) {
       // 중복 검사
-      const existingCode = await this.prisma.teamJoinCode.findMany({
+      const existingCode = await this.mysql.teamJoinCode.findMany({
         where: { code: newCode },
       });
 
-      if (!existingCode) {
+      if (existingCode.length === 0) {
+        this.logger.log(`[팀 ${teamId.toString()}]에 대해 참여코드가 생성되었습니다. [${newCode}]`);
         break; // 중복이 없으면 루프 종료
       }
+
+      this.logger.warn(
+        `팀 참여 코드가 중복해서 생성되었습니다. [${newCode}] 새로운 코드 생성을 시도합니다.`,
+      );
 
       newCode = generateInviteCode(); // 중복이 있으면 새 코드 생성
     }
@@ -196,7 +222,7 @@ export class TeamUsersService {
     const expirationTime = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
 
     try {
-      await this.prisma.teamJoinCode.create({
+      await this.mysql.teamJoinCode.create({
         data: {
           teamId,
           code: newCode,
@@ -212,7 +238,7 @@ export class TeamUsersService {
 
   async joinTeamByCode(userId: bigint, code: string) {
     // Find the team join code in the database
-    const teamWithJoinCode = await this.prisma.teamJoinCode.findMany({
+    const teamWithJoinCode = await this.mysql.teamJoinCode.findMany({
       where: { code },
     });
 
@@ -232,7 +258,7 @@ export class TeamUsersService {
   }
 
   async isUserInTeam(userId: bigint, teamId: bigint) {
-    const membership = await this.prisma.teamMember.findUnique({
+    const membership = await this.mysql.teamMember.findUnique({
       where: {
         teamId_userId: {
           teamId,

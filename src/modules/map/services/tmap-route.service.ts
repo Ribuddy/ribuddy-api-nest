@@ -14,8 +14,8 @@ import { catchError, firstValueFrom } from 'rxjs';
 
 import { inspectObject } from '@common/utils/inspect-object.util';
 
-import { TmapConfig } from '@modules/tmap/configs/tmap.config';
-import { RouteRequestDto } from '@modules/tmap/dto/route-request.dto';
+import { TmapConfig } from '@modules/map/configs/tmap.config';
+import { RouteRequestDto } from '@modules/map/dto/route-request.dto';
 
 @Injectable()
 export class TmapRouteService {

@@ -1,13 +1,4 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { CustomException } from '@common/codes/custom.exception';
@@ -94,7 +85,7 @@ export class UsersV1Controller {
   }
 
   @ApiOperation({
-    summary: '사용자 정보 수정',
+    summary: '사용자 정보 수정 (라이버디 ID 수정)',
     description: '로그인된 사용자의 정보를 수정합니다. 수정 가능한 필드는 Schema를 참고하세요.',
   })
   @Post('edit')

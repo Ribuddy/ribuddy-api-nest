@@ -56,7 +56,7 @@ async function bootstrap() {
 
   // PIPE, INTERCEPTOR, FILTER 모두 app.module.ts 로 이동되었습니다. Nest.js에서 권장되는 구조를 따라 봅시다!
 
-  await app.listen(process.env.PORT ?? 7777);
+  await app.listen(process.env.PORT ?? 7777, '0.0.0.0');
 }
 
 bootstrap().then(() => {

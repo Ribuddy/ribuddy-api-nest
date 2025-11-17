@@ -40,6 +40,8 @@ export class UsersService {
       name: user.name,
       nickname: user.nickname,
       introduction: user.oneLineIntroduction,
+      ribuddyId: user.ribuddyId,
+      profileImageUrl: user.profileImage,
       createdAt: user.createdAt,
       teams: user.teamMember.map((tm) => tm.teamId.toString()),
       ridingRecords: ridingRecordCount, // TODO: 조정해야함

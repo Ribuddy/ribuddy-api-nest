@@ -1,12 +1,14 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 
 import { MapV1Controller } from '@modules/map/controllers/v1/map.v1.controller';
 import { RoutesService } from '@modules/map/services/routes.service';
-import { TmapModule } from '@modules/tmap/tmap.module';
+import { TmapRouteService } from '@modules/map/services/tmap-route.service';
+import { TmapSearchService } from '@modules/map/services/tmap-search.service';
 
 @Module({
-  imports: [TmapModule],
+  imports: [HttpModule],
   controllers: [MapV1Controller],
-  providers: [RoutesService],
+  providers: [RoutesService, TmapRouteService, TmapSearchService],
 })
 export class MapModule {}
