@@ -35,6 +35,8 @@ export class UsersService {
       throw new CustomException(UserErrorCode.NO_USER);
     }
 
+    const friendList = await this.getFriendList(userId);
+
     return {
       id: user.id.toString(),
       name: user.name,
@@ -44,7 +46,9 @@ export class UsersService {
       profileImageUrl: user.profileImage,
       createdAt: user.createdAt,
       teams: user.teamMember.map((tm) => tm.teamId.toString()),
+      teamCount: user.teamMember.length,
       ridingRecords: ridingRecordCount, // TODO: 조정해야함
+      friends: friendList,
     };
   }
 

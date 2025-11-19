@@ -159,5 +159,7 @@ export class GetUserInfoResponseDto {
   profileImageUrl!: string | null;
   createdAt!: Date;
   teams!: string[];
+  teamCount!: number;
   ridingRecords!: number;
+  friends!: any[];
 }
