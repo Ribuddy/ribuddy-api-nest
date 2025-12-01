@@ -12,6 +12,7 @@ import { winstonLoggerOptions } from '@common/configs/winston.config';
 import { AllExceptionsFilter } from '@common/filters/all-exception.filter';
 import { HttpExceptionFilter } from '@common/filters/http-exception.filter';
 import { PrismaExceptionFilter } from '@common/filters/prisma-exception.filter';
+import { BigIntSerializationInterceptor } from '@common/interceptors/bigint-serialization.interceptor';
 import { ResponseInterceptor } from '@common/interceptors/response.interceptor';
 import { LoggerMiddleware } from '@common/middleware/logger.middleware';
 import { RequestContextMiddleware } from '@common/middleware/request-context.middleware';
@@ -92,6 +93,10 @@ import { UsersModule } from '@modules/users/users.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: ResponseInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: BigIntSerializationInterceptor,
     },
     // ===== FILTER =====
     // FILTER 간에는, 순서가 중요합니다.
