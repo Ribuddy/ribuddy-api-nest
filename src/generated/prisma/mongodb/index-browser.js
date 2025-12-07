@@ -120,6 +120,7 @@ exports.Prisma.RidingRecordScalarFieldEnum = {
   teamId: 'teamId',
   departToArrival: 'departToArrival',
   status: 'status',
+  sendedEvents: 'sendedEvents',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

@@ -1054,10 +1054,12 @@ export namespace Prisma {
 
   export type RidingRecordCountOutputType = {
     routes: number
+    events: number
   }
 
   export type RidingRecordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     routes?: boolean | RidingRecordCountOutputTypeCountRoutesArgs
+    events?: boolean | RidingRecordCountOutputTypeCountEventsArgs
   }
 
   // Custom InputTypes
@@ -1078,6 +1080,13 @@ export namespace Prisma {
     where?: RidingRouteWhereInput
   }
 
+  /**
+   * RidingRecordCountOutputType without action
+   */
+  export type RidingRecordCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RidingEventWhereInput
+  }
+
 
   /**
    * Models
@@ -1096,6 +1105,8 @@ export namespace Prisma {
     coordinates?: boolean
     timestamp?: boolean
     name?: boolean
+    gravityForce?: boolean
+    leanAngle?: boolean
   }, ExtArgs["result"]["geoPoint"]>
 
 
@@ -1105,9 +1116,11 @@ export namespace Prisma {
     coordinates?: boolean
     timestamp?: boolean
     name?: boolean
+    gravityForce?: boolean
+    leanAngle?: boolean
   }
 
-  export type GeoPointOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"type" | "coordinates" | "timestamp" | "name", ExtArgs["result"]["geoPoint"]>
+  export type GeoPointOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"type" | "coordinates" | "timestamp" | "name" | "gravityForce" | "leanAngle", ExtArgs["result"]["geoPoint"]>
 
   export type $GeoPointPayload = {
     name: "GeoPoint"
@@ -1117,6 +1130,8 @@ export namespace Prisma {
       coordinates: number[]
       timestamp: Date | null
       name: string | null
+      gravityForce: number | null
+      leanAngle: number | null
     }
     composites: {}
   }
@@ -1135,6 +1150,8 @@ export namespace Prisma {
     readonly coordinates: FieldRef<"GeoPoint", 'Float[]'>
     readonly timestamp: FieldRef<"GeoPoint", 'DateTime'>
     readonly name: FieldRef<"GeoPoint", 'String'>
+    readonly gravityForce: FieldRef<"GeoPoint", 'Float'>
+    readonly leanAngle: FieldRef<"GeoPoint", 'Float'>
   }
     
 
@@ -1189,6 +1206,7 @@ export namespace Prisma {
     teamId: number
     departToArrival: number
     status: number
+    sendedEvents: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1220,6 +1238,7 @@ export namespace Prisma {
     teamId?: true
     departToArrival?: true
     status?: true
+    sendedEvents?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1304,6 +1323,7 @@ export namespace Prisma {
     teamId: string | null
     departToArrival: string[]
     status: $Enums.RidingRecordStatus
+    sendedEvents: string[]
     createdAt: Date
     updatedAt: Date
     _count: RidingRecordCountAggregateOutputType | null
@@ -1333,9 +1353,11 @@ export namespace Prisma {
     teamId?: boolean
     departToArrival?: boolean
     status?: boolean
+    sendedEvents?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     routes?: boolean | RidingRecord$routesArgs<ExtArgs>
+    events?: boolean | RidingRecord$eventsArgs<ExtArgs>
     _count?: boolean | RidingRecordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ridingRecord"]>
 
@@ -1348,13 +1370,15 @@ export namespace Prisma {
     teamId?: boolean
     departToArrival?: boolean
     status?: boolean
+    sendedEvents?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RidingRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "route" | "recordOwnerId" | "participants" | "teamId" | "departToArrival" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingRecord"]>
+  export type RidingRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "route" | "recordOwnerId" | "participants" | "teamId" | "departToArrival" | "status" | "sendedEvents" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingRecord"]>
   export type RidingRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     routes?: boolean | RidingRecord$routesArgs<ExtArgs>
+    events?: boolean | RidingRecord$eventsArgs<ExtArgs>
     _count?: boolean | RidingRecordCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1362,6 +1386,7 @@ export namespace Prisma {
     name: "RidingRecord"
     objects: {
       routes: Prisma.$RidingRoutePayload<ExtArgs>[]
+      events: Prisma.$RidingEventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1370,6 +1395,7 @@ export namespace Prisma {
       teamId: string | null
       departToArrival: string[]
       status: $Enums.RidingRecordStatus
+      sendedEvents: string[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["ridingRecord"]>
@@ -1738,6 +1764,7 @@ export namespace Prisma {
   export interface Prisma__RidingRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     routes<T extends RidingRecord$routesArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecord$routesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingRoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    events<T extends RidingRecord$eventsArgs<ExtArgs> = {}>(args?: Subset<T, RidingRecord$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RidingEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1773,6 +1800,7 @@ export namespace Prisma {
     readonly teamId: FieldRef<"RidingRecord", 'String'>
     readonly departToArrival: FieldRef<"RidingRecord", 'String[]'>
     readonly status: FieldRef<"RidingRecord", 'RidingRecordStatus'>
+    readonly sendedEvents: FieldRef<"RidingRecord", 'String[]'>
     readonly createdAt: FieldRef<"RidingRecord", 'DateTime'>
     readonly updatedAt: FieldRef<"RidingRecord", 'DateTime'>
   }
@@ -2169,6 +2197,30 @@ export namespace Prisma {
   }
 
   /**
+   * RidingRecord.events
+   */
+  export type RidingRecord$eventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingEvent
+     */
+    select?: RidingEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingEvent
+     */
+    omit?: RidingEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingEventInclude<ExtArgs> | null
+    where?: RidingEventWhereInput
+    orderBy?: RidingEventOrderByWithRelationInput | RidingEventOrderByWithRelationInput[]
+    cursor?: RidingEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RidingEventScalarFieldEnum | RidingEventScalarFieldEnum[]
+  }
+
+  /**
    * RidingRecord without action
    */
   export type RidingRecordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2368,6 +2420,7 @@ export namespace Prisma {
     ridingRecordId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    ridingRecord?: boolean | RidingEvent$ridingRecordArgs<ExtArgs>
   }, ExtArgs["result"]["ridingEvent"]>
 
 
@@ -2383,11 +2436,15 @@ export namespace Prisma {
   }
 
   export type RidingEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "timestamp" | "location" | "userId" | "ridingRecordId" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingEvent"]>
-  export type RidingEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type RidingEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ridingRecord?: boolean | RidingEvent$ridingRecordArgs<ExtArgs>
+  }
 
   export type $RidingEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "RidingEvent"
-    objects: {}
+    objects: {
+      ridingRecord: Prisma.$RidingRecordPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       type: $Enums.RidingEventType
@@ -2761,6 +2818,7 @@ export namespace Prisma {
    */
   export interface Prisma__RidingEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    ridingRecord<T extends RidingEvent$ridingRecordArgs<ExtArgs> = {}>(args?: Subset<T, RidingEvent$ridingRecordArgs<ExtArgs>>): Prisma__RidingRecordClient<$Result.GetResult<Prisma.$RidingRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3164,6 +3222,25 @@ export namespace Prisma {
      * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
      */
     options?: InputJsonValue
+  }
+
+  /**
+   * RidingEvent.ridingRecord
+   */
+  export type RidingEvent$ridingRecordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RidingRecord
+     */
+    select?: RidingRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RidingRecord
+     */
+    omit?: RidingRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RidingRecordInclude<ExtArgs> | null
+    where?: RidingRecordWhereInput
   }
 
   /**
@@ -4171,6 +4248,7 @@ export namespace Prisma {
     teamId: 'teamId',
     departToArrival: 'departToArrival',
     status: 'status',
+    sendedEvents: 'sendedEvents',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -4328,9 +4406,11 @@ export namespace Prisma {
     teamId?: StringNullableFilter<"RidingRecord"> | string | null
     departToArrival?: StringNullableListFilter<"RidingRecord">
     status?: EnumRidingRecordStatusFilter<"RidingRecord"> | $Enums.RidingRecordStatus
+    sendedEvents?: StringNullableListFilter<"RidingRecord">
     createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
     routes?: RidingRouteListRelationFilter
+    events?: RidingEventListRelationFilter
   }
 
   export type RidingRecordOrderByWithRelationInput = {
@@ -4341,9 +4421,11 @@ export namespace Prisma {
     teamId?: SortOrder
     departToArrival?: SortOrder
     status?: SortOrder
+    sendedEvents?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     routes?: RidingRouteOrderByRelationAggregateInput
+    events?: RidingEventOrderByRelationAggregateInput
   }
 
   export type RidingRecordWhereUniqueInput = Prisma.AtLeast<{
@@ -4357,9 +4439,11 @@ export namespace Prisma {
     teamId?: StringNullableFilter<"RidingRecord"> | string | null
     departToArrival?: StringNullableListFilter<"RidingRecord">
     status?: EnumRidingRecordStatusFilter<"RidingRecord"> | $Enums.RidingRecordStatus
+    sendedEvents?: StringNullableListFilter<"RidingRecord">
     createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
     routes?: RidingRouteListRelationFilter
+    events?: RidingEventListRelationFilter
   }, "id">
 
   export type RidingRecordOrderByWithAggregationInput = {
@@ -4369,6 +4453,7 @@ export namespace Prisma {
     teamId?: SortOrder
     departToArrival?: SortOrder
     status?: SortOrder
+    sendedEvents?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: RidingRecordCountOrderByAggregateInput
@@ -4386,6 +4471,7 @@ export namespace Prisma {
     teamId?: StringNullableWithAggregatesFilter<"RidingRecord"> | string | null
     departToArrival?: StringNullableListFilter<"RidingRecord">
     status?: EnumRidingRecordStatusWithAggregatesFilter<"RidingRecord"> | $Enums.RidingRecordStatus
+    sendedEvents?: StringNullableListFilter<"RidingRecord">
     createdAt?: DateTimeWithAggregatesFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"RidingRecord"> | Date | string
   }
@@ -4402,6 +4488,7 @@ export namespace Prisma {
     ridingRecordId?: StringNullableFilter<"RidingEvent"> | string | null
     createdAt?: DateTimeFilter<"RidingEvent"> | Date | string
     updatedAt?: DateTimeFilter<"RidingEvent"> | Date | string
+    ridingRecord?: XOR<RidingRecordNullableScalarRelationFilter, RidingRecordWhereInput> | null
   }
 
   export type RidingEventOrderByWithRelationInput = {
@@ -4413,6 +4500,7 @@ export namespace Prisma {
     ridingRecordId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    ridingRecord?: RidingRecordOrderByWithRelationInput
   }
 
   export type RidingEventWhereUniqueInput = Prisma.AtLeast<{
@@ -4427,6 +4515,7 @@ export namespace Prisma {
     ridingRecordId?: StringNullableFilter<"RidingEvent"> | string | null
     createdAt?: DateTimeFilter<"RidingEvent"> | Date | string
     updatedAt?: DateTimeFilter<"RidingEvent"> | Date | string
+    ridingRecord?: XOR<RidingRecordNullableScalarRelationFilter, RidingRecordWhereInput> | null
   }, "id">
 
   export type RidingEventOrderByWithAggregationInput = {
@@ -4518,9 +4607,11 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     routes?: RidingRouteCreateNestedManyWithoutRidingRecordInput
+    events?: RidingEventCreateNestedManyWithoutRidingRecordInput
   }
 
   export type RidingRecordUncheckedCreateInput = {
@@ -4531,9 +4622,11 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     routes?: RidingRouteUncheckedCreateNestedManyWithoutRidingRecordInput
+    events?: RidingEventUncheckedCreateNestedManyWithoutRidingRecordInput
   }
 
   export type RidingRecordUpdateInput = {
@@ -4543,9 +4636,11 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     routes?: RidingRouteUpdateManyWithoutRidingRecordNestedInput
+    events?: RidingEventUpdateManyWithoutRidingRecordNestedInput
   }
 
   export type RidingRecordUncheckedUpdateInput = {
@@ -4555,9 +4650,11 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     routes?: RidingRouteUncheckedUpdateManyWithoutRidingRecordNestedInput
+    events?: RidingEventUncheckedUpdateManyWithoutRidingRecordNestedInput
   }
 
   export type RidingRecordCreateManyInput = {
@@ -4568,6 +4665,7 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -4579,6 +4677,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4590,6 +4689,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4600,9 +4700,9 @@ export namespace Prisma {
     timestamp: Date | string
     location?: XOR<GeoPointNullableCreateEnvelopeInput, GeoPointCreateInput> | null
     userId: string
-    ridingRecordId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    ridingRecord?: RidingRecordCreateNestedOneWithoutEventsInput
   }
 
   export type RidingEventUncheckedCreateInput = {
@@ -4621,9 +4721,9 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: XOR<GeoPointNullableUpdateEnvelopeInput, GeoPointCreateInput> | null
     userId?: StringFieldUpdateOperationsInput | string
-    ridingRecordId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ridingRecord?: RidingRecordUpdateOneWithoutEventsNestedInput
   }
 
   export type RidingEventUncheckedUpdateInput = {
@@ -4652,7 +4752,6 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: XOR<GeoPointNullableUpdateEnvelopeInput, GeoPointCreateInput> | null
     userId?: StringFieldUpdateOperationsInput | string
-    ridingRecordId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4747,6 +4846,8 @@ export namespace Prisma {
     coordinates?: number[]
     timestamp?: Date | string | null
     name?: string | null
+    gravityForce?: number | null
+    leanAngle?: number | null
   }
 
   export type StringNullableListFilter<$PrismaModel = never> = {
@@ -4797,11 +4898,21 @@ export namespace Prisma {
     none?: RidingRouteWhereInput
   }
 
+  export type RidingEventListRelationFilter = {
+    every?: RidingEventWhereInput
+    some?: RidingEventWhereInput
+    none?: RidingEventWhereInput
+  }
+
   export type GeoPointOrderByCompositeAggregateInput = {
     _count?: SortOrder
   }
 
   export type RidingRouteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RidingEventOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -4812,6 +4923,7 @@ export namespace Prisma {
     teamId?: SortOrder
     departToArrival?: SortOrder
     status?: SortOrder
+    sendedEvents?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4909,11 +5021,18 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type RidingRecordNullableScalarRelationFilter = {
+    is?: RidingRecordWhereInput | null
+    isNot?: RidingRecordWhereInput | null
+  }
+
   export type GeoPointOrderByInput = {
     type?: SortOrder
     coordinates?: SortOrder
     timestamp?: SortOrder
     name?: SortOrder
+    gravityForce?: SortOrder
+    leanAngle?: SortOrder
   }
 
   export type RidingEventCountOrderByAggregateInput = {
@@ -5017,6 +5136,8 @@ export namespace Prisma {
     coordinates?: GeoPointCreatecoordinatesInput | number[]
     timestamp?: Date | string | null
     name?: string | null
+    gravityForce?: number | null
+    leanAngle?: number | null
   }
 
   export type RidingRecordCreateparticipantsInput = {
@@ -5027,6 +5148,10 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type RidingRecordCreatesendedEventsInput = {
+    set: string[]
+  }
+
   export type RidingRouteCreateNestedManyWithoutRidingRecordInput = {
     create?: XOR<RidingRouteCreateWithoutRidingRecordInput, RidingRouteUncheckedCreateWithoutRidingRecordInput> | RidingRouteCreateWithoutRidingRecordInput[] | RidingRouteUncheckedCreateWithoutRidingRecordInput[]
     connectOrCreate?: RidingRouteCreateOrConnectWithoutRidingRecordInput | RidingRouteCreateOrConnectWithoutRidingRecordInput[]
@@ -5034,11 +5159,25 @@ export namespace Prisma {
     connect?: RidingRouteWhereUniqueInput | RidingRouteWhereUniqueInput[]
   }
 
+  export type RidingEventCreateNestedManyWithoutRidingRecordInput = {
+    create?: XOR<RidingEventCreateWithoutRidingRecordInput, RidingEventUncheckedCreateWithoutRidingRecordInput> | RidingEventCreateWithoutRidingRecordInput[] | RidingEventUncheckedCreateWithoutRidingRecordInput[]
+    connectOrCreate?: RidingEventCreateOrConnectWithoutRidingRecordInput | RidingEventCreateOrConnectWithoutRidingRecordInput[]
+    createMany?: RidingEventCreateManyRidingRecordInputEnvelope
+    connect?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
+  }
+
   export type RidingRouteUncheckedCreateNestedManyWithoutRidingRecordInput = {
     create?: XOR<RidingRouteCreateWithoutRidingRecordInput, RidingRouteUncheckedCreateWithoutRidingRecordInput> | RidingRouteCreateWithoutRidingRecordInput[] | RidingRouteUncheckedCreateWithoutRidingRecordInput[]
     connectOrCreate?: RidingRouteCreateOrConnectWithoutRidingRecordInput | RidingRouteCreateOrConnectWithoutRidingRecordInput[]
     createMany?: RidingRouteCreateManyRidingRecordInputEnvelope
     connect?: RidingRouteWhereUniqueInput | RidingRouteWhereUniqueInput[]
+  }
+
+  export type RidingEventUncheckedCreateNestedManyWithoutRidingRecordInput = {
+    create?: XOR<RidingEventCreateWithoutRidingRecordInput, RidingEventUncheckedCreateWithoutRidingRecordInput> | RidingEventCreateWithoutRidingRecordInput[] | RidingEventUncheckedCreateWithoutRidingRecordInput[]
+    connectOrCreate?: RidingEventCreateOrConnectWithoutRidingRecordInput | RidingEventCreateOrConnectWithoutRidingRecordInput[]
+    createMany?: RidingEventCreateManyRidingRecordInputEnvelope
+    connect?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
   }
 
   export type GeoPointListUpdateEnvelopeInput = {
@@ -5071,6 +5210,11 @@ export namespace Prisma {
     set?: $Enums.RidingRecordStatus
   }
 
+  export type RidingRecordUpdatesendedEventsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -5089,6 +5233,20 @@ export namespace Prisma {
     deleteMany?: RidingRouteScalarWhereInput | RidingRouteScalarWhereInput[]
   }
 
+  export type RidingEventUpdateManyWithoutRidingRecordNestedInput = {
+    create?: XOR<RidingEventCreateWithoutRidingRecordInput, RidingEventUncheckedCreateWithoutRidingRecordInput> | RidingEventCreateWithoutRidingRecordInput[] | RidingEventUncheckedCreateWithoutRidingRecordInput[]
+    connectOrCreate?: RidingEventCreateOrConnectWithoutRidingRecordInput | RidingEventCreateOrConnectWithoutRidingRecordInput[]
+    upsert?: RidingEventUpsertWithWhereUniqueWithoutRidingRecordInput | RidingEventUpsertWithWhereUniqueWithoutRidingRecordInput[]
+    createMany?: RidingEventCreateManyRidingRecordInputEnvelope
+    set?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
+    disconnect?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
+    delete?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
+    connect?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
+    update?: RidingEventUpdateWithWhereUniqueWithoutRidingRecordInput | RidingEventUpdateWithWhereUniqueWithoutRidingRecordInput[]
+    updateMany?: RidingEventUpdateManyWithWhereWithoutRidingRecordInput | RidingEventUpdateManyWithWhereWithoutRidingRecordInput[]
+    deleteMany?: RidingEventScalarWhereInput | RidingEventScalarWhereInput[]
+  }
+
   export type RidingRouteUncheckedUpdateManyWithoutRidingRecordNestedInput = {
     create?: XOR<RidingRouteCreateWithoutRidingRecordInput, RidingRouteUncheckedCreateWithoutRidingRecordInput> | RidingRouteCreateWithoutRidingRecordInput[] | RidingRouteUncheckedCreateWithoutRidingRecordInput[]
     connectOrCreate?: RidingRouteCreateOrConnectWithoutRidingRecordInput | RidingRouteCreateOrConnectWithoutRidingRecordInput[]
@@ -5103,8 +5261,28 @@ export namespace Prisma {
     deleteMany?: RidingRouteScalarWhereInput | RidingRouteScalarWhereInput[]
   }
 
+  export type RidingEventUncheckedUpdateManyWithoutRidingRecordNestedInput = {
+    create?: XOR<RidingEventCreateWithoutRidingRecordInput, RidingEventUncheckedCreateWithoutRidingRecordInput> | RidingEventCreateWithoutRidingRecordInput[] | RidingEventUncheckedCreateWithoutRidingRecordInput[]
+    connectOrCreate?: RidingEventCreateOrConnectWithoutRidingRecordInput | RidingEventCreateOrConnectWithoutRidingRecordInput[]
+    upsert?: RidingEventUpsertWithWhereUniqueWithoutRidingRecordInput | RidingEventUpsertWithWhereUniqueWithoutRidingRecordInput[]
+    createMany?: RidingEventCreateManyRidingRecordInputEnvelope
+    set?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
+    disconnect?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
+    delete?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
+    connect?: RidingEventWhereUniqueInput | RidingEventWhereUniqueInput[]
+    update?: RidingEventUpdateWithWhereUniqueWithoutRidingRecordInput | RidingEventUpdateWithWhereUniqueWithoutRidingRecordInput[]
+    updateMany?: RidingEventUpdateManyWithWhereWithoutRidingRecordInput | RidingEventUpdateManyWithWhereWithoutRidingRecordInput[]
+    deleteMany?: RidingEventScalarWhereInput | RidingEventScalarWhereInput[]
+  }
+
   export type GeoPointNullableCreateEnvelopeInput = {
     set?: GeoPointCreateInput | null
+  }
+
+  export type RidingRecordCreateNestedOneWithoutEventsInput = {
+    create?: XOR<RidingRecordCreateWithoutEventsInput, RidingRecordUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: RidingRecordCreateOrConnectWithoutEventsInput
+    connect?: RidingRecordWhereUniqueInput
   }
 
   export type EnumRidingEventTypeFieldUpdateOperationsInput = {
@@ -5115,6 +5293,16 @@ export namespace Prisma {
     set?: GeoPointCreateInput | null
     upsert?: GeoPointUpsertInput
     unset?: boolean
+  }
+
+  export type RidingRecordUpdateOneWithoutEventsNestedInput = {
+    create?: XOR<RidingRecordCreateWithoutEventsInput, RidingRecordUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: RidingRecordCreateOrConnectWithoutEventsInput
+    upsert?: RidingRecordUpsertWithoutEventsInput
+    disconnect?: boolean
+    delete?: RidingRecordWhereInput | boolean
+    connect?: RidingRecordWhereUniqueInput
+    update?: XOR<XOR<RidingRecordUpdateToOneWithWhereWithoutEventsInput, RidingRecordUpdateWithoutEventsInput>, RidingRecordUncheckedUpdateWithoutEventsInput>
   }
 
   export type RidingRecordCreateNestedOneWithoutRoutesInput = {
@@ -5153,6 +5341,8 @@ export namespace Prisma {
     coordinates?: FloatNullableListFilter<"GeoPoint">
     timestamp?: DateTimeNullableFilter<"GeoPoint"> | Date | string | null
     name?: StringNullableFilter<"GeoPoint"> | string | null
+    gravityForce?: FloatNullableFilter<"GeoPoint"> | number | null
+    leanAngle?: FloatNullableFilter<"GeoPoint"> | number | null
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -5325,6 +5515,35 @@ export namespace Prisma {
     data: RidingRouteCreateManyRidingRecordInput | RidingRouteCreateManyRidingRecordInput[]
   }
 
+  export type RidingEventCreateWithoutRidingRecordInput = {
+    id?: string
+    type: $Enums.RidingEventType
+    timestamp: Date | string
+    location?: XOR<GeoPointNullableCreateEnvelopeInput, GeoPointCreateInput> | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RidingEventUncheckedCreateWithoutRidingRecordInput = {
+    id?: string
+    type: $Enums.RidingEventType
+    timestamp: Date | string
+    location?: XOR<GeoPointNullableCreateEnvelopeInput, GeoPointCreateInput> | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RidingEventCreateOrConnectWithoutRidingRecordInput = {
+    where: RidingEventWhereUniqueInput
+    create: XOR<RidingEventCreateWithoutRidingRecordInput, RidingEventUncheckedCreateWithoutRidingRecordInput>
+  }
+
+  export type RidingEventCreateManyRidingRecordInputEnvelope = {
+    data: RidingEventCreateManyRidingRecordInput | RidingEventCreateManyRidingRecordInput[]
+  }
+
   export type GeoPointUpdateManyInput = {
     where: GeoPointWhereInput
     data: GeoPointUpdateInput
@@ -5361,9 +5580,108 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"RidingRoute"> | Date | string
   }
 
+  export type RidingEventUpsertWithWhereUniqueWithoutRidingRecordInput = {
+    where: RidingEventWhereUniqueInput
+    update: XOR<RidingEventUpdateWithoutRidingRecordInput, RidingEventUncheckedUpdateWithoutRidingRecordInput>
+    create: XOR<RidingEventCreateWithoutRidingRecordInput, RidingEventUncheckedCreateWithoutRidingRecordInput>
+  }
+
+  export type RidingEventUpdateWithWhereUniqueWithoutRidingRecordInput = {
+    where: RidingEventWhereUniqueInput
+    data: XOR<RidingEventUpdateWithoutRidingRecordInput, RidingEventUncheckedUpdateWithoutRidingRecordInput>
+  }
+
+  export type RidingEventUpdateManyWithWhereWithoutRidingRecordInput = {
+    where: RidingEventScalarWhereInput
+    data: XOR<RidingEventUpdateManyMutationInput, RidingEventUncheckedUpdateManyWithoutRidingRecordInput>
+  }
+
+  export type RidingEventScalarWhereInput = {
+    AND?: RidingEventScalarWhereInput | RidingEventScalarWhereInput[]
+    OR?: RidingEventScalarWhereInput[]
+    NOT?: RidingEventScalarWhereInput | RidingEventScalarWhereInput[]
+    id?: StringFilter<"RidingEvent"> | string
+    type?: EnumRidingEventTypeFilter<"RidingEvent"> | $Enums.RidingEventType
+    timestamp?: DateTimeFilter<"RidingEvent"> | Date | string
+    userId?: StringFilter<"RidingEvent"> | string
+    ridingRecordId?: StringNullableFilter<"RidingEvent"> | string | null
+    createdAt?: DateTimeFilter<"RidingEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"RidingEvent"> | Date | string
+  }
+
+  export type RidingRecordCreateWithoutEventsInput = {
+    id?: string
+    route?: XOR<GeoPointListCreateEnvelopeInput, GeoPointCreateInput> | GeoPointCreateInput[]
+    recordOwnerId: string
+    participants?: RidingRecordCreateparticipantsInput | string[]
+    teamId?: string | null
+    departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
+    status?: $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    routes?: RidingRouteCreateNestedManyWithoutRidingRecordInput
+  }
+
+  export type RidingRecordUncheckedCreateWithoutEventsInput = {
+    id?: string
+    route?: XOR<GeoPointListCreateEnvelopeInput, GeoPointCreateInput> | GeoPointCreateInput[]
+    recordOwnerId: string
+    participants?: RidingRecordCreateparticipantsInput | string[]
+    teamId?: string | null
+    departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
+    status?: $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    routes?: RidingRouteUncheckedCreateNestedManyWithoutRidingRecordInput
+  }
+
+  export type RidingRecordCreateOrConnectWithoutEventsInput = {
+    where: RidingRecordWhereUniqueInput
+    create: XOR<RidingRecordCreateWithoutEventsInput, RidingRecordUncheckedCreateWithoutEventsInput>
+  }
+
   export type GeoPointUpsertInput = {
     set: GeoPointCreateInput | null
     update: GeoPointUpdateInput
+  }
+
+  export type RidingRecordUpsertWithoutEventsInput = {
+    update: XOR<RidingRecordUpdateWithoutEventsInput, RidingRecordUncheckedUpdateWithoutEventsInput>
+    create: XOR<RidingRecordCreateWithoutEventsInput, RidingRecordUncheckedCreateWithoutEventsInput>
+    where?: RidingRecordWhereInput
+  }
+
+  export type RidingRecordUpdateToOneWithWhereWithoutEventsInput = {
+    where?: RidingRecordWhereInput
+    data: XOR<RidingRecordUpdateWithoutEventsInput, RidingRecordUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type RidingRecordUpdateWithoutEventsInput = {
+    route?: XOR<GeoPointListUpdateEnvelopeInput, GeoPointCreateInput> | GeoPointCreateInput[]
+    recordOwnerId?: StringFieldUpdateOperationsInput | string
+    participants?: RidingRecordUpdateparticipantsInput | string[]
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
+    status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    routes?: RidingRouteUpdateManyWithoutRidingRecordNestedInput
+  }
+
+  export type RidingRecordUncheckedUpdateWithoutEventsInput = {
+    route?: XOR<GeoPointListUpdateEnvelopeInput, GeoPointCreateInput> | GeoPointCreateInput[]
+    recordOwnerId?: StringFieldUpdateOperationsInput | string
+    participants?: RidingRecordUpdateparticipantsInput | string[]
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
+    status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    routes?: RidingRouteUncheckedUpdateManyWithoutRidingRecordNestedInput
   }
 
   export type RidingRecordCreateWithoutRoutesInput = {
@@ -5374,8 +5692,10 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    events?: RidingEventCreateNestedManyWithoutRidingRecordInput
   }
 
   export type RidingRecordUncheckedCreateWithoutRoutesInput = {
@@ -5386,8 +5706,10 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    events?: RidingEventUncheckedCreateNestedManyWithoutRidingRecordInput
   }
 
   export type RidingRecordCreateOrConnectWithoutRoutesInput = {
@@ -5413,8 +5735,10 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    events?: RidingEventUpdateManyWithoutRidingRecordNestedInput
   }
 
   export type RidingRecordUncheckedUpdateWithoutRoutesInput = {
@@ -5424,8 +5748,10 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
+    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    events?: RidingEventUncheckedUpdateManyWithoutRidingRecordNestedInput
   }
 
   export type FloatNullableListFilter<$PrismaModel = never> = {
@@ -5448,9 +5774,31 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
   export type RidingRouteCreateManyRidingRecordInput = {
     id?: string
     routes: InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RidingEventCreateManyRidingRecordInput = {
+    id?: string
+    type: $Enums.RidingEventType
+    timestamp: Date | string
+    location?: XOR<GeoPointNullableCreateEnvelopeInput, GeoPointCreateInput> | null
+    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5460,6 +5808,8 @@ export namespace Prisma {
     coordinates?: GeoPointUpdatecoordinatesInput | number[]
     timestamp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    gravityForce?: NullableFloatFieldUpdateOperationsInput | number | null
+    leanAngle?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type RidingRouteUpdateWithoutRidingRecordInput = {
@@ -5480,6 +5830,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RidingEventUpdateWithoutRidingRecordInput = {
+    type?: EnumRidingEventTypeFieldUpdateOperationsInput | $Enums.RidingEventType
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: XOR<GeoPointNullableUpdateEnvelopeInput, GeoPointCreateInput> | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RidingEventUncheckedUpdateWithoutRidingRecordInput = {
+    type?: EnumRidingEventTypeFieldUpdateOperationsInput | $Enums.RidingEventType
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: XOR<GeoPointNullableUpdateEnvelopeInput, GeoPointCreateInput> | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RidingEventUncheckedUpdateManyWithoutRidingRecordInput = {
+    type?: EnumRidingEventTypeFieldUpdateOperationsInput | $Enums.RidingEventType
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: XOR<GeoPointNullableUpdateEnvelopeInput, GeoPointCreateInput> | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -5492,6 +5869,18 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
   export type GeoPointUpdatecoordinatesInput = {
     set?: number[]
     push?: number | number[]
@@ -5499,6 +5888,15 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+    unset?: boolean
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
     unset?: boolean
   }
 

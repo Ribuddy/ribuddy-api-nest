@@ -4,12 +4,13 @@ import { ConfigService, ConfigType } from '@nestjs/config';
 
 import { AxiosError } from 'axios';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { catchError, firstValueFrom } from 'rxjs';
+import { async, catchError, firstValueFrom } from 'rxjs';
 
 import { inspectObject } from '@common/utils/inspect-object.util';
 
 import { TmapConfig } from '@modules/map/configs/tmap.config';
 import { RouteRequestDto } from '@modules/map/dto/route-request.dto';
+import { MongoDBPrismaService } from '@modules/prisma/services/mongodb.prisma.service';
 
 @Injectable()
 export class TmapRouteService {
@@ -18,6 +19,7 @@ export class TmapRouteService {
 
   constructor(
     private readonly httpService: HttpService,
+    private readonly mongo: MongoDBPrismaService,
     @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
     @Inject(TmapConfig.KEY) private readonly tmapConfig: ConfigType<typeof TmapConfig>,
   ) {}
@@ -63,5 +65,26 @@ export class TmapRouteService {
     );
 
     return data;
+  }
+
+  async getTeamRoutes(ridingRecordId: string): Promise<any | null> {
+    const ridingRoute = await this.mongo.ridingRoute.findFirst({
+      where: {
+        ridingRecordId: ridingRecordId,
+      },
+    });
+
+    return ridingRoute;
+  }
+
+  async saveTeamRoutes(ridingRecordId: string, routeData: any): Promise<void> {
+    await this.mongo.ridingRoute.create({
+      data: {
+        ridingRecordId: ridingRecordId,
+        routes: routeData,
+      },
+    });
+
+    return;
   }
 }

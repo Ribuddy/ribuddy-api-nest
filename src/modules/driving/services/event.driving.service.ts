@@ -13,6 +13,7 @@ export class DrivingEventService {
   ) {}
 
   // 사고 감지 시 추가하는 API
+  // ridingRecord 기준에 넣음
   async recordAccidentEvent(ridingRecordId: string, timestamp: Date) {
     const ridingRecord = await this.locService.getRidingRecordInfo(ridingRecordId);
 
@@ -26,5 +27,56 @@ export class DrivingEventService {
     });
 
     return accidentEvent;
+  }
+
+  // 급정거 감지 시 추가하는 API
+  async recordSuddenStopEvent(ridingRecordId: string, timestamp: Date) {
+    const ridingRecord = await this.locService.getRidingRecordInfo(ridingRecordId);
+
+    const suddenStopEvent = await this.mongo.ridingEvent.create({
+      data: {
+        ridingRecordId,
+        type: RidingEventType.SUDDEN_STOP,
+        timestamp,
+        userId: ridingRecord.recordOwnerId,
+      },
+    });
+
+    return suddenStopEvent;
+  }
+
+  async getTeamRingEvents(ridingRecordId: string) {
+    const events = await this.mongo.ridingEvent.findMany({
+      where: {
+        ridingRecordId,
+      },
+      orderBy: {
+        timestamp: 'asc',
+      },
+    });
+
+    const alreadySentEvents = await this.mongo.ridingRecord.findUnique({
+      where: {
+        id: ridingRecordId,
+      },
+      select: {
+        sendedEvents: true,
+      },
+    });
+
+    const newEvents = events.filter((event) => !alreadySentEvents?.sendedEvents.includes(event.id));
+
+    await this.mongo.ridingRecord.update({
+      where: {
+        id: ridingRecordId,
+      },
+      data: {
+        sendedEvents: {
+          push: newEvents.map((event) => event.id),
+        },
+      },
+    });
+
+    return newEvents;
   }
 }

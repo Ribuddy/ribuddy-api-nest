@@ -265,6 +265,11 @@ export class ReducedRouteRequestDto extends PickType(RouteRequestDto, [
   'endX',
   'endY',
 ] as const) {
+  @ApiProperty({
+    description: 'Riding Record ID',
+    required: false,
+  })
+  ridingRecordId?: string;
   // @ApiProperty({
   //   description: '목적지 X좌표 (경도)',
   //   required: true,

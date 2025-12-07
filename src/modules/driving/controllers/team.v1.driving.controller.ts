@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import { API_TAGS } from '@common/constants/api-tags.constants';
 import { ParseBigIntPipe } from '@common/pipes/parse-bigint.pipe';
@@ -10,6 +10,8 @@ import {
   StartOrEndTeamRidingRequestDto,
 } from '@modules/driving/dto/common.driving.dto';
 import { DriveLocationService } from '@modules/driving/services/drive-location.service';
+import { DrivingEventService } from '@modules/driving/services/event.driving.service';
+import { TmapRouteService } from '@modules/map/services/tmap-route.service';
 import { TeamUsersService } from '@modules/users/services/team.users.service';
 
 @ApiTags(API_TAGS.DRIVING_TEAM)
@@ -21,8 +23,10 @@ import { TeamUsersService } from '@modules/users/services/team.users.service';
 export class DrivingTeamV1Controller {
   constructor(
     private readonly locationService: DriveLocationService,
+    private readonly eventService: DrivingEventService,
     private readonly teamUsersService: TeamUsersService,
     private readonly requestContext: RequestContextService,
+    private readonly tampRouteService: TmapRouteService,
   ) {}
 
   // 팀라이딩 시작 API
@@ -64,7 +68,7 @@ export class DrivingTeamV1Controller {
   // 반환값으로 팀원의 위치를 전송해줌
   @Post('location/:ridingRecordId')
   @ApiOperation({
-    summary: '내 위치 보고 & 팀 위치 조회',
+    summary: '내 위치 보고 & 팀 위치 조회 & 사고 여부 조회 & 팀 경로 조회',
     description:
       '내 위치를 정해진 형식에 맞추어 전송하면, 함께 라이딩 중인 팀원의 위치를 반환합니다.\n' +
       "라이딩 중인 팀원의 규칙 : 본인이 속한 팀 중, 상태가 '라이딩' 중인 팀의 팀원들 중 위치 정보가 존재하는 팀원",
@@ -79,7 +83,16 @@ export class DrivingTeamV1Controller {
     await this.locationService.saveUserLocationToRidingRecord(ridingRecordId, body);
 
     // redis에서 가져온 팀원 위치 조회
-    return this.locationService.getLocationsFromRidingRecordId(ridingRecordId);
+    const teammateLocations =
+      await this.locationService.getLocationsFromRidingRecordId(ridingRecordId);
+    const routes = await this.tampRouteService.getTeamRoutes(ridingRecordId);
+    const ridingEvents = await this.eventService.getTeamRingEvents(ridingRecordId);
+
+    return {
+      teammateLocations,
+      routes,
+      ridingEvents,
+    };
   }
 
   // 팀라이딩 종료 API
@@ -111,8 +124,13 @@ export class DrivingTeamV1Controller {
   @ApiOperation({
     summary: '주행 리포트 조회',
   })
+  @ApiQuery({
+    name: 'ridingRecordId',
+    required: true,
+    description: '주행 리포트 조회를 원하는 Riding Record ID',
+  })
   @Get('report')
-  async getDrivingReport() {
-    return;
+  async getDrivingReport(@Query('ridingRecordId') ridingRecordId: string) {
+    return this.locationService.getRidingRecordStatistics(ridingRecordId);
   }
 }

@@ -9,13 +9,7 @@ import { catchError, firstValueFrom } from 'rxjs';
 import { inspectObject } from '@common/utils/inspect-object.util';
 
 import { TMAP_CONFIG, TmapConfig } from '@modules/map/configs/tmap.config';
-import {
-  CoordType,
-  MultiPoint,
-  PoiGroupYn,
-  PoiSearchRequestDto,
-  SearchType,
-} from '@modules/map/dto/poi-search-request.dto';
+import { PoiSearchRequestDto } from '@modules/map/dto/poi-search-request.dto';
 
 @Injectable()
 export class TmapSearchService {

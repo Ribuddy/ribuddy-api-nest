@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { API_TAGS } from '@common/constants/api-tags.constants';
 
-import { LatLonEleDto, ReportAccidentRequestDto } from '@modules/driving/dto/common.driving.dto';
+import { LatLonEleDto, ReportDrivingEventDto } from '@modules/driving/dto/common.driving.dto';
 import {
   AccidentEventDto,
   SuddenSpeedChangeEventDto,
@@ -26,25 +26,29 @@ export class DrivingEventsV1Controller {
       '현재는 사고 기록만 저장하고 있으며, 사고 관련 정보는 위치 정보와 사고 발생 시간이 포함됩니다. 시간은 제공되지 않을 경우 요청을 받은 서버 시간으로 기록됩니다.',
   })
   @Post('accident')
-  accident(@Body() accidentData: ReportAccidentRequestDto) {
+  accident(@Body() accidentData: ReportDrivingEventDto) {
     return this.eventService.recordAccidentEvent(
       accidentData.ridingRecordId,
       accidentData.timestamp ?? new Date(),
     );
   }
 
-  // =============== WIP 영역 ===============
-
   @ApiOperation({
-    summary: '[WIP] 급가속/급정거 등 순간적인 속도 변화 발생 보고',
+    summary: '급가속/급정거 등 순간적인 속도 변화 발생 보고',
     description: 'FE단에서 급가속 이벤트 감지 시, 관련 정보와 함께 호출해주시면 됩니다.',
-    deprecated: true,
   })
   @Post('sudden-speed-change')
-  suddenSpeedChange(@Body() eventData: SuddenSpeedChangeEventDto) {
-    console.log(eventData.trackSegments.map((point) => `${point.lat}, ${point.lon}`));
-    return eventData;
+  suddenSpeedChange(@Body() eventData: ReportDrivingEventDto) {
+    // console.log(eventData.trackSegments.map((point) => `${point.lat}, ${point.lon}`));
+    // return eventData;
+
+    return this.eventService.recordSuddenStopEvent(
+      eventData.ridingRecordId,
+      eventData.timestamp ?? new Date(),
+    );
   }
+
+  // =============== WIP 영역 ===============
 
   @ApiOperation({
     summary: '[WIP] 급선회 발생 보고',
