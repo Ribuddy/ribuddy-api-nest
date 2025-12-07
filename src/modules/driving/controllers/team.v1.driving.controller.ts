@@ -1,13 +1,10 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { $Enums } from '@generated/prisma/mysql';
-
 import { API_TAGS } from '@common/constants/api-tags.constants';
 import { ParseBigIntPipe } from '@common/pipes/parse-bigint.pipe';
 
 import { RequestContextService } from '@modules/als/services/request-context.service';
-import { Public } from '@modules/auth/decorators/public.decorator';
 import {
   LatLonEleDto,
   StartOrEndTeamRidingRequestDto,
@@ -109,5 +106,13 @@ export class DrivingTeamV1Controller {
     const arrivalName = body.name ? body.name : '도착지';
 
     return await this.locationService.endTeamRiding(ridingRecordId, arrivalLocation, arrivalName);
+  }
+
+  @ApiOperation({
+    summary: '주행 리포트 조회',
+  })
+  @Get('report')
+  async getDrivingReport() {
+    return;
   }
 }
