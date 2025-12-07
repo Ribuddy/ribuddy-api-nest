@@ -134,6 +134,14 @@ exports.Prisma.RidingEventScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.RidingRouteScalarFieldEnum = {
+  id: 'id',
+  ridingRecordId: 'ridingRecordId',
+  routes: 'routes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -156,7 +164,8 @@ exports.RidingEventType = exports.$Enums.RidingEventType = {
 
 exports.Prisma.ModelName = {
   RidingRecord: 'RidingRecord',
-  RidingEvent: 'RidingEvent'
+  RidingEvent: 'RidingEvent',
+  RidingRoute: 'RidingRoute'
 };
 
 /**

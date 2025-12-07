@@ -35,6 +35,8 @@ model RidingRecord {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
 
+  routes RidingRoute[]
+
   @@map("riding_record")
 }
 
@@ -59,4 +61,17 @@ model RidingEvent {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
+}
+
+model RidingRoute {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  ridingRecordId String @map("riding_record_id") @db.ObjectId
+  routes         Json
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  ridingRecord RidingRecord @relation(fields: [ridingRecordId], references: [id], onDelete: Cascade)
+
+  @@map("riding_route")
 }
