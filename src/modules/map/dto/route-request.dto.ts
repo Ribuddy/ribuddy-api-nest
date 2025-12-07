@@ -260,40 +260,45 @@ export class RouteRequestDto {
   mainRoadInfo?: 'Y' | 'N';
 }
 
-export class ReducedRouteRequestDto {
-  @ApiProperty({
-    description: '목적지 X좌표 (경도)',
-    required: true,
-    example: 129.07579349764512,
-  })
-  @IsNumber()
-  @Transform(({ value }) => Number(value))
-  endX!: number;
-
-  @ApiProperty({
-    description: '목적지 Y좌표 (위도)',
-    required: true,
-    example: 35.17883196265564,
-  })
-  @IsNumber()
-  @Transform(({ value }) => Number(value))
-  endY!: number;
-
-  @ApiProperty({
-    description: '출발지 X좌표 (경도)',
-    required: true,
-    example: 126.98217734415019,
-  })
-  @IsNumber()
-  @Transform(({ value }) => Number(value))
-  startX!: number;
-
-  @ApiProperty({
-    description: '출발지 Y좌표 (위도)',
-    required: true,
-    example: 35.17883196265564,
-  })
-  @IsNumber()
-  @Transform(({ value }) => Number(value))
-  startY!: number;
+export class ReducedRouteRequestDto extends PickType(RouteRequestDto, [
+  'startX',
+  'startY',
+  'endX',
+  'endY',
+] as const) {
+  // @ApiProperty({
+  //   description: '목적지 X좌표 (경도)',
+  //   required: true,
+  //   example: 129.07579349764512,
+  // })
+  // @IsNumber()
+  // @Transform(({ value }) => Number(value))
+  // endX!: number;
+  //
+  // @ApiProperty({
+  //   description: '목적지 Y좌표 (위도)',
+  //   required: true,
+  //   example: 35.17883196265564,
+  // })
+  // @IsNumber()
+  // @Transform(({ value }) => Number(value))
+  // endY!: number;
+  //
+  // @ApiProperty({
+  //   description: '출발지 X좌표 (경도)',
+  //   required: true,
+  //   example: 126.98217734415019,
+  // })
+  // @IsNumber()
+  // @Transform(({ value }) => Number(value))
+  // startX!: number;
+  //
+  // @ApiProperty({
+  //   description: '출발지 Y좌표 (위도)',
+  //   required: true,
+  //   example: 35.17883196265564,
+  // })
+  // @IsNumber()
+  // @Transform(({ value }) => Number(value))
+  // startY!: number;
 }

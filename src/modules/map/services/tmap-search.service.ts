@@ -9,7 +9,13 @@ import { catchError, firstValueFrom } from 'rxjs';
 import { inspectObject } from '@common/utils/inspect-object.util';
 
 import { TMAP_CONFIG, TmapConfig } from '@modules/map/configs/tmap.config';
-import { PoiSearchRequestDto } from '@modules/map/dto/poi-search-request.dto';
+import {
+  CoordType,
+  MultiPoint,
+  PoiGroupYn,
+  PoiSearchRequestDto,
+  SearchType,
+} from '@modules/map/dto/poi-search-request.dto';
 
 @Injectable()
 export class TmapSearchService {
@@ -42,8 +48,15 @@ export class TmapSearchService {
     // 요청 파라미터 구성 (searchKeyword는 URL 인코딩)
     const params = {
       ...poiSearchRequestDto,
-      searchKeyword: encodeURIComponent(poiSearchRequestDto.searchKeyword),
+      // searchKeyword: encodeURIComponent(poiSearchRequestDto.searchKeyword),
       version: 1, // API 명세에 따라 version은 필수로 포함
+      // searchType: poiSearchRequestDto.searchType || SearchType.ALL, // 기본값 설정
+      // reqCoordType: CoordType.WGS84GEO, // 요청 좌표계
+      // resCoordType: CoordType.WGS84GEO, // 응답 좌표계
+      // page: poiSearchRequestDto.page || 1, // 기본값 설정
+      // count: poiSearchRequestDto.count || 20, // 기본값 설정
+      // multiPoint: poiSearchRequestDto.multiPoint || MultiPoint.NO, // 기본값 설정
+      // poiGroupYn: poiSearchRequestDto.poiGroupYn || PoiGroupYn.NO, // 기본값 설정
     };
 
     this.logger.log(

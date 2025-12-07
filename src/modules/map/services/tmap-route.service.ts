@@ -1,11 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-  LoggerService,
-} from '@nestjs/common';
+import { Inject, Injectable, InternalServerErrorException, LoggerService } from '@nestjs/common';
 import { ConfigService, ConfigType } from '@nestjs/config';
 
 import { AxiosError } from 'axios';
@@ -46,8 +40,8 @@ export class TmapRouteService {
     const requestBody = {
       ...routeRequestDto,
       // startName과 endName을 URL 인코딩 처리
-      startName: encodeURIComponent(routeRequestDto.startName || '출발지'),
-      endName: encodeURIComponent(routeRequestDto.endName || '도착지'),
+      // startName: encodeURIComponent(routeRequestDto.startName || '출발지'),
+      // endName: encodeURIComponent(routeRequestDto.endName || '도착지'),
     };
 
     const headers = {
