@@ -64,7 +64,21 @@ export class GpxTrack {
   }
 }
 
-export class LatLonEleDto extends PickType(GpxTrackPoint, ['lat', 'lon', 'ele'] as const) {}
+export class LatLonEleDto extends PickType(GpxTrackPoint, ['lat', 'lon', 'ele'] as const) {
+  @IsOptional()
+  @IsNumber()
+  @ApiProperty({
+    description: '중력 가속도 (G 단위)',
+  })
+  gravityForce?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @ApiProperty({
+    description: '기울기 각도 (도 단위)',
+  })
+  leanAngle?: number;
+}
 
 export class StartOrEndTeamRidingRequestDto extends LatLonEleDto {
   @IsOptional()
@@ -72,7 +86,7 @@ export class StartOrEndTeamRidingRequestDto extends LatLonEleDto {
   name?: string; // 출발,도착지 명칭
 }
 
-export class ReportAccidentRequestDto extends LatLonEleDto {
+export class ReportDrivingEventDto extends LatLonEleDto {
   @IsNotEmpty()
   @IsString()
   ridingRecordId!: string;

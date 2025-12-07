@@ -238,11 +238,11 @@ export class TeamUsersService {
 
   async joinTeamByCode(userId: bigint, code: string) {
     // Find the team join code in the database
-    const teamWithJoinCode = await this.mysql.teamJoinCode.findMany({
+    const teamWithJoinCode = await this.mysql.teamJoinCode.findFirst({
       where: { code },
     });
 
-    if (!teamWithJoinCode || teamWithJoinCode.length > 1) {
+    if (!teamWithJoinCode) {
       throw new CustomException(UserErrorCode.INVALID_TEAM_JOIN_CODE);
     }
 

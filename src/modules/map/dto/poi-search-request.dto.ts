@@ -1,32 +1,32 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 
 // API 명세서에 정의된 enum 값들을 상수로 관리
-enum SearchType {
+export enum SearchType {
   ALL = 'all',
   NAME = 'name',
   TELNO = 'telno',
 }
 
-enum SearchTypCd {
+export enum SearchTypCd {
   ACCURACY = 'A',
   DISTANCE = 'R',
 }
 
-enum CoordType {
+export enum CoordType {
   WGS84GEO = 'WGS84GEO',
   EPSG3857 = 'EPSG3S7',
   KATECH = 'KATECH',
 }
 
-enum MultiPoint {
+export enum MultiPoint {
   YES = 'Y',
   NO = 'N',
 }
 
-enum PoiGroupYn {
+export enum PoiGroupYn {
   YES = 'Y',
   NO = 'N',
 }
@@ -241,3 +241,9 @@ export class PoiSearchRequestDto {
   @IsString()
   callback?: string;
 }
+
+export class ReducedPoiSearchRequestDto extends PickType(PoiSearchRequestDto, [
+  'searchKeyword',
+  'centerLat',
+  'centerLon',
+] as const) {}

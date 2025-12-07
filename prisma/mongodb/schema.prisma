@@ -13,14 +13,16 @@ datasource db {
 }
 
 type GeoPoint {
-  type        String // Point로 고정
-  coordinates Float[] // [lon, lat, ele?]
-  timestamp   DateTime?
-  name        String? // 위치 이름 (예: "서울역")
+  type         String // Point로 고정
+  coordinates  Float[] // [lon, lat, ele?]
+  timestamp    DateTime?
+  name         String? // 위치 이름 (예: "서울역")
+  gravityForce Float? // 중력가속도, m/s²
+  leanAngle    Float? // 기울기 각도, 도 단위
 }
 
 model RidingRecord {
-  id              String             @default(auto()) @id @map("_id") @db.ObjectId
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
   route           GeoPoint[] // 사용자한테 위치 받을 때 마다 여기에 집어넣어야 함
   recordOwnerId   String             @map("record_owner_id")
   participants    String[] // 참여자 ID 목록
@@ -28,12 +30,16 @@ model RidingRecord {
   // 출발지, 경유지, 도착지 "이름" 만을 저장하는 배열
   departToArrival String[]           @map("depart_to_arrival")
   status          RidingRecordStatus @default(ONGOING)
+  sentEvents      String[]           @map("sentEvents") // RidingEvent의 id 목록
 
   // distance, duration 등 부가 정보는 서버에서 계산하도록 함
 
   // 기본 정보
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
+
+  routes RidingRoute[]
+  events RidingEvent[]
 
   @@map("riding_record")
 }
@@ -50,13 +56,28 @@ enum RidingEventType {
 }
 
 model RidingEvent {
-  id             String          @default(auto()) @id @map("_id") @db.ObjectId
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
   type           RidingEventType
   timestamp      DateTime
   location       GeoPoint?
   userId         String          @map("user_id")
-  ridingRecordId String?         @map("riding_record_id")
+  ridingRecordId String?         @map("riding_record_id") @db.ObjectId
+
+  ridingRecord RidingRecord? @relation(fields: [ridingRecordId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
+}
+
+model RidingRoute {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  ridingRecordId String @map("riding_record_id") @db.ObjectId
+  routes         Json
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  ridingRecord RidingRecord @relation(fields: [ridingRecordId], references: [id], onDelete: Cascade)
+
+  @@map("riding_route")
 }

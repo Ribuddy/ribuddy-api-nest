@@ -11,11 +11,21 @@ import { RidingRecordStatus } from '@generated/prisma/mongodb';
 import { RedisService } from '@liaoliaots/nestjs-redis';
 import Redis from 'ioredis';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { async, take } from 'rxjs';
 
 import { REDIS } from '@common/constants/redis.constants';
+import {
+  calculateClimbAndFall,
+  calculateDrivingScore,
+  calculateDuration,
+  calculateMaxLeanAngle,
+  calculateTopSpeed,
+  calculateTotalDistance,
+} from '@common/utils/geo-utils';
 
 import { LatLonEleDto } from '@modules/driving/dto/common.driving.dto';
-import { UserLocation } from '@modules/driving/types/drive-location.types';
+import { DrivingEventType } from '@modules/driving/dto/event.driving.dto';
+import { RidingRecordStatistics, UserLocation } from '@modules/driving/types/drive-location.types';
 import { MongoDBPrismaService } from '@modules/prisma/services/mongodb.prisma.service';
 import { MySQLPrismaService } from '@modules/prisma/services/mysql.prisma.service';
 import { TeamUsersService } from '@modules/users/services/team.users.service';
@@ -195,34 +205,42 @@ export class DriveLocationService {
       where: { id: ridingRecordId, status: RidingRecordStatus.ONGOING },
     });
 
-    // TODO: 커스텀 에러로 변환
     if (!ridingRecord) {
       throw new NotFoundException('RidingRecord ID 값에 해당하는 기록이 존재하지 않습니다.');
     }
 
-    // 팀 라이딩인 경우, 해당 팀의 모든 사람들의 ridingRecord가 completed 상태인 경우 제거
+    // 1. 먼저 현재 레코드를 COMPLETED로 업데이트 (락 획득 효과)
+    await this.updateRidingRecordLocation(ridingRecordId, loc, locationName, true);
+
+    // 2. 팀 라이딩인 경우에만 추가 처리
     if (ridingRecord.teamId) {
-      const ongoingRecords = await this.mongo.ridingRecord.findMany({
+      // 업데이트 후 다시 조회하여 정확한 상태 확인
+      const remainingOngoingRecords = await this.mongo.ridingRecord.count({
         where: {
           teamId: ridingRecord.teamId,
           status: RidingRecordStatus.ONGOING,
         },
       });
 
-      if (ongoingRecords.length > 1) {
-        // 아직 완료되지 않은 라이딩 기록이 남아있는 경우, 바로 종료하지 않음
-        await this.updateRidingRecordLocation(ridingRecordId, loc, locationName, true);
+      // 모든 팀원이 완료한 경우에만 Redis에서 제거
+      if (remainingOngoingRecords === 0) {
+        await this.removeTeamFromRedisCurrentRidingTeam(BigInt(ridingRecord.teamId));
 
-        return;
-      } // else, 마지막 기록인 경우 redis 내 current riding team에서 제거
-      else await this.removeTeamFromRedisCurrentRidingTeam(BigInt(ridingRecord.teamId));
+        this.logger.log(
+          `[팀 라이딩 완전 종료] [TEAM_ID: ${ridingRecord.teamId}] [마지막 RIDING_RECORD_ID: ${ridingRecordId}]`,
+          'LOCATION_SERVICE',
+        );
+      }
     }
 
-    // 라이딩 레코드 마무리 (예: 종료 시간 기록)
-    await this.updateRidingRecordLocation(ridingRecordId, loc, locationName, true);
+    // 3. 사용자 위치 정보 Redis에서 제거
+    await this.redis.zrem(
+      REDIS.USER_LOCATION.COLLECTION_KEY,
+      REDIS.USER_LOCATION.MEMBER_KEY(BigInt(ridingRecord.recordOwnerId)),
+    );
 
     this.logger.log(
-      `[팀 라이딩 종료] [RIDING_RECORD_ID: ${ridingRecordId}] [위경도: ${loc.lat}, ${loc.lon}]`,
+      `[라이딩 종료] [RIDING_RECORD_ID: ${ridingRecordId}] [위경도: ${loc.lat}, ${loc.lon}]`,
       'LOCATION_SERVICE',
     );
 
@@ -273,6 +291,7 @@ export class DriveLocationService {
   // ridingRecordId 받아서, 해당 riding record의 participant들을 추출,
   // 해당 사용자들의 위치 반환, 위치가 없는 사용자는 제외함.
   async getLocationsFromRidingRecordId(ridingRecordId: string) {
+    // riding record 에서 참여자 목록 추출
     const ridingRecord = await this.mongo.ridingRecord.findUnique({
       where: { id: ridingRecordId },
     });
@@ -281,6 +300,7 @@ export class DriveLocationService {
       throw new NotFoundException('RidingRecord ID 값에 해당하는 기록이 존재하지 않습니다.');
     }
 
+    // 사용자 위치를 redis에서 조회
     const locations: UserLocation[] = [];
     for (const participantId of ridingRecord.participants) {
       const location = await this.getUserLocation(BigInt(participantId));
@@ -311,6 +331,73 @@ export class DriveLocationService {
     }
 
     return locations;
+  }
+
+  async getRidingRecordStatistics(ridingRecordId: string): Promise<RidingRecordStatistics> {
+    const ridingRecord = await this.mongo.ridingRecord.findUnique({
+      where: { id: ridingRecordId },
+      include: {
+        events: true,
+      },
+    });
+
+    if (!ridingRecord) {
+      throw new NotFoundException('RidingRecord ID 값에 해당하는 기록이 존재하지 않습니다.');
+    }
+
+    // GeoPoint 배열을 파싱하여 계산에 필요한 형식으로 변환
+    const coordinates = ridingRecord.route.map((geoPoint) => ({
+      lat: geoPoint.coordinates[1], // coordinates[0]: lon, coordinates[1]: lat
+      lon: geoPoint.coordinates[0],
+      ele: geoPoint.coordinates[2] ?? undefined, // coordinates[2]: ele (optional)
+      time: geoPoint.timestamp ?? undefined,
+      leanAngle: geoPoint.leanAngle ?? undefined,
+      gravityForce: geoPoint.gravityForce ?? undefined,
+    }));
+
+    // 주행 거리 계산 (km)
+    const distance = calculateTotalDistance(coordinates, 'km');
+
+    // 주행 시간 계산 (초)
+    const duration = calculateDuration(coordinates);
+
+    // 최고 속도 계산 (km/h)
+    const topSpeed = calculateTopSpeed(coordinates);
+
+    // 상승/하강 고도 계산 (m)
+    const { climb, fall } = calculateClimbAndFall(coordinates);
+
+    // 최대 기울기 각도 계산 (도)
+    const { maxLeftLean, maxRightLean } = calculateMaxLeanAngle(coordinates);
+
+    const drivingScore = calculateDrivingScore({
+      distanceKm: distance,
+      eventCounts: {
+        suddenDeceleration: ridingRecord.events.filter(
+          (event) => event.type === DrivingEventType.SUDDEN_STOP,
+        ).length,
+        suddenAcceleration: ridingRecord.events.filter(
+          (event) => event.type === DrivingEventType.SUDDEN_ACCELERATION,
+        ).length,
+        suddenStop: 0,
+        suddenStart: 0,
+      },
+      maxLeftLean: maxLeftLean,
+      maxRightLean: maxRightLean,
+      topSpeed: topSpeed,
+    });
+
+    return {
+      distance, // km
+      duration, // 초
+      topSpeed, // km/h
+      climb, // 미터
+      fall, // 미터
+      maxLeftLean, // 도
+      maxRightLean, // 도
+      // score: 0, // TODO: 주행 점수 계산
+      drivingScore: drivingScore,
+    };
   }
 
   // ================== TEST ============================
