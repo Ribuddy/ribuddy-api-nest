@@ -30,7 +30,7 @@ model RidingRecord {
   // 출발지, 경유지, 도착지 "이름" 만을 저장하는 배열
   departToArrival String[]           @map("depart_to_arrival")
   status          RidingRecordStatus @default(ONGOING)
-  sendedEvents    String[]           @map("sended_events") // RidingEvent의 id 목록
+  sentEvents      String[]           @map("sentEvents") // RidingEvent의 id 목록
 
   // distance, duration 등 부가 정보는 서버에서 계산하도록 함
 

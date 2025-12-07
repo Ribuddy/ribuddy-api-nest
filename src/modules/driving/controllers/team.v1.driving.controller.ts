@@ -26,7 +26,7 @@ export class DrivingTeamV1Controller {
     private readonly eventService: DrivingEventService,
     private readonly teamUsersService: TeamUsersService,
     private readonly requestContext: RequestContextService,
-    private readonly tampRouteService: TmapRouteService,
+    private readonly tmapRouteService: TmapRouteService,
   ) {}
 
   // 팀라이딩 시작 API
@@ -85,8 +85,8 @@ export class DrivingTeamV1Controller {
     // redis에서 가져온 팀원 위치 조회
     const teammateLocations =
       await this.locationService.getLocationsFromRidingRecordId(ridingRecordId);
-    const routes = await this.tampRouteService.getTeamRoutes(ridingRecordId);
-    const ridingEvents = await this.eventService.getTeamRingEvents(ridingRecordId);
+    const routes = await this.tmapRouteService.getTeamRoutes(ridingRecordId);
+    const ridingEvents = await this.eventService.getTeamRidingEvents(ridingRecordId);
 
     return {
       teammateLocations,

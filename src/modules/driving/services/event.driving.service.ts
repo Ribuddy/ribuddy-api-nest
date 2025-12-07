@@ -45,7 +45,7 @@ export class DrivingEventService {
     return suddenStopEvent;
   }
 
-  async getTeamRingEvents(ridingRecordId: string) {
+  async getTeamRidingEvents(ridingRecordId: string) {
     const events = await this.mongo.ridingEvent.findMany({
       where: {
         ridingRecordId,
@@ -60,18 +60,18 @@ export class DrivingEventService {
         id: ridingRecordId,
       },
       select: {
-        sendedEvents: true,
+        sentEvents: true,
       },
     });
 
-    const newEvents = events.filter((event) => !alreadySentEvents?.sendedEvents.includes(event.id));
+    const newEvents = events.filter((event) => !alreadySentEvents?.sentEvents.includes(event.id));
 
     await this.mongo.ridingRecord.update({
       where: {
         id: ridingRecordId,
       },
       data: {
-        sendedEvents: {
+        sentEvents: {
           push: newEvents.map((event) => event.id),
         },
       },

@@ -1206,7 +1206,7 @@ export namespace Prisma {
     teamId: number
     departToArrival: number
     status: number
-    sendedEvents: number
+    sentEvents: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1238,7 +1238,7 @@ export namespace Prisma {
     teamId?: true
     departToArrival?: true
     status?: true
-    sendedEvents?: true
+    sentEvents?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1323,7 +1323,7 @@ export namespace Prisma {
     teamId: string | null
     departToArrival: string[]
     status: $Enums.RidingRecordStatus
-    sendedEvents: string[]
+    sentEvents: string[]
     createdAt: Date
     updatedAt: Date
     _count: RidingRecordCountAggregateOutputType | null
@@ -1353,7 +1353,7 @@ export namespace Prisma {
     teamId?: boolean
     departToArrival?: boolean
     status?: boolean
-    sendedEvents?: boolean
+    sentEvents?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     routes?: boolean | RidingRecord$routesArgs<ExtArgs>
@@ -1370,12 +1370,12 @@ export namespace Prisma {
     teamId?: boolean
     departToArrival?: boolean
     status?: boolean
-    sendedEvents?: boolean
+    sentEvents?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RidingRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "route" | "recordOwnerId" | "participants" | "teamId" | "departToArrival" | "status" | "sendedEvents" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingRecord"]>
+  export type RidingRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "route" | "recordOwnerId" | "participants" | "teamId" | "departToArrival" | "status" | "sentEvents" | "createdAt" | "updatedAt", ExtArgs["result"]["ridingRecord"]>
   export type RidingRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     routes?: boolean | RidingRecord$routesArgs<ExtArgs>
     events?: boolean | RidingRecord$eventsArgs<ExtArgs>
@@ -1395,7 +1395,7 @@ export namespace Prisma {
       teamId: string | null
       departToArrival: string[]
       status: $Enums.RidingRecordStatus
-      sendedEvents: string[]
+      sentEvents: string[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["ridingRecord"]>
@@ -1800,7 +1800,7 @@ export namespace Prisma {
     readonly teamId: FieldRef<"RidingRecord", 'String'>
     readonly departToArrival: FieldRef<"RidingRecord", 'String[]'>
     readonly status: FieldRef<"RidingRecord", 'RidingRecordStatus'>
-    readonly sendedEvents: FieldRef<"RidingRecord", 'String[]'>
+    readonly sentEvents: FieldRef<"RidingRecord", 'String[]'>
     readonly createdAt: FieldRef<"RidingRecord", 'DateTime'>
     readonly updatedAt: FieldRef<"RidingRecord", 'DateTime'>
   }
@@ -4248,7 +4248,7 @@ export namespace Prisma {
     teamId: 'teamId',
     departToArrival: 'departToArrival',
     status: 'status',
-    sendedEvents: 'sendedEvents',
+    sentEvents: 'sentEvents',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -4406,7 +4406,7 @@ export namespace Prisma {
     teamId?: StringNullableFilter<"RidingRecord"> | string | null
     departToArrival?: StringNullableListFilter<"RidingRecord">
     status?: EnumRidingRecordStatusFilter<"RidingRecord"> | $Enums.RidingRecordStatus
-    sendedEvents?: StringNullableListFilter<"RidingRecord">
+    sentEvents?: StringNullableListFilter<"RidingRecord">
     createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
     routes?: RidingRouteListRelationFilter
@@ -4421,7 +4421,7 @@ export namespace Prisma {
     teamId?: SortOrder
     departToArrival?: SortOrder
     status?: SortOrder
-    sendedEvents?: SortOrder
+    sentEvents?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     routes?: RidingRouteOrderByRelationAggregateInput
@@ -4439,7 +4439,7 @@ export namespace Prisma {
     teamId?: StringNullableFilter<"RidingRecord"> | string | null
     departToArrival?: StringNullableListFilter<"RidingRecord">
     status?: EnumRidingRecordStatusFilter<"RidingRecord"> | $Enums.RidingRecordStatus
-    sendedEvents?: StringNullableListFilter<"RidingRecord">
+    sentEvents?: StringNullableListFilter<"RidingRecord">
     createdAt?: DateTimeFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeFilter<"RidingRecord"> | Date | string
     routes?: RidingRouteListRelationFilter
@@ -4453,7 +4453,7 @@ export namespace Prisma {
     teamId?: SortOrder
     departToArrival?: SortOrder
     status?: SortOrder
-    sendedEvents?: SortOrder
+    sentEvents?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: RidingRecordCountOrderByAggregateInput
@@ -4471,7 +4471,7 @@ export namespace Prisma {
     teamId?: StringNullableWithAggregatesFilter<"RidingRecord"> | string | null
     departToArrival?: StringNullableListFilter<"RidingRecord">
     status?: EnumRidingRecordStatusWithAggregatesFilter<"RidingRecord"> | $Enums.RidingRecordStatus
-    sendedEvents?: StringNullableListFilter<"RidingRecord">
+    sentEvents?: StringNullableListFilter<"RidingRecord">
     createdAt?: DateTimeWithAggregatesFilter<"RidingRecord"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"RidingRecord"> | Date | string
   }
@@ -4607,7 +4607,7 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
+    sentEvents?: RidingRecordCreatesentEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     routes?: RidingRouteCreateNestedManyWithoutRidingRecordInput
@@ -4622,7 +4622,7 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
+    sentEvents?: RidingRecordCreatesentEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     routes?: RidingRouteUncheckedCreateNestedManyWithoutRidingRecordInput
@@ -4636,7 +4636,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    sentEvents?: RidingRecordUpdatesentEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     routes?: RidingRouteUpdateManyWithoutRidingRecordNestedInput
@@ -4650,7 +4650,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    sentEvents?: RidingRecordUpdatesentEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     routes?: RidingRouteUncheckedUpdateManyWithoutRidingRecordNestedInput
@@ -4665,7 +4665,7 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
+    sentEvents?: RidingRecordCreatesentEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -4677,7 +4677,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    sentEvents?: RidingRecordUpdatesentEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4689,7 +4689,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    sentEvents?: RidingRecordUpdatesentEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4923,7 +4923,7 @@ export namespace Prisma {
     teamId?: SortOrder
     departToArrival?: SortOrder
     status?: SortOrder
-    sendedEvents?: SortOrder
+    sentEvents?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5148,7 +5148,7 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type RidingRecordCreatesendedEventsInput = {
+  export type RidingRecordCreatesentEventsInput = {
     set: string[]
   }
 
@@ -5210,7 +5210,7 @@ export namespace Prisma {
     set?: $Enums.RidingRecordStatus
   }
 
-  export type RidingRecordUpdatesendedEventsInput = {
+  export type RidingRecordUpdatesentEventsInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -5617,7 +5617,7 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
+    sentEvents?: RidingRecordCreatesentEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     routes?: RidingRouteCreateNestedManyWithoutRidingRecordInput
@@ -5631,7 +5631,7 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
+    sentEvents?: RidingRecordCreatesentEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     routes?: RidingRouteUncheckedCreateNestedManyWithoutRidingRecordInput
@@ -5665,7 +5665,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    sentEvents?: RidingRecordUpdatesentEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     routes?: RidingRouteUpdateManyWithoutRidingRecordNestedInput
@@ -5678,7 +5678,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    sentEvents?: RidingRecordUpdatesentEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     routes?: RidingRouteUncheckedUpdateManyWithoutRidingRecordNestedInput
@@ -5692,7 +5692,7 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
+    sentEvents?: RidingRecordCreatesentEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     events?: RidingEventCreateNestedManyWithoutRidingRecordInput
@@ -5706,7 +5706,7 @@ export namespace Prisma {
     teamId?: string | null
     departToArrival?: RidingRecordCreatedepartToArrivalInput | string[]
     status?: $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordCreatesendedEventsInput | string[]
+    sentEvents?: RidingRecordCreatesentEventsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     events?: RidingEventUncheckedCreateNestedManyWithoutRidingRecordInput
@@ -5735,7 +5735,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    sentEvents?: RidingRecordUpdatesentEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     events?: RidingEventUpdateManyWithoutRidingRecordNestedInput
@@ -5748,7 +5748,7 @@ export namespace Prisma {
     teamId?: NullableStringFieldUpdateOperationsInput | string | null
     departToArrival?: RidingRecordUpdatedepartToArrivalInput | string[]
     status?: EnumRidingRecordStatusFieldUpdateOperationsInput | $Enums.RidingRecordStatus
-    sendedEvents?: RidingRecordUpdatesendedEventsInput | string[]
+    sentEvents?: RidingRecordUpdatesentEventsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     events?: RidingEventUncheckedUpdateManyWithoutRidingRecordNestedInput
