@@ -420,4 +420,23 @@ export class DriveLocationService {
 
     return ridingRecords;
   }
+
+  async getUserRidingRecords(userId: bigint) {
+    const ridingRecords = await this.mongo.ridingRecord.findMany({
+      select: {
+        id: true,
+        participants: true,
+        teamId: true,
+        status: true,
+      },
+      where: {
+        recordOwnerId: userId.toString(),
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return ridingRecords;
+  }
 }
