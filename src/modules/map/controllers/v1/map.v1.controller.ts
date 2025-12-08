@@ -32,13 +32,13 @@ export class MapV1Controller {
   @Post('routes')
   @Public()
   async getRoute(@Query() query: ReducedRouteRequestDto) {
-    if (query.ridingRecordId) {
-      const route: any | null = await this.tmapRouteService.getTeamRoutes(query.ridingRecordId);
-      if (route) {
-        this.logger.log(`라이딩 기록 ${query.ridingRecordId}에 대한 저장된 경로를 반환합니다.`);
-        return route;
-      }
-    }
+    // if (query.ridingRecordId) {
+    //   const route: any | null = await this.tmapRouteService.getTeamRoutes(query.ridingRecordId);
+    //   if (route) {
+    //     this.logger.log(`라이딩 기록 ${query.ridingRecordId}에 대한 저장된 경로를 반환합니다.`);
+    //     return route;
+    //   }
+    // }
 
     const routes = await this.tmapRouteService.findRoute({
       startX: query.startX,
@@ -49,10 +49,10 @@ export class MapV1Controller {
       searchOption: 12, // 이륜차 경로로 고정
     });
 
-    // ridingRecord가 있을 경우에는 저장하도록 함
-    if (query.ridingRecordId) {
-      await this.tmapRouteService.saveTeamRoutes(query.ridingRecordId, routes);
-    }
+    // // ridingRecord가 있을 경우에는 저장하도록 함
+    // if (query.ridingRecordId) {
+    //   await this.tmapRouteService.saveTeamRoutes(query.ridingRecordId, routes);
+    // }
 
     return routes;
   }

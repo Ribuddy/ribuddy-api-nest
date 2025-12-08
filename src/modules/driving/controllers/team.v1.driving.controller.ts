@@ -85,12 +85,12 @@ export class DrivingTeamV1Controller {
     // redis에서 가져온 팀원 위치 조회
     const teammateLocations =
       await this.locationService.getLocationsFromRidingRecordId(ridingRecordId);
-    const routes = await this.tmapRouteService.getTeamRoutes(ridingRecordId);
+    // const routes = await this.tmapRouteService.getTeamRoutes(ridingRecordId);
     const ridingEvents = await this.eventService.getTeamRidingEvents(ridingRecordId);
 
     return {
       teammateLocations,
-      routes,
+      // routes,
       ridingEvents,
     };
   }
