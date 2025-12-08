@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { RidingEventType } from '@generated/prisma/mongodb';
 
@@ -46,25 +46,39 @@ export class DrivingEventService {
   }
 
   async getTeamRidingEvents(ridingRecordId: string) {
-    const events = await this.mongo.ridingEvent.findMany({
-      where: {
-        ridingRecordId,
-      },
-      orderBy: {
-        timestamp: 'asc',
-      },
-    });
+    // const events = await this.mongo.ridingEvent.findMany({
+    //   where: {
+    //     ridingRecordId,
+    //   },
+    //   orderBy: {
+    //     timestamp: 'asc',
+    //   },
+    // });
+    //
+    //
+    // return newEvents;
 
-    const alreadySentEvents = await this.mongo.ridingRecord.findUnique({
+    const ridingRecord = await this.mongo.ridingRecord.findUnique({
       where: {
         id: ridingRecordId,
       },
-      select: {
-        sentEvents: true,
+    });
+
+    if (!ridingRecord) {
+      throw new NotFoundException('라이딩 기록이 존재하지 않습니다.');
+    }
+
+    const teammateEvents = await this.mongo.ridingEvent.findMany({
+      where: {
+        userId: {
+          in: ridingRecord.participants,
+        },
       },
     });
 
-    const newEvents = events.filter((event) => !alreadySentEvents?.sentEvents.includes(event.id));
+    const alreadySentEvents = ridingRecord.sentEvents;
+
+    const newEvents = teammateEvents.filter((event) => !alreadySentEvents.includes(event.id));
 
     await this.mongo.ridingRecord.update({
       where: {
