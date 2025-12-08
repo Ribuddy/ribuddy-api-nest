@@ -247,12 +247,12 @@ export class TeamUsersService {
     }
 
     // Check if the code has expired
-    if (teamWithJoinCode[0].expiresAt < new Date()) {
+    if (teamWithJoinCode.expiresAt < new Date()) {
       throw new CustomException(UserErrorCode.EXPIRED_TEAM_JOIN_CODE);
     }
 
     // Add the user to the team
-    await this.joinTeam(userId, teamWithJoinCode[0].teamId);
+    await this.joinTeam(userId, teamWithJoinCode.teamId);
 
     return;
   }
