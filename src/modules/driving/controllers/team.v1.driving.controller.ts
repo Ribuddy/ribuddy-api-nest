@@ -133,4 +133,15 @@ export class DrivingTeamV1Controller {
   async getDrivingReport(@Query('ridingRecordId') ridingRecordId: string) {
     return this.locationService.getRidingRecordStatistics(ridingRecordId);
   }
+
+  @ApiOperation({
+    summary: '내 라이딩 기록들 조회',
+    description: '내가 작성한 라이딩 기록들의 요약 정보를 반환합니다.',
+  })
+  @Get('my-records')
+  async getMyRidingRecords() {
+    const userId = this.requestContext.getOrThrowUserId();
+
+    return this.locationService.getUserRidingRecords(userId);
+  }
 }
